@@ -7,7 +7,10 @@
     "test": "playwright test --project=chromium --headed",
     "trace": "playwright test --trace on --project=chromium",
     "show:report": "playwright show-report",
-    "test:headless": "playwright test"
+    "test:headless": "playwright test",
+    "test:consultation": "playwright test tests/consultationForm.spec.ts --project=chromium",
+    "test:footer": "playwright test tests/footer.spec.ts --project=chromium",
+    "test:main": "playwright test tests/main.spec.ts --project=chromium --headed"
   },
   "keywords": [],
   "author": "",
