@@ -144,14 +144,19 @@ test.describe("Auth page testing", () => {
   test("TC-577 Authorization with invalid password", async ({
     signinPage,
   }) => {
-    for (const invalidPassword of signinPage.invalidEmailOptions()) {
+    for (const invalidPassword of signinPage.invalidPasswordOptions()) {
       await signinPage.fillLoginEmailInput(valid_creds[0].email);
       await signinPage.fillLoginPasswordInput(invalidPassword);
       await signinPage.clickLoginSubmitBtn();
+
       expect(signinPage.getListOfErrorMsg()).toContain(
-        await signinPage.getPasswordInputErrorMsg()
-      );
+          await signinPage.getPasswordInputErrorMsg()
+        );
       await signinPage.clearLoginInputs();
     }
+   await signinPage.fillLoginEmailInput(valid_creds[0].email);
+   await signinPage.fillLoginPasswordInput(signinPage.generateRandomPassword(10))
+   await signinPage.clickLoginSubmitBtn();
+   expect(await signinPage.getLoginFormErrorText()).toBe("Невірний e-mail або пароль")
   });
 });

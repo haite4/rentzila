@@ -15,6 +15,7 @@ const logoutBtn = `[data-testid="logout"]`;
 const profileBtn = `[data-testid="profile"]`;
 const mobileInput = "#mobile";
 const logoutBtnOnTheProfile = `[data-testid="logOut"]`;
+const loginFormError = ".LoginForm_error__UBao6";
 
 export class SigninPage extends Page {
   constructor(page: Page["page"]) {
@@ -121,7 +122,6 @@ export class SigninPage extends Page {
     const validPassword = valid_creds[0].password;
     const passwordWithSpaceAtTheEnd = `${validPassword} `;
     const passwordWithSpaceAtTheStart = ` ${validPassword}`;
-    const nonExistinsPassword = this.generateRandomPassword(10);
     const passwordInLowerCase = validPassword.toLowerCase();
     const passwordInUpperCase = validPassword.toUpperCase();
     const passwordInCyrylic = "Йцукен123+";
@@ -129,11 +129,11 @@ export class SigninPage extends Page {
     invalidPasswordList.push(
       passwordWithSpaceAtTheEnd,
       passwordWithSpaceAtTheStart,
-      nonExistinsPassword,
       passwordInLowerCase,
       passwordInUpperCase,
       passwordInCyrylic
     );
+    return invalidPasswordList;
   }
 
   getListOfErrorMsg() {
@@ -145,18 +145,32 @@ export class SigninPage extends Page {
   }
 
   generateRandomPassword(length) {
-    const charset =
-      "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+[]{}|;:,.<>?";
-    let password = "";
-    for (let i = 0; i < length; i++) {
-      const randomIndex = Math.floor(Math.random() * charset.length);
-      password += charset[randomIndex];
+    const lowercaseCharset = "abcdefghijklmnopqrstuvwxyz";
+    const uppercaseCharset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const digits = "0123456789";
+    let password =
+      uppercaseCharset[Math.floor(Math.random() * uppercaseCharset.length)] +
+      digits[Math.floor(Math.random() * digits.length)];
+
+    while (password.length < length) {
+      password +=
+        lowercaseCharset[Math.floor(Math.random() * lowercaseCharset.length)];
     }
+
+    password = password
+      .split("")
+      .sort(() => 0.5 - Math.random())
+      .join("");
+
     return password;
   }
 
   async clickHeaderAuthBtn() {
     await this.page.locator(headerAuthBtn).click();
+  }
+
+  async getLoginFormErrorText() {
+    return await this.page.locator(loginFormError).textContent();
   }
 
   async clickLoginSubmitBtn() {
