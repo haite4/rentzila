@@ -1,5 +1,5 @@
 import { APIRequestContext } from "@playwright/test";
-import admin_creds from "../data/admin_creds.json"
+import valid_creds from "../data/valid_creds.json"
 
 let adminAccessToken: any = null;
 let feedback: any;
@@ -14,8 +14,8 @@ export class Helper {
       await this.request
         .post("https://dev.rentzila.com.ua/api/auth/jwt/create/", {
           data: {
-            email: admin_creds.email,
-            password: admin_creds.password,
+            email: valid_creds[0].email,
+            password: valid_creds[0].password,
           },
         })
         .then(async (response) => {
