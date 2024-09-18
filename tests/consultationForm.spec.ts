@@ -41,7 +41,7 @@ test.describe("Consulting form functionality", () => {
       "value",
       "+380"
     );
-    await mainPage.fillConsultingInputPhoneNumber(test_data.phone_number);
+    await mainPage.fillConsultingInputPhoneNumber(test_data.phoneNumber);
     await mainPage.clearConsultingInputName();
     await mainPage.clickOrderConsultationBtn();
     await expect(mainPage.getConsultingInputName()).toHaveCSS(
@@ -74,7 +74,7 @@ test.describe("Consulting form functionality", () => {
       await mainPage.clearConsultingInputPhoneNumber();
     }
 
-    await mainPage.fillConsultingInputPhoneNumber(test_data.phone_number);
+    await mainPage.fillConsultingInputPhoneNumber(test_data.phoneNumber);
 
     const [dialog] = await Promise.all([
       mainPage.page.waitForEvent("dialog"),
@@ -85,7 +85,7 @@ test.describe("Consulting form functionality", () => {
     expect(
       apiHelper.isPhoneNumbePresent(
         await apiHelper.getListOfFeedback(),
-        test_data.phone_number
+        test_data.phoneNumber
       )
     ).toBe(true);
   });
