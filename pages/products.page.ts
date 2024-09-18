@@ -77,7 +77,4 @@ export class ProductsPage extends Page {
     return await this.page.locator(productsQuantity).nth(1).textContent();
   }
 
-  async getProductFilterText(){
-    await this.page.locator(selectedFilter).textContent()
-  }
 }
