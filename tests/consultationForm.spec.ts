@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
-import test_data from "../data/test_data.json";
+import phone_number from "../data/phone_number.json";
 
 test.describe("Consulting form functionality", () => {
   test("TC-226: Verify 'У Вас залишилися питання?' form", async ({
@@ -41,7 +41,7 @@ test.describe("Consulting form functionality", () => {
       "value",
       "+380"
     );
-    await mainPage.fillConsultingInputPhoneNumber(test_data.phoneNumber);
+    await mainPage.fillConsultingInputPhoneNumber(phone_number.phoneNumber);
     await mainPage.clearConsultingInputName();
     await mainPage.clickOrderConsultationBtn();
     await expect(mainPage.getConsultingInputName()).toHaveCSS(
@@ -74,7 +74,7 @@ test.describe("Consulting form functionality", () => {
       await mainPage.clearConsultingInputPhoneNumber();
     }
 
-    await mainPage.fillConsultingInputPhoneNumber(test_data.phoneNumber);
+    await mainPage.fillConsultingInputPhoneNumber(phone_number.phoneNumber);
 
     const [dialog] = await Promise.all([
       mainPage.page.waitForEvent("dialog"),
@@ -85,7 +85,7 @@ test.describe("Consulting form functionality", () => {
     expect(
       apiHelper.isPhoneNumbePresent(
         await apiHelper.getListOfFeedback(),
-        test_data.phoneNumber
+        phone_number.phoneNumber
       )
     ).toBe(true);
   });

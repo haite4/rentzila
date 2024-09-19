@@ -1,7 +1,9 @@
 import { APIRequestContext } from "@playwright/test";
-import valid_creds from "../data/valid_creds.json"
+import admin_creds from "../data/admin_creds.json"
+import user_creds from "../data/user_creds.json"
 
 let adminAccessToken: any = null;
+let userAccessToken: any = null;
 let feedback: any;
 
 export class Helper {
@@ -9,13 +11,13 @@ export class Helper {
     this.request = request;
   }
 
-  async createJwtToken() {
+  async createAdminJwtToken() {
     if (adminAccessToken === null) {
       await this.request
         .post("https://dev.rentzila.com.ua/api/auth/jwt/create/", {
           data: {
-            email: valid_creds[0].email,
-            password: valid_creds[0].password,
+            email: admin_creds.email,
+            password: admin_creds.password,
           },
         })
         .then(async (response) => {
@@ -25,8 +27,24 @@ export class Helper {
     return adminAccessToken;
   }
 
+  async createUserJwtToken() {
+    if (userAccessToken === null) {
+      await this.request
+        .post("https://dev.rentzila.com.ua/api/auth/jwt/create/", {
+          data: {
+            email: user_creds.email,
+            password: user_creds.password,
+          },
+        })
+        .then(async (response) => {
+          userAccessToken = (await response.json()).access;
+        });
+    }
+    return userAccessToken;
+  }
+
   async getListOfFeedback() {
-    const accessToken = await this.createJwtToken();
+    const accessToken = await this.createAdminJwtToken();
     await this.request
       .get("https://dev.rentzila.com.ua/api/backcall/", {
         headers: {
