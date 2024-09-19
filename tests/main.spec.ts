@@ -23,8 +23,8 @@ test.describe("Main page testing", () => {
 
       await mainPage.clickOnEachServices(locator);
 
-      await expect(mainPage.page).toHaveURL(endpoints.products);
       await productsPage.page.waitForLoadState("networkidle");
+      await expect(mainPage.page).toHaveURL(endpoints.products);
 
       await productsPage.clickExpendFilterContainer();
       const checkboxLabel = productsPage.getCheckboxByLabel(text);
