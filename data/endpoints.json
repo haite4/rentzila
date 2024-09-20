@@ -2,5 +2,6 @@
     "products": "https://dev.rentzila.com.ua/products/",
     "base": "https://dev.rentzila.com.ua/",
     "admin": "https://dev.rentzila.com.ua/admin",
-    "profile": "https://dev.rentzila.com.ua/owner-cabinet/"
+    "profile": "https://dev.rentzila.com.ua/owner-cabinet/",
+    "createUnit": "https://dev.rentzila.com.ua/create-unit/"
 }

@@ -144,7 +144,7 @@ export class SigninPage extends Page {
     return errorMsg;
   }
 
-  generateRandomPassword(length) {
+  generateRandomPassword(length: number) {
     const lowercaseCharset = "abcdefghijklmnopqrstuvwxyz";
     const uppercaseCharset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const digits = "0123456789";
@@ -185,11 +185,11 @@ export class SigninPage extends Page {
     await this.page.locator(logoutBtnOnTheProfile).click();
   }
 
-  async fillLoginEmailInput(email) {
+  async fillLoginEmailInput(email: string) {
     await this.page.locator(loginEmailInput).fill(email);
   }
 
-  async fillLoginPasswordInput(password) {
+  async fillLoginPasswordInput(password: string) {
     await this.page.locator(loginPasswordInput).fill(password);
   }
 

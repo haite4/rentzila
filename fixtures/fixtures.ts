@@ -6,6 +6,8 @@ import { SigninPage } from "../pages/signIn.page";
 import Page from "../pages/page";
 import { Helper } from "../helpers/api_helper";
 import { RandomValue } from "../helpers/random_value";
+import { CreateUnitPage } from "../pages/create-unit.page";
+import { SignInHelper } from "../helpers/signin_helper"
 
 type MyFixtures = {
   mainPage: MainPage;
@@ -14,7 +16,9 @@ type MyFixtures = {
   basePage: Page;
   apiHelper: Helper;
   randomValueHelper: RandomValue,
-  signinPage: SigninPage
+  signinPage: SigninPage,
+  createUnitPage: CreateUnitPage,
+  signInHelper: SignInHelper
 };
 
 export const test = base.extend<MyFixtures>({
@@ -39,5 +43,11 @@ export const test = base.extend<MyFixtures>({
   },
   signinPage: async({page}, use) => {
     await use(new SigninPage(page))
+  },
+  createUnitPage: async({page}, use) => {
+    await use(new CreateUnitPage(page))
+  },
+  signInHelper: async({page, signinPage}, use) => {
+    await use(new SignInHelper(page, signinPage))
   }
 });
