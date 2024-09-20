@@ -6,8 +6,8 @@
       "rootDir": "./",
       "strict": true,
       "esModuleInterop": true,
-      "resolveJsonModule": true,      // Разрешение JSON модулей
-      "moduleResolution": "node"      // Разрешение модулей в стиле Node.js
+      "resolveJsonModule": true,    
+      "moduleResolution": "node"      
     },
     "include": ["helpers/**/*.ts"],
     "exclude": ["node_modules"]
