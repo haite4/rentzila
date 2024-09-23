@@ -13,8 +13,7 @@
     "test:main": "playwright test tests/main.spec.ts --project=chromium --headed",
     "test:signin": "playwright test tests/signIn.spec.ts --project=chromium --trace on --headed",
     "test:createUnit": "playwright test tests/createUnit.spec.ts --project=chromium --trace on --headed"
-    }, 
-    
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -27,6 +26,7 @@
     "typescript": "^5.6.2"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
     "tsx": "^4.19.1"
   }
 }

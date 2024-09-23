@@ -48,7 +48,7 @@ export class SigninPage extends Page {
 
   validPhoneNumberOptions() {
     const validOptionsList: string[] = [];
-    const phoneNumber = valid_creds[0].phone_number;
+    const phoneNumber = valid_creds.phone_number;
     const phoneNumberWithoutPlus = phoneNumber.replace(/^\+/, "");
     const cleanedPhoneNumber = phoneNumberWithoutPlus.replace(/^38/, "");
     validOptionsList.push(phoneNumber);
@@ -60,7 +60,7 @@ export class SigninPage extends Page {
   invalidPhoneNumberOptions() {
     const invalidOptionsList: string[] = [];
     const countryCodes = ["+1", "+44", "+33", "+49", "+61", "+105"];
-    const phoneNumber = valid_creds[0].phone_number;
+    const phoneNumber = valid_creds.phone_number;
     const phoneNumberWithoutFirstDigits = phoneNumber.replace(/^\+38/, "");
     const phoneNumberWithoutPrefix = phoneNumber.replace(/^\+380/, "");
     const phoneNumberWithoutLastNumber = phoneNumberWithoutPrefix.slice(0, -1);
@@ -93,16 +93,16 @@ export class SigninPage extends Page {
 
   invalidEmailOptions() {
     const invalidEmailOptionsList: string[] = [];
-    const validEmail = valid_creds[0].email;
+    const validEmail = valid_creds.email;
     const firstThreeChars = validEmail.slice(0, 3);
     const remainingPart = validEmail.slice(3);
     const emailWithSpace = `${firstThreeChars} ${remainingPart}`;
     const cyrilicText = "еуіегіуккутеяшдф";
     const emailWithoutAt = validEmail.replace("@", "");
     const emailWithoutDot = validEmail.replace(".", "");
-    const emailWithoutCom = validEmail.replace(/\.net$/, "");
-    const emailWithoutGmail = validEmail.replace(/ukr/, "");
-    const emailWithoutDomain = validEmail.replace(/@ukr\.net$/, "");
+    const emailWithoutCom = validEmail.replace(/\.com$/, "");
+    const emailWithoutGmail = validEmail.replace(/gmail/, "");
+    const emailWithoutDomain = validEmail.replace(/@gmail\.com$/, "");
     const emailWithExtraAt = validEmail.replace(/@/, "@@");
     invalidEmailOptionsList.push(
       emailWithSpace,
@@ -119,7 +119,7 @@ export class SigninPage extends Page {
 
   invalidPasswordOptions() {
     const invalidPasswordList: string[] = [];
-    const validPassword = valid_creds[0].password;
+    const validPassword = valid_creds.password;
     const passwordWithSpaceAtTheEnd = `${validPassword} `;
     const passwordWithSpaceAtTheStart = ` ${validPassword}`;
     const passwordInLowerCase = validPassword.toLowerCase();

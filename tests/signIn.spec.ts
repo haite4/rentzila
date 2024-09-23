@@ -2,7 +2,6 @@ import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
 import valid_creds from "../data/valid_creds.json";
 import endpoints from "../data/endpoints.json";
-import admin_creds from "../data/admin_creds.json"
 
 test.describe("Auth page testing", () => {
   test.beforeEach(async ({ signinPage }) => {
@@ -26,7 +25,7 @@ test.describe("Auth page testing", () => {
       "border",
       "0.834783px solid rgb(247, 56, 89)"
     );
-    await signinPage.fillLoginEmailInput(valid_creds[0].email);
+    await signinPage.fillLoginEmailInput(valid_creds.email);
     await signinPage.clickLoginSubmitBtn();
     expect(signinPage.getEmailInput()).toHaveCSS(
       "border",
@@ -47,7 +46,7 @@ test.describe("Auth page testing", () => {
     expect(await signinPage.getEmailInpuErrorMsg()).toBe(
       "Поле не може бути порожнім"
     );
-    await signinPage.fillLoginPasswordInput(valid_creds[0].password);
+    await signinPage.fillLoginPasswordInput(valid_creds.password);
     await signinPage.clickLoginSubmitBtn();
     expect(signinPage.getPasswordInput()).toHaveCSS(
       "border",
@@ -58,14 +57,13 @@ test.describe("Auth page testing", () => {
   test("TC-201 Authorization with valid email and password", async ({
     signinPage,
   }) => {
-    for (let i = 0; i < valid_creds.length; i++) {
-      await signinPage.fillLoginEmailInput(valid_creds[i].email);
+      await signinPage.fillLoginEmailInput(valid_creds.email);
       await expect(signinPage.getEmailInput()).toHaveValue(
-        valid_creds[i].email
+        valid_creds.email
       );
-      await signinPage.fillLoginPasswordInput(valid_creds[i].password);
+      await signinPage.fillLoginPasswordInput(valid_creds.password);
       await expect(signinPage.getPasswordInput()).toHaveValue(
-        valid_creds[i].password
+        valid_creds.password
       );
       await signinPage.clickHiddenIcon();
       await expect(signinPage.getPasswordInput()).toHaveAttribute(
@@ -82,12 +80,12 @@ test.describe("Auth page testing", () => {
       await signinPage.clickAvatarBlock();
       await expect(signinPage.getDropDownMenuContainer()).toBeVisible();
       expect(await signinPage.getProfileDropdownEmailText()).toBe(
-        valid_creds[i].email
+        valid_creds.email
       );
       await signinPage.clickLogoutBtn();
       await signinPage.clickHeaderAuthBtn();
     }
-  });
+  );
 
   test("TC-202 Authorization with valid phone and password", async ({
     signinPage,
@@ -98,7 +96,7 @@ test.describe("Auth page testing", () => {
         "border",
         "0.834783px solid rgb(229, 229, 229)"
       );
-      await signinPage.fillLoginPasswordInput(admin_creds.password);
+      await signinPage.fillLoginPasswordInput(valid_creds.password);
       expect(signinPage.getPasswordInput()).toHaveCSS(
         "border",
         "0.834783px solid rgb(229, 229, 229)"
@@ -111,7 +109,7 @@ test.describe("Auth page testing", () => {
       await expect(signinPage.page).toHaveURL(endpoints.profile);
       await expect(signinPage.getMobileInput()).toBeVisible();
       expect(await signinPage.getMobileValue()).toBe(
-        admin_creds.phone_number
+        valid_creds.phone_number
       );
       await signinPage.clickLogoutBtnOnTheProfile();
       await signinPage.clickHeaderAuthBtn();
@@ -120,7 +118,7 @@ test.describe("Auth page testing", () => {
 
   test("TC-207 Authorization with invalid phone", async ({ signinPage }) => {
     for (const invalidPhoneNumber of signinPage.invalidPhoneNumberOptions()) {
-      await signinPage.fillLoginPasswordInput(admin_creds.password);
+      await signinPage.fillLoginPasswordInput(valid_creds.password);
       await signinPage.fillLoginEmailInput(invalidPhoneNumber);
       await signinPage.clickLoginSubmitBtn();
       expect(await signinPage.getEmailInpuErrorMsg()).toBe(
@@ -132,7 +130,7 @@ test.describe("Auth page testing", () => {
 
   test("TC-576 Authorization with invalid email", async ({ signinPage }) => {
     for (const InvalidEmail of signinPage.invalidEmailOptions()) {
-      await signinPage.fillLoginPasswordInput(admin_creds.password);
+      await signinPage.fillLoginPasswordInput(valid_creds.password);
       await signinPage.fillLoginEmailInput(InvalidEmail);
       await signinPage.clickLoginSubmitBtn();
       expect(await signinPage.getEmailInpuErrorMsg()).toBe(
@@ -146,7 +144,7 @@ test.describe("Auth page testing", () => {
     signinPage,
   }) => {
     for (const invalidPassword of signinPage.invalidPasswordOptions()) {
-      await signinPage.fillLoginEmailInput(admin_creds.email);
+      await signinPage.fillLoginEmailInput(valid_creds.email);
       await signinPage.fillLoginPasswordInput(invalidPassword);
       await signinPage.clickLoginSubmitBtn();
 
@@ -155,7 +153,7 @@ test.describe("Auth page testing", () => {
         );
       await signinPage.clearLoginInputs();
     }
-   await signinPage.fillLoginEmailInput(admin_creds.email);
+   await signinPage.fillLoginEmailInput(valid_creds.email);
    await signinPage.fillLoginPasswordInput(signinPage.generateRandomPassword(10))
    await signinPage.clickLoginSubmitBtn();
    expect(await signinPage.getLoginFormErrorText()).toBe("Невірний e-mail або пароль")

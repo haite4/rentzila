@@ -1,6 +1,6 @@
 import { APIRequestContext } from "@playwright/test";
-import admin_creds from "../data/admin_creds.json"
-import user_creds from "../data/user_creds.json"
+import valid_creds from "../data/valid_creds.json"
+require('dotenv').config()
 
 let adminAccessToken: any = null;
 let userAccessToken: any = null;
@@ -16,8 +16,8 @@ export class Helper {
       await this.request
         .post("https://dev.rentzila.com.ua/api/auth/jwt/create/", {
           data: {
-            email: admin_creds.email,
-            password: admin_creds.password,
+            email: process.env.ADMIN_EMAIL,
+            password: process.env.ADMIN_PASSWORD,
           },
         })
         .then(async (response) => {
@@ -32,8 +32,8 @@ export class Helper {
       await this.request
         .post("https://dev.rentzila.com.ua/api/auth/jwt/create/", {
           data: {
-            email: user_creds.email,
-            password: user_creds.password,
+            email: valid_creds.email,
+            password: valid_creds.password,
           },
         })
         .then(async (response) => {

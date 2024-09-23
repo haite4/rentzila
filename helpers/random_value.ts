@@ -1,4 +1,4 @@
-import { Faker, uk } from "@faker-js/faker";
+import {fakerEN_US ,Faker, uk } from "@faker-js/faker";
 
 export class RandomValue {
   public faker: Faker;
@@ -28,5 +28,13 @@ export class RandomValue {
 
   randomName(){
     return this.faker.person.firstName()
+  }
+
+  randomWord(){
+    return fakerEN_US.lorem.word({length: {min: 5, max: 9}})
+  }
+
+  generateStringWithLength(length: number){
+    return fakerEN_US.string.alphanumeric(length)
   }
 }
