@@ -1,32 +1,33 @@
 import { Locator} from "@playwright/test"; 
 import Page from "./page";
 
-const services = `[data-testid="services"]`;
 const equipment = `[data-testid="specialEquipment"]`;
-const populyarniServices = `[data-testid="services__populyarni"]`;
-const populyarniEquipment = `[data-testid="specialEquipment__populyarna"]`;
-const itemServices = ".RentzilaProposes_proposes_item__sY_h2";
+const populyarniServices = 'section[data-testid*="services"]';
+const populyarniEquipment = 'section[data-testid*="specialEquipment"]';
+const itemServices = '[class*="RentzilaProposes_proposes_item"]';
 const title = `[data-testid="title"]`;
-const servicesText = ".RentzilaProposes_name__DTnwr";
-const footer = ".Footer_footer__Dhw_9";
+const servicesText = '[class*="RentzilaProposes_name"]';
+const footer = '[class*="Footer_footer"]';
 const logo = `[data-testid="logo"]`;
-const aboutUsTitle = ".RentzilaAbout_title__vI_3A";
-const forBuyersTitle = ".RentzilaForBuyers_title__k3tHn";
-const contactsTitle = ".RentzilaContacts_title__SxcO7";
+const aboutUsTitle = '[class*="RentzilaAbout_title"]';
+const forBuyersTitle = '[class*="RentzilaForBuyers_title"]';
+const contactsTitle = '[class*="RentzilaContacts_title"]';
 const politikaConfidencialinosty = `[data-testid="politika-konfidenciinosti"]`;
 const pravilaVikoristanyaCookie = `[data-testid="pravila-vikoristannya-failiv-cookie"]`;
 const umoviDostupu = `[data-testid="umovi-dostupu-ta-koristuvannya"]`;
 const zapitiNaRoboru = `[data-testid="zapiti-na-robotu"]`;
 const copyright = `[data-testid="copyright"]`;
-const contactUsEmail = ".RentzilaContacts_email__jlzWc";
-const politikaConfidencialinostyTitle = "h1.PrivacyPolicy_title__FEiRV";
-const politikaVikoristanyaCookieTitle = "h1.Cookies_title__BVLFo";
+const contactUsEmail = '[class*="RentzilaContacts_email"]';
+const politikaConfidencialinostyTitle = 'h1[class*="PrivacyPolicy_title"]';
+const politikaVikoristanyaCookieTitle = 'h1[class*="Cookies_title"]';
 const tenderSearchInput = `[data-testid="search"]`;
-const heroSectionTitle = ".HeroSection_title__QIzpM";
+const heroSectionTitle = '[class*="HeroSection_title"]';
 const ogoloshennyaSearch = `[data-testid="searchInput"]`;
-const consultingInputName = ".ConsultationForm_name__3bVcz input";
-const consultingInputPhoneNumber = ".ConsultationForm_phone__vEOS9 input";
+const consultingInputName = '[class*="ConsultationForm_name"] input';
+const consultingInputPhoneNumber = '[class*="ConsultationForm_phone"] input';
 const specialEquipmentText = "specialEquipment";
+const cosultationFormTitleFooter = '[class*="ConsultationForm_title"]'
+const listOfEuipmentTab = '//*[contains(@class, "RentzilaProposes_service")]'
 
 export class MainPage extends Page {
   constructor(page: Page["page"]) {
@@ -34,250 +35,237 @@ export class MainPage extends Page {
   }
 
   getPopulyarniServicesTab(): Locator {
-    return this.page.locator(populyarniServices);
+    return super.getElement(populyarniServices);
   }
 
   getPopulyarniEuqipmentTab(): Locator {
-    return this.page.locator(populyarniEquipment);
+    return super.getElement(populyarniEquipment);
   }
 
   getListItemServices(): Promise<Locator[]> {
-    const servicesItem = this.page.locator(services);
-    return servicesItem.locator(itemServices).all();
+   return super.getElementAll(super.getElement(populyarniServices, itemServices))
   }
 
   getListEquipmentServices(): Promise<Locator[]> {
-    const equipmentItem = this.page.locator(equipment);
-    return equipmentItem.locator(itemServices).all();
+    return super.getElementAll(super.getElement(equipment, itemServices))
   }
 
   getServicesTitle(): Locator {
-    const servicesItem = this.page.locator(services);
-    return servicesItem.locator(title);
+    return super.getElement(populyarniServices, title)
   }
 
   getEquipmentTitle(): Locator {
-    const equipmentItem = this.page.locator(equipment);
-    return equipmentItem.locator(title);
+    return super.getElement(equipment, title)
   }
 
   getFooterContainer(): Locator {
-    return this.page.locator(footer);
+    return super.getElement(footer);
   }
 
   getLogoFooter(): Locator {
-    return this.page.locator(logo).nth(1);
+    return super.getElement(logo).nth(1);
   }
 
   getAboutUs(): Locator {
-    return this.page.locator(aboutUsTitle);
+    return super.getElement(aboutUsTitle);
   }
 
   getPolitikaConfidencialinosty(): Locator {
-    return this.page.locator(politikaConfidencialinosty);
+    return super.getElement(politikaConfidencialinosty);
   }
 
   getAnnouncement(): Locator {
-    return this.page.locator(forBuyersTitle);
+    return super.getElement(forBuyersTitle);
   }
 
   getContactsTitle(): Locator {
-    return this.page.locator(contactsTitle);
+    return super.getElement(contactsTitle);
   }
 
   getPravilaVikoristanyaCookie(): Locator {
-    return this.page.locator(pravilaVikoristanyaCookie);
+    return super.getElement(pravilaVikoristanyaCookie);
   }
 
   getUmoviDostupu(): Locator {
-    return this.page.locator(umoviDostupu);
+    return super.getElement(umoviDostupu);
   }
 
   getOgoloshennya(): Locator {
-    const ogoloshenya = this.page.getByRole('list').getByRole('link', { name: 'Оголошення' })
-    return ogoloshenya;
+   return super.getElementByRole("Оголошення")
   }
 
   getTender(): Locator {
-    return this.page.getByRole('list').getByRole('link', { name: 'Тендери' });
+    return super.getElementByRole("Тендери")
   }
 
   getZapitiNaRobotu(): Locator {
-    return this.page.locator(zapitiNaRoboru);
+    return super.getElement(zapitiNaRoboru);
   }
 
   getCopyright(): Locator {
-    return this.page.locator(copyright);
+    return super.getElement(copyright);
   }
 
   getContactUsEmail(): Locator {
-    return this.page.locator(contactUsEmail);
+    return super.getElement(contactUsEmail);
   }
 
   getPolitikaConfidencialinostyTitle(): Locator {
-    return this.page.locator(politikaConfidencialinostyTitle);
+    return super.getElement(politikaConfidencialinostyTitle);
   }
 
   getPolitikaVikoristanyaCookieTitle(): Locator {
-    return this.page.locator(politikaVikoristanyaCookieTitle);
+    return super.getElement(politikaVikoristanyaCookieTitle);
   }
 
   getumoviDostupuTitle(): Locator {
-    return this.page.locator(umoviDostupu);
+    return super.getElement(umoviDostupu);
   }
 
   getTenderSearchInput(): Locator {
-    return this.page.locator(tenderSearchInput);
+    return super.getElement(tenderSearchInput);
   }
 
   getOgoloshennyaSearch(): Locator {
-    return this.page.locator(ogoloshennyaSearch);
+    return super.getElement(ogoloshennyaSearch);
   }
 
   getHeroSectionTitle(): Locator {
-    return this.page.locator(heroSectionTitle);
+    return super.getElement(heroSectionTitle);
   }
 
   getNameFieldCannotBeEmptyError(): Locator {
-    return this.page.getByText("Поле не може бути порожнім").first();
+    return super.getElementByText("Поле не може бути порожнім").first();
   }
 
   getPhoneNumberFieldCannotBeEmptyError(): Locator {
-    return this.page.getByText("Поле не може бути порожнім").nth(1);
+    return super.getElementByText("Поле не може бути порожнім").nth(1);
   }
 
   getValidateFieldFailure(): Locator {
-    return this.page.getByText("Телефон не пройшов валідацію");
+    return super.getElementByText("Телефон не пройшов валідацію");
   }
 
   getConsultingInputName(): Locator {
-    return this.page.locator(consultingInputName);
+    return super.getElement(consultingInputName);
   }
 
   getConsultingInputPhoneNumber(): Locator {
-    return this.page.locator(consultingInputPhoneNumber);
+    return super.getElement(consultingInputPhoneNumber);
+  }
+
+  getLogoOnHeader(){
+    return super.getElement(logo)
   }
 
   getYouStillHaveQuestion(): Locator {
-    return this.page
-      .locator("section")
-      .filter({ hasText: "У Вас залишилися питання?Замовити консультацію" });
+    return super.getElement(cosultationFormTitleFooter)
   }
 
-  getEquimpmentServicesByIndex(index){
-    const equipmentItem = this.page.locator(equipment);
-    const item = equipmentItem.locator(itemServices).nth(index)
-    return item
-
+  getEquimpmentServicesByIndex(index: number){
+    return super.getElement(equipment, itemServices).nth(index)
   }
 
   async scrollToServices(): Promise<void> {
-    await this.page.locator(services).scrollIntoViewIfNeeded();
+    await super.scrollToElementIfNeeded(populyarniServices);
   }
 
   async getServicesText(locator: Locator): Promise<string | null> {
-    return await locator.locator(servicesText).textContent();
+    return super.getElementTextContent(super.getSubElement(locator, servicesText))
   }
 
   async scrollToSpecialEquipment(): Promise<void> {
-    await this.page.getByTestId(specialEquipmentText).scrollIntoViewIfNeeded();
+    await super.scrollToElementIfNeeded(super.getElementByTestId(specialEquipmentText))
   }
 
   async clickPolitikaConfidencialinostyLink(): Promise<void> {
-    await this.page.locator(politikaConfidencialinosty).click();
+    await super.clickLocator(super.getElement(politikaConfidencialinosty));
   }
 
   async clickPravilaVikoristanyaCookieLink(): Promise<void> {
-    await this.page.locator(pravilaVikoristanyaCookie).click();
+    await super.clickLocator(this.getPravilaVikoristanyaCookie());
   }
 
   async clickUmoviDostupuLink(): Promise<void> {
-    await this.page.locator(umoviDostupu).click();
+    await super.clickLocator(this.getUmoviDostupu())
   }
 
   async clickLogoOnHeaderLink(): Promise<void> {
-    await this.page.locator(logo).click();
+    await super.clickLocator(this.getLogoOnHeader())
   }
 
   async clickTenderiLink(): Promise<void> {
-    const tenderi = this.page.getByRole('list').getByRole('link', { name: 'Тендери' })
-    await tenderi.click();
+    await super.clickLocator(super.getElementByRole("Тендери"))
   }
 
   async clickOnTheEquipmentTab(locator: Locator): Promise<void> {
-    await locator.click();
+    await super.clickLocator(locator);
   }
 
   async clickOnPhoneNumberInput(): Promise<void> {
-    await this.page.locator(consultingInputPhoneNumber).click();
+    await super.clickLocator(this.getConsultingInputPhoneNumber());
   }
 
   async clickOgoloshennyaLink(): Promise<void> {
-    const ogoloshenya = this.page.getByRole('list').getByRole('link', { name: 'Оголошення' })
-    await ogoloshenya.click();
+    await super.clickLocator(super.getElementByRole("Оголошення"))
   }
 
   async getLocatorOfEquipmentTab(): Promise<Locator[]> {
-    const equipmentList: Locator[] = [];
-    const listOfTab = this.getListOfEquipmentTab()
-    for (const id of listOfTab) {
-      const res = this.page.getByTestId(id);
-      equipmentList.push(res);
-      
+
+    const equpmentTabElement = this.getListOfEquipmentTab()
+    const count = await equpmentTabElement.count()
+    const elementsArray: Locator[] = [];
+
+    for (let i = 0; i < count; i++) {
+        elementsArray.push(equpmentTabElement.nth(i));
     }
-    return  equipmentList
+
+    return elementsArray; 
    
   }
 
   getListOfEquipmentTab(){
-    const testId = [
-      "specialEquipment__populyarna",
-      "specialEquipment__silskogospodarska",
-      "specialEquipment__budivelna",
-      "specialEquipment__insha",
-    ];
-
-    return testId
+    return super.getElement(listOfEuipmentTab)
   }
 
-  async clickOnTheEquipmentTabs(index){
-    const tabId = this.getListOfEquipmentTab()[index]
-    await this.page.getByTestId(tabId).click()
+  async clickOnTheEquipmentTabs(index: number){
+    super.clickLocator(super.getElement(listOfEuipmentTab)[index])
   }
 
   async clickOnEachServices(locator: Locator): Promise<void> {
-    await locator.click();
+    await super.clickLocator(locator);
   }
 
   async clickOnTheEquipment(locator: Locator): Promise<void> {
-    await locator.click();
+    await super.clickLocator(locator)
   }
 
   async scrollDownToFooter(): Promise<void> {
-    await this.page.locator(footer).scrollIntoViewIfNeeded();
+    await super.scrollToElementIfNeeded(footer);
   }
 
   async clickOrderConsultationBtn(): Promise<void> {
-    const orderConsulting = this.page.getByRole("button", {
-      name: "Замовити консультацію",
-    });
-    await orderConsulting.click();
+    await super.clickLocator(super.getButtonByText("Замовити консультацію"));
   }
 
   async fillConsultingInputName(name: string): Promise<void> {
-    await this.page.locator(consultingInputName).fill(name);
+    await super.fillText(this.getConsultingInputName(), name);
   }
 
   async fillConsultingInputPhoneNumber(phoneNumber: string): Promise<void> {
-    await this.page.locator(consultingInputPhoneNumber).fill(phoneNumber);
+    await super.fillText(this.getConsultingInputPhoneNumber(), phoneNumber);
   }
 
   async clearConsultingInputName(): Promise<void> {
-    await this.page.locator(consultingInputName).clear();
+    await super.clearInputField(this.getConsultingInputName());
   }
 
   async clearConsultingInputPhoneNumber(): Promise<void> {
-    await this.page.locator(consultingInputPhoneNumber).clear();
+    await super.clearInputField(this.getConsultingInputPhoneNumber());
+  }
+
+  async clickLogoFooter(){
+    await super.clickLocator(this.getLogoFooter())
   }
 
 }

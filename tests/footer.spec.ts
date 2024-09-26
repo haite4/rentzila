@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
-import endpoints from "../data/endpoints.json";
+require('dotenv').config()
 
 test.describe("Footer functionality", () => {
   test("TC-214: Verify that all elements on the footer are displayed and all links are clickable", async ({
@@ -9,19 +9,19 @@ test.describe("Footer functionality", () => {
     await mainPage.open();
     await mainPage.scrollDownToFooter();
     await expect(mainPage.getFooterContainer()).toBeVisible();
-    expect(mainPage.getLogoFooter().isDisabled()).toBeTruthy();
-    expect(mainPage.getAboutUs()).toBeVisible();
-    expect(mainPage.getPolitikaConfidencialinosty()).toBeVisible();
-    expect(mainPage.getPravilaVikoristanyaCookie()).toBeVisible();
-    expect(mainPage.getUmoviDostupu()).toBeVisible();
-    expect(mainPage.getAnnouncement()).toBeVisible();
-    expect(mainPage.getOgoloshennya()).toBeVisible();
-    expect(mainPage.getTender()).toBeVisible();
-    expect(mainPage.getTender()).toBeVisible();
-    expect(mainPage.getContactsTitle()).toBeVisible();
-    expect(mainPage.getContactUsEmail()).toBeVisible();
-    expect(mainPage.getLogoFooter()).toBeVisible();
-    expect(mainPage.getCopyright()).toBeVisible();
+    await mainPage.clickLogoFooter()
+    await expect(mainPage.getAboutUs()).toBeVisible();
+    await expect(mainPage.getPolitikaConfidencialinosty()).toBeVisible();
+    await expect(mainPage.getPravilaVikoristanyaCookie()).toBeVisible();
+    await expect(mainPage.getUmoviDostupu()).toBeVisible();
+    await expect(mainPage.getAnnouncement()).toBeVisible();
+    await expect(mainPage.getOgoloshennya()).toBeVisible();
+    await expect(mainPage.getTender()).toBeVisible();
+    await expect(mainPage.getTender()).toBeVisible();
+    await expect(mainPage.getContactsTitle()).toBeVisible();
+    await expect(mainPage.getContactUsEmail()).toBeVisible();
+    await expect(mainPage.getLogoFooter()).toBeVisible();
+    await expect(mainPage.getCopyright()).toBeVisible();
     await mainPage.clickPolitikaConfidencialinostyLink();
     await expect(mainPage.page).toHaveURL(/.*privacy-policy.*/);
     await expect(mainPage.getPolitikaConfidencialinostyTitle()).toBeVisible();
@@ -50,6 +50,6 @@ test.describe("Footer functionality", () => {
       "Пошук тендера за ключовими словами"
     );
     await mainPage.clickLogoOnHeaderLink();
-    await expect(mainPage.page).toHaveURL(endpoints.base);
+    await expect(mainPage.page).toHaveURL(process.env.BASE_URL ?? "");
   });
 });

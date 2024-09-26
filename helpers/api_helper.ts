@@ -1,46 +1,74 @@
 import { APIRequestContext } from "@playwright/test";
-import admin_creds from "../data/admin_creds.json"
+import valid_creds from "../data/valid_creds.json"
 
-let adminAccessToken: any = null;
-let feedback: any;
+require('dotenv').config()
 
-export class Helper {
+interface Feedback {
+  id: number;
+  name: string;
+  phone: string;
+  created_date: string;   
+  closed_date: string | null;
+  is_closed: boolean;
+}
+
+export class ApiHelper {
+  private adminAccessToken: string | null = null;
+  private userAccessToken: string | null  = null;
+  private feedback: Feedback[] = [];
+
   constructor(private request: APIRequestContext) {
     this.request = request;
   }
 
-  async createJwtToken() {
-    if (adminAccessToken === null) {
-      await this.request
-        .post("https://dev.rentzila.com.ua/api/auth/jwt/create/", {
-          data: {
-            email: admin_creds.email,
-            password: admin_creds.password,
-          },
-        })
-        .then(async (response) => {
-          adminAccessToken = (await response.json()).access;
-        });
+  private async createAdminJwtToken() {
+    if (this.adminAccessToken) {
+      return this.adminAccessToken;
     }
-    return adminAccessToken;
+
+    const response = await this.request.post("https://dev.rentzila.com.ua/api/auth/jwt/create/", {
+      data: {
+        email: process.env.ADMIN_EMAIL,
+        password: process.env.ADMIN_PASSWORD,
+      },
+    });
+  
+    this.adminAccessToken = (await response.json()).access;
+  
+    return this.adminAccessToken;
   }
 
-  async getListOfFeedback() {
-    const accessToken = await this.createJwtToken();
-    await this.request
-      .get("https://dev.rentzila.com.ua/api/backcall/", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-      .then(async (response) => {
-        feedback = await response.json();
-      });
-
-    return feedback;
+ private async createUserJwtToken() {
+    if (this.userAccessToken) {
+      return this.userAccessToken;
+    }
+  
+    const response = await this.request.post(`${process.env.BASE_URL}/api/auth/jwt/create/`, {
+      data: {
+        email: valid_creds.email,
+        password: valid_creds.password,
+      },
+    });
+  
+    this.userAccessToken = (await response.json()).access;
+  
+    return this.userAccessToken;
   }
 
-  isPhoneNumbePresent(feedbackList: any[], phoneNumber: string): boolean {
+  async getListOfFeedback(phoneNumber: string) {
+    await this.createAdminJwtToken();
+    const response = await this.request.get(`${process.env.BASE_URL}/api/backcall/`, {
+      headers: {
+        Authorization: `Bearer ${this.adminAccessToken}`,
+      },
+    });
+  
+    this.feedback = await response.json();
+  
+    return this.isPhoneNumbePresent(this.feedback, phoneNumber);
+  }
+
+  isPhoneNumbePresent(feedbackList: Feedback[], phoneNumber: string): boolean {
     return feedbackList.some((feedback) => feedback.phone === phoneNumber);
   }
 }
