@@ -56,7 +56,10 @@ export class ApiHelper {
   }
 
   async getListOfFeedback(phoneNumber: string) {
-    await this.createAdminJwtToken();
+    if(!this.adminAccessToken){
+      await this.createAdminJwtToken();
+    }
+    
     const response = await this.request.get(`${process.env.BASE_URL}/api/backcall/`, {
       headers: {
         Authorization: `Bearer ${this.adminAccessToken}`,
