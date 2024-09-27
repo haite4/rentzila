@@ -55,22 +55,7 @@ export class ApiHelper {
     return this.userAccessToken;
   }
 
-  async createUserJwtToken() {
-    if (userAccessToken === null) {
-      await this.request
-        .post("https://dev.rentzila.com.ua/api/auth/jwt/create/", {
-          data: {
-            email: user_creds.email,
-            password: user_creds.password,
-          },
-        })
-        .then(async (response) => {
-          userAccessToken = (await response.json()).access;
-        });
-    }
-    return userAccessToken;
-  }
-
+  
   async getListOfFeedback(phoneNumber: string) {
     if(!this.adminAccessToken){
       await this.createAdminJwtToken();
