@@ -26,7 +26,7 @@ export class ApiHelper {
       return this.adminAccessToken;
     }
 
-    const response = await this.request.post("https://dev.rentzila.com.ua/api/auth/jwt/create/", {
+    const response = await this.request.post(`${process.env.BASE_URL}/api/auth/jwt/create/`, {
       data: {
         email: process.env.ADMIN_EMAIL,
         password: process.env.ADMIN_PASSWORD,
