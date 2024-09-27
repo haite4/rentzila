@@ -4,7 +4,7 @@ import { ProductsPage } from "../pages/products.page";
 import { ProductsDetailsPage } from "../pages/products-details.page";
 import { SigninPage } from "../pages/signIn.page";
 import Page from "../pages/page";
-import { Helper } from "../helpers/api_helper";
+import { ApiHelper } from "../helpers/api_helper";
 import { RandomValue } from "../helpers/random_value";
 
 type MyFixtures = {
@@ -12,9 +12,10 @@ type MyFixtures = {
   productsPage: ProductsPage;
   productsDetailsPage: ProductsDetailsPage;
   basePage: Page;
-  apiHelper: Helper;
+  apiHelper: ApiHelper;
   randomValueHelper: RandomValue,
   signinPage: SigninPage
+
 };
 
 export const test = base.extend<MyFixtures>({
@@ -32,7 +33,7 @@ export const test = base.extend<MyFixtures>({
   },
   apiHelper: async ({}, use) => {
     const apiRequestContext = await playwrightRequest.newContext();
-    await use(new Helper(apiRequestContext));
+    await use(new ApiHelper(apiRequestContext));
   },
   randomValueHelper: async({}, use) => {
     await use(new RandomValue())

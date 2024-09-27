@@ -1,10 +1,12 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
-import endpoints from "../data/endpoints.json";
+import { Endpoints } from "../helpers/enums_endpoints"
+
+require('dotenv').config()
 
 test.describe("Main page testing", () => {
   test.slow();
-  test("TC-212: Checking 'Послуги' section on the main page", async ({
+  test.only("TC-212: Checking 'Послуги' section on the main page", async ({
     mainPage,
     productsPage,
     productsDetailsPage,
@@ -23,25 +25,22 @@ test.describe("Main page testing", () => {
 
       await mainPage.clickOnEachServices(locator);
 
+      await expect(mainPage.page).toHaveURL(`${process.env.BASE_URL}${Endpoints.Products}`);
       await productsPage.page.waitForLoadState("networkidle");
-      await expect(mainPage.page).toHaveURL(endpoints.products);
 
       await productsPage.clickExpendFilterContainer();
-      const checkboxLabel = productsPage.getCheckboxByLabel(text);
+      const checkboxLabel = productsPage.getCheckboxByLabel(text ?? "");
       await mainPage.page.waitForTimeout(2000);
       await expect(checkboxLabel).toBeVisible();
       await expect(checkboxLabel).toBeChecked();
       await productsPage.clickUnitCardImage();
-      await expect(productsDetailsPage.getUnitCharacteristics()).toBeVisible();
-      await expect(productsDetailsPage.getUnitCharacteristics()).toHaveText(
+      await expect(productsDetailsPage.getUnitCharacteristicsTitle()).toBeVisible();
+      await expect(productsDetailsPage.getUnitCharacteristicsTitle()).toHaveText(
         "Послуги, які надає технічний засіб:"
       );
-      expect(await productsDetailsPage.getUnitCharacteristicText()).toContain(
-        text
-      );
-
+      await expect(productsDetailsPage.getUnitCharacteristicText(text ?? "")).toHaveCount(1);
       await basePage.clickOnTheLogo();
-      await expect(mainPage.page).toHaveURL(endpoints.base);
+      await expect(mainPage.page).toHaveURL(process.env.BASE_URL ?? "");
     }
   });
 
@@ -75,7 +74,7 @@ test.describe("Main page testing", () => {
         );
 
         await expect(mainPage.page).toHaveURL(
-          new RegExp(`.*${endpoints.products}.*`)
+          new RegExp(`.*${process.env.BASE_URL}${Endpoints.Products}.*`)
         );
 
         try {
@@ -86,7 +85,7 @@ test.describe("Main page testing", () => {
 
         await productsPage.page.waitForLoadState("networkidle");
         await basePage.clickOnTheLogo();
-        await expect(mainPage.page).toHaveURL(endpoints.base);
+        await expect(mainPage.page).toHaveURL(process.env.BASE_URL ?? "");
       }
     }
   });
