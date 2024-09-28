@@ -44,7 +44,7 @@ test.describe("Consulting form functionality", () => {
       "+380"
     );
     await mainPage.fillConsultingInputPhoneNumber(
-      process.env.PHONE_NUMBER ?? ""
+      process.env.VALID_PHONE_NUMBER ?? ""
     );
     await mainPage.clearConsultingInputName();
     await mainPage.clickOrderConsultationBtn();
@@ -77,7 +77,7 @@ test.describe("Consulting form functionality", () => {
     await mainPage.clearConsultingInputPhoneNumber();
 
     await mainPage.fillConsultingInputPhoneNumber(
-      process.env.PHONE_NUMBER ?? ""
+      process.env.VALID_PHONE_NUMBER ?? ""
     );
 
     const [dialog] = await Promise.all([
@@ -87,7 +87,7 @@ test.describe("Consulting form functionality", () => {
     expect(dialog.message()).toBe("Ви успішно відправили заявку");
     await dialog.accept();
     expect(
-      await apiHelper.getListOfFeedback(process.env.PHONE_NUMBER ?? "")
+      await apiHelper.getListOfFeedback(process.env.VALID_PHONE_NUMBER ?? "")
     ).toBe(true);
   });
 });
