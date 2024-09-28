@@ -166,6 +166,10 @@ export class MainPage extends Page {
     return super.getElement(equipment, itemServices).nth(index)
   }
 
+  getListOfEquipmentTab(){
+    return super.getElement(listOfEuipmentTab)
+  }
+
   async scrollToServices(): Promise<void> {
     await super.scrollToElementIfNeeded(populyarniServices);
   }
@@ -222,10 +226,6 @@ export class MainPage extends Page {
 
     return elementsArray; 
    
-  }
-
-  getListOfEquipmentTab(){
-    return super.getElement(listOfEuipmentTab)
   }
 
   async clickOnTheEquipmentTabs(index: number){
