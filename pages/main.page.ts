@@ -229,7 +229,7 @@ export class MainPage extends Page {
   }
 
   async clickOnTheEquipmentTabs(index: number){
-    super.clickLocator(super.getElement(listOfEuipmentTab)[index])
+   await super.clickLocator(super.getElement(listOfEuipmentTab)[index])
   }
 
   async clickOnEachServices(locator: Locator): Promise<void> {
