@@ -1,7 +1,10 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
 import valid_creds from "../data/valid_creds.json";
-import endpoints from "../data/endpoints.json";
+import { Endpoints } from "../helpers/enums_endpoints"
+import { AlertMsgColors } from "../helpers/enums_colors"
+
+require('dotenv').config()
 
 test.describe("Auth page testing", () => {
   test.beforeEach(async ({ signinPage }) => {
@@ -11,46 +14,46 @@ test.describe("Auth page testing", () => {
   test("TC-200 Authorization with empty fields", async ({ signinPage }) => {
     await signinPage.clickLoginSubmitBtn();
     await expect(signinPage.getLoginPopUp()).toBeVisible();
-    expect(await signinPage.getEmailInpuErrorMsg()).toBe(
+    await expect(signinPage.getEmailInpuErrorMsg()).toHaveText(
       "Поле не може бути порожнім"
     );
-    expect(await signinPage.getPasswordInputErrorMsg()).toBe(
+    await expect(signinPage.getPasswordInputErrorMsgLocator()).toHaveText(
       "Поле не може бути порожнім"
     );
-    expect(signinPage.getEmailInput()).toHaveCSS(
+    await expect(signinPage.getEmailInput()).toHaveCSS(
       "border",
-      "0.834783px solid rgb(247, 56, 89)"
+      AlertMsgColors.BorderRed
     );
-    expect(signinPage.getPasswordInput()).toHaveCSS(
+    await expect(signinPage.getPasswordInput()).toHaveCSS(
       "border",
-      "0.834783px solid rgb(247, 56, 89)"
+      AlertMsgColors.BorderRed
     );
     await signinPage.fillLoginEmailInput(valid_creds.email);
     await signinPage.clickLoginSubmitBtn();
-    expect(signinPage.getEmailInput()).toHaveCSS(
+    await expect(signinPage.getEmailInput()).toHaveCSS(
       "border",
-      "0.834783px solid rgb(229, 229, 229)"
+      AlertMsgColors.BorderGray
     );
-    expect(await signinPage.getPasswordInputErrorMsg()).toBe(
+    await expect(signinPage.getPasswordInputErrorMsgLocator()).toHaveText(
       "Поле не може бути порожнім"
     );
-    expect(signinPage.getPasswordInput()).toHaveCSS(
+    await expect(signinPage.getPasswordInput()).toHaveCSS(
       "border",
-      "0.834783px solid rgb(247, 56, 89)"
+      AlertMsgColors.BorderRed
     );
     await signinPage.clearEmailInput();
-    expect(signinPage.getEmailInput()).toHaveCSS(
+    await expect(signinPage.getEmailInput()).toHaveCSS(
       "border",
-      "0.834783px solid rgb(247, 56, 89)"
+      AlertMsgColors.BorderRed
     );
-    expect(await signinPage.getEmailInpuErrorMsg()).toBe(
+    await expect(signinPage.getEmailInpuErrorMsg()).toHaveText(
       "Поле не може бути порожнім"
     );
     await signinPage.fillLoginPasswordInput(valid_creds.password);
     await signinPage.clickLoginSubmitBtn();
-    expect(signinPage.getPasswordInput()).toHaveCSS(
+    await expect(signinPage.getPasswordInput()).toHaveCSS(
       "border",
-      "0.834783px solid rgb(229, 229, 229)"
+      AlertMsgColors.BorderGray
     );
   });
 
@@ -76,7 +79,7 @@ test.describe("Auth page testing", () => {
         "password"
       );
       await signinPage.randomSubmitAction();
-      await expect(signinPage.page).toHaveURL(endpoints.base);
+      await expect(signinPage.page).toHaveURL(process.env.BASE_URL ?? "");
       await signinPage.clickAvatarBlock();
       await expect(signinPage.getDropDownMenuContainer()).toBeVisible();
       expect(await signinPage.getProfileDropdownEmailText()).toBe(
@@ -84,56 +87,56 @@ test.describe("Auth page testing", () => {
       );
       await signinPage.clickLogoutBtn();
       await signinPage.clickHeaderAuthBtn();
-    }
-  );
+  });
 
   test("TC-202 Authorization with valid phone and password", async ({
     signinPage,
+    randomValueHelper
   }) => {
-    for (const phoneNumber of signinPage.validPhoneNumberOptions()) {
+    for (const phoneNumber of randomValueHelper.validPhoneNumberOptions()) {
       await signinPage.fillLoginEmailInput(phoneNumber);
-      expect(signinPage.getEmailInput()).toHaveCSS(
+      await expect(signinPage.getEmailInput()).toHaveCSS(
         "border",
-        "0.834783px solid rgb(229, 229, 229)"
+        AlertMsgColors.BorderGray
       );
-      await signinPage.fillLoginPasswordInput(valid_creds.password);
-      expect(signinPage.getPasswordInput()).toHaveCSS(
+      await signinPage.fillLoginPasswordInput(process.env.ADMIN_PASSWORD ?? "");
+      await expect(signinPage.getPasswordInput()).toHaveCSS(
         "border",
-        "0.834783px solid rgb(229, 229, 229)"
+        AlertMsgColors.BorderGray
       );
       await signinPage.clickLoginSubmitBtn();
-      await expect(signinPage.page).toHaveURL(endpoints.base);
+      await expect(signinPage.page).toHaveURL(process.env.BASE_URL ?? "");
       await signinPage.clickAvatarBlock();
       await expect(signinPage.getDropDownMenuContainer()).toBeVisible();
       await signinPage.clickProfileBtn();
-      await expect(signinPage.page).toHaveURL(endpoints.profile);
+      await expect(signinPage.page).toHaveURL(`${process.env.BASE_URL}${Endpoints.Profile}`);
       await expect(signinPage.getMobileInput()).toBeVisible();
       expect(await signinPage.getMobileValue()).toBe(
-        valid_creds.phone_number
+        process.env.ADMIN_PHONE_NUMBER
       );
       await signinPage.clickLogoutBtnOnTheProfile();
       await signinPage.clickHeaderAuthBtn();
     }
   });
 
-  test("TC-207 Authorization with invalid phone", async ({ signinPage }) => {
-    for (const invalidPhoneNumber of signinPage.invalidPhoneNumberOptions()) {
-      await signinPage.fillLoginPasswordInput(valid_creds.password);
+  test("TC-207 Authorization with invalid phone", async ({ signinPage, randomValueHelper}) => {
+    for (const invalidPhoneNumber of randomValueHelper.invalidPhoneNumberOptions()) {
+      await signinPage.fillLoginPasswordInput(process.env.ADMIN_PASSWORD ?? "");
       await signinPage.fillLoginEmailInput(invalidPhoneNumber);
       await signinPage.clickLoginSubmitBtn();
-      expect(await signinPage.getEmailInpuErrorMsg()).toBe(
+      await expect(signinPage.getEmailInpuErrorMsg()).toHaveText(
         "Неправильний формат email або номера телефону"
       );
       await signinPage.clearLoginInputs();
     }
   });
 
-  test("TC-576 Authorization with invalid email", async ({ signinPage }) => {
-    for (const InvalidEmail of signinPage.invalidEmailOptions()) {
-      await signinPage.fillLoginPasswordInput(valid_creds.password);
+  test("TC-576 Authorization with invalid email", async ({ signinPage, randomValueHelper }) => {
+    for (const InvalidEmail of randomValueHelper.invalidEmailOptions()) {
+      await signinPage.fillLoginPasswordInput(process.env.ADMIN_PASSWORD ?? "");
       await signinPage.fillLoginEmailInput(InvalidEmail);
       await signinPage.clickLoginSubmitBtn();
-      expect(await signinPage.getEmailInpuErrorMsg()).toBe(
+      await expect(signinPage.getEmailInpuErrorMsg()).toHaveText(
         "Неправильний формат email або номера телефону"
       );
       await signinPage.clearLoginInputs();
@@ -142,20 +145,22 @@ test.describe("Auth page testing", () => {
 
   test("TC-577 Authorization with invalid password", async ({
     signinPage,
+    randomValueHelper
   }) => {
-    for (const invalidPassword of signinPage.invalidPasswordOptions()) {
-      await signinPage.fillLoginEmailInput(valid_creds.email);
+    for (const invalidPassword of randomValueHelper.invalidPasswordOptions()) {
+      await signinPage.fillLoginEmailInput(process.env.ADMIN_EMAIL ?? "");
       await signinPage.fillLoginPasswordInput(invalidPassword);
       await signinPage.clickLoginSubmitBtn();
 
       expect(signinPage.getListOfErrorMsg()).toContain(
-          await signinPage.getPasswordInputErrorMsg()
+          await signinPage.getPasswordInputErrorMsgText()
         );
       await signinPage.clearLoginInputs();
     }
-   await signinPage.fillLoginEmailInput(valid_creds.email);
-   await signinPage.fillLoginPasswordInput(signinPage.generateRandomPassword(10))
+   await signinPage.fillLoginEmailInput(process.env.ADMIN_EMAIL ?? "");
+   await signinPage.fillLoginPasswordInput(randomValueHelper.generateRandomPassword(10))
    await signinPage.clickLoginSubmitBtn();
-   expect(await signinPage.getLoginFormErrorText()).toBe("Невірний e-mail або пароль")
+   await expect(signinPage.getLoginFormErrorText()).toHaveText("Невірний e-mail або пароль")
   });
+
 });

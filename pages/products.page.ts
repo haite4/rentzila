@@ -1,10 +1,10 @@
 import { Locator } from "@playwright/test";
 import Page from "./page";
 
-const selectedFilter = ".ResetFilters_selectedCategory___D1E6";
-const unitCardImage = ".UnitCard_imageBlock__hJgt4";
-const productsQuantity = ".MapPagination_count__c_dzg";
-const expandedClassSelector = ".ServiceCategory_clicked__Jm6x8";
+const selectedFilter = '[class*="ResetFilters_selectedCategory"]';
+const unitCardImage = '[class*=UnitCard_imageBlock]';
+const productsQuantity = '[class*=MapPagination_count]';
+const expandedClassSelector = '[class*=ServiceCategory_clicked]';
 const rightArrowSelector = '[data-testid="rightArrow"]';
 
 export class ProductsPage extends Page {
@@ -12,36 +12,36 @@ export class ProductsPage extends Page {
     super(page);
   }
 
-  getCheckboxByLabel(text): Locator{
-    return this.page.getByLabel(`${text}`);
+  getCheckboxByLabel(text: string): Locator{
+    return super.getElementByLabel(text)
   }
 
   getProductsFilter(){
-    return this.page.locator(selectedFilter)
+    return super.getElement(selectedFilter)
   }
 
-  async getCheckedLabelByText(text): Promise<string | null>{
-    return await this.page.getByText(text).nth(1).textContent();
+  async getCheckedLabelByText(text: string): Promise<string | null>{
+      return super.getElementTextContent(super.getElementByText(text).nth(1))
   }
 
   async clickExpendFilterContainer(): Promise<void> {
 
     const isExpanded =
-      (await this.page.locator(expandedClassSelector).count()) > 0;
+      (await super.getElement(expandedClassSelector).isVisible());
 
     if (!isExpanded) {
-      const rightArrowElements = this.page.locator(rightArrowSelector);
+      const rightArrowElements = super.getElement(rightArrowSelector);
 
       for (let i = 0; i < (await rightArrowElements.count()); i++) {
         const element = rightArrowElements.nth(i);
         await element.waitFor({ state: "visible", timeout: 5000 });
         await element.click();
 
-        await this.page
-          .locator(expandedClassSelector)
+        await 
+          super.getElement(expandedClassSelector)
           .waitFor({ state: "attached", timeout: 5000 });
 
-        if ((await this.page.locator(expandedClassSelector).count()) > 0) {
+        if ((await super.getElement(expandedClassSelector).isVisible())) {
           break;
         }
       }
@@ -51,30 +51,18 @@ export class ProductsPage extends Page {
   }
 
   async getSelectedFilterText():Promise<string | null>{
-    return await this.page.locator(selectedFilter).textContent();
+   return super.getElementTextContent(super.getElement(selectedFilter))
   }
 
   async clickUnitCardImage(): Promise<void>{
-    await this.page.locator(unitCardImage).first().click();
-  }
-
-  async getProductQuantity(text):Promise<string>{
-    if (typeof text !== "string") {
-      console.error("Invalid text value:", text);
-      return "";
-    }
-
-    const match = text.match(/\d+/);
-
-    if (match) {
-      return match[0];
-    } else {
-      return "";
-    }
+    await super.clickLocator(super.getElement(unitCardImage).first())
   }
 
   async getMyPaginationCountText(): Promise<string | null>{
-    return await this.page.locator(productsQuantity).nth(1).textContent();
+    return super.getElementTextContent(super.getElement(productsQuantity).nth(1))
   }
 
+  async getProductFilterText(){
+    return super.getElementTextContent(super.getElement(selectedFilter))
+  }
 }
