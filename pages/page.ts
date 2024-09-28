@@ -63,8 +63,8 @@ export default class Page {
     return this.page.getByRole('list').getByRole('link', { name: text })
   }
 
-  protected getButtonByText(text: string) {
-    return this.page.getByRole("button", { name: text });
+  protected getButtonByText(text: string, exact: boolean = false) {
+    return this.page.getByRole("button", { name: text, exact });
   }
 
   protected getHeadingByText(text: string) {
@@ -81,6 +81,10 @@ export default class Page {
 
   protected getElementByLabel(text: string){
     return this.page.getByLabel(text)
+  }
+
+  protected async getElementInputValue(locator: Locator){
+    return locator.inputValue()
   }
 
 }

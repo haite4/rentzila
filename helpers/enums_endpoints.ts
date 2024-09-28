@@ -1,3 +1,4 @@
 export enum Endpoints {
-    Products = "/products/"
+    Products = "/products/",
+    Profile = "/owner-cabinet/"
 }
