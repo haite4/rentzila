@@ -1,4 +1,5 @@
 export enum Endpoints {
     Products = "/products/",
-    Profile = "/owner-cabinet/"
+    Profile = "/owner-cabinet/",
+    CreateUnit = "/create-unit/"
 }

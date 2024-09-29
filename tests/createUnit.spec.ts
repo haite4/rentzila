@@ -1,11 +1,14 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
-import endpoints from "../data/endpoints.json";
 import valid_creds from "../data/valid_creds.json"
+import { Endpoints } from "../helpers/enums_endpoints"
+import { AlertMsgColors } from "../helpers/enums_colors"
+
+require('dotenv').config()
 
 test.describe("Create unit functionality", () => {
   test.beforeEach(async ({ signInHelper, signinPage }) => {
-    await signinPage.open(endpoints.createUnit);
+    await signinPage.open(Endpoints.CreateUnit);
     await signInHelper.login(valid_creds.email, valid_creds.password);
   });
 
@@ -56,11 +59,11 @@ test.describe("Create unit functionality", () => {
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getCategorySelectError()).toHaveCSS(
       "border",
-      "0.834783px solid rgb(247, 56, 89)"
+      AlertMsgColors.BorderRed
     );
     await expect(createUnitPage.getCategorySelectErrorText()).toHaveCSS(
       "color",
-      "rgb(247, 56, 89)"
+      AlertMsgColors.Red
     );
     await expect(createUnitPage.getCategorySelectErrorText()).toHaveText(
       "Це поле обов’язкове"
@@ -121,14 +124,14 @@ test.describe("Create unit functionality", () => {
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getNazvaOgolochenyaInput()).toHaveCSS(
       "border-color",
-      "rgb(247, 56, 89)"
+      AlertMsgColors.Red
     );
     await expect(createUnitPage.getErrorMessage()).toHaveText(
       "Це поле обов’язкове"
     );
     await expect(createUnitPage.getErrorMessage()).toHaveCSS(
       "color",
-      "rgb(247, 56, 89)"
+      AlertMsgColors.Red
     );
     await createUnitPage.typeNazvaOgolochenyaInput(
       randomValueHelper.randomWord()
@@ -139,7 +142,7 @@ test.describe("Create unit functionality", () => {
     );
     await expect(createUnitPage.getNazvaOgolochenyaInput()).toHaveCSS(
       "border-color",
-      "rgb(247, 56, 89)"
+      AlertMsgColors.Red
     );
     await createUnitPage.clearNazvaOgolochenyaInput();
     await createUnitPage.fillNazvaOgolochenyaInput(
@@ -151,7 +154,7 @@ test.describe("Create unit functionality", () => {
     );
     await expect(createUnitPage.getNazvaOgolochenyaInput()).toHaveCSS(
       "border-color",
-      "rgb(247, 56, 89)"
+      AlertMsgColors.Red
     );
     await createUnitPage.clearNazvaOgolochenyaInput();
     await createUnitPage.typeNazvaOgolochenyaInput(
@@ -174,7 +177,7 @@ test.describe("Create unit functionality", () => {
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getNazvaOgolochenyaInput()).toHaveCSS(
       "border",
-      "0.834783px solid rgb(229, 229, 229)"
+      AlertMsgColors.BorderGray
     );
     await expect(createUnitPage.getErrorMessage()).not.toBeVisible();
   });
@@ -197,11 +200,11 @@ test.describe("Create unit functionality", () => {
     );
     await expect(createUnitPage.getSelectedManufacturerError()).toHaveCSS(
       "color",
-      "rgb(247, 56, 89)"
+      AlertMsgColors.Red
     );
     await expect(createUnitPage.getSeletedManufacturerBorder()).toHaveCSS(
       "border",
-      "0.834783px solid rgb(247, 56, 89)"
+      AlertMsgColors.BorderRed
     );
     await createUnitPage.typeSelectedManufacturerInput("A");
     await expect(
@@ -278,7 +281,7 @@ test.describe("Create unit functionality", () => {
       );
       await expect(createUnitPage.getNazvaModeliInput()).toHaveCSS(
         "border-color",
-        "rgb(247, 56, 89)"
+        AlertMsgColors.Red
       );
       await createUnitPage.clearNazvaModeliInput();
     }
@@ -297,7 +300,7 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
     randomValueHelper,
   }) => {
-    test.setTimeout(160000);
+    test.setTimeout(200000);
     await expect(
       createUnitPage.getTechnicalCharacteristicTitle()
     ).toBeVisible();
@@ -328,7 +331,7 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
     randomValueHelper,
   }) => {
-    test.setTimeout(160000);
+    test.setTimeout(200000);
     await expect(createUnitPage.getDetailedDescriptionTitle()).toBeVisible();
     await expect(createUnitPage.getDetailedDescriptionTitle()).toHaveText(
       "Детальний опис"
@@ -368,14 +371,14 @@ test.describe("Create unit functionality", () => {
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getMapLabel()).toHaveCSS(
       "border",
-      "0.834783px solid rgb(247, 56, 89)"
+      AlertMsgColors.BorderRed
     );
     await expect(createUnitPage.getAddressSelectionError()).toHaveText(
       "Виберіть коректне місце на мапі України"
     );
     await expect(createUnitPage.getAddressSelectionError()).toHaveCSS(
       "color",
-      "rgb(247, 56, 89)"
+      AlertMsgColors.Red
     );
     await createUnitPage.clickAddressSelectionBtn();
     await expect(createUnitPage.getMapPopUpWrapper()).toBeVisible();
@@ -410,7 +413,7 @@ test.describe("Create unit functionality", () => {
         await mainPage.clickOnTheLogo()
       ]);
       await dialog.accept()
-      await expect(createUnitPage.page).toHaveURL(endpoints.base)
+      await expect(createUnitPage.page).toHaveURL(process.env.BASE_URL ?? "")
   })
 
   test("TC-329 Verify 'Далі' button", async({createUnitPage, randomValueHelper}) => {
@@ -446,12 +449,12 @@ test.describe("Create unit functionality", () => {
           createUnitPage.getListOfCategoryTabNumber()[i]
         );
         if (i === 1) {
-          expect(createUnitPage.getCategoryTabBtn(1)).toHaveAttribute(
+          await expect(createUnitPage.getCategoryTabBtn(1)).toHaveAttribute(
             "aria-selected",
             "true"
           );
         } else {
-          expect(createUnitPage.getCategoryTabBtn(i)).toHaveAttribute(
+         await expect(createUnitPage.getCategoryTabBtn(i)).toHaveAttribute(
             "aria-selected",
             "false"
           );

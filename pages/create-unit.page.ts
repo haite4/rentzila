@@ -1,42 +1,42 @@
 import Page from "./page";
 
-const categorySelectTitle = ".CategorySelect_title__W8Hgo"
+const categorySelectTitle = '[class*="CategorySelect_title"]'
 const categorySelectContent = `[data-testid="categoryName"]`
-const categorySelectBtn = ".CategorySelect_button__UbbJB"
+const categorySelectBtn = '[class*="CategorySelect_button"]'
 const nextBtn = `[data-testid="nextButton"]`
-const categorySelectError = ".CategorySelect_error__oGAYs"
-const categorySelectErrorText = ".CategorySelect_errorTextVisible__1Oyzh"
+const categorySelectError = '[class*="CategorySelect_error"]'
+const categorySelectErrorText = '[class*="CategorySelect_errorTextVisible"]'
 const categoryPopUp = `[data-testid="categoryPopup"]`
-const categoryPopUpTitle = ".CategoryPopup_title__19YOz"
+const categoryPopUpTitle = '[class*="CategoryPopup_title"]'
 const categoryPopUpCloseBtn = `[data-testid="closeIcon"]`
-const firstCategoryLocator = ".FirstCategoryList_content__sQClK"
-const secondCategoryLocator = ".SecondCategory_radio_flex__3DZ9R"
-const thirdCategoryLocator = ".ThirdCategory_wrapper__gQ5DT"
-const categoryBodyTitle = ".CreateEditFlowLayout_title__0A3ik"
-const categoryTabTitle = ".CustomLabel_labelTitle__O2bFl"
+const firstCategoryLocator = '[class*="FirstCategoryList_content"]'
+const secondCategoryLocator = '[class*="SecondCategory_radio_flex"]'
+const thirdCategoryLocator = '[class*="ThirdCategory_wrapper"]'
+const categoryBodyTitle = '[class*="CreateEditFlowLayout_title"]'
+const categoryTabTitle = '[class*="CustomLabel_labelTitle"]'
 const categoryTabLabelNumber = `[data-testid="labelNumber"]`
 const categoryTabBtn = ".MuiButtonBase-root"
-const customInputTitle = ".CustomInput_title__fdY4X"
+const customInputTitle = '[class*="CustomInput_title"]'
 const customInput = `[data-testid="custom-input"]`
-const errorMessage = ".CustomInput_errorDescr__yM7eC"
-const selectManufacturerTitle = ".SelectManufacturer_title__X9AEw"
+const errorMessage = '[class*="CustomInput_errorDescr"]'
+const selectManufacturerTitle = '[class*="SelectManufacturer_title"]'
 const selectedManufacturerInput = `[data-testid="input-customSelectWithSearch"]`
-const selectedManufacturerError = ".CustomSelectWithSearch_errorTextVisible__B5lZH"
-const seletedManufacturerBorder = ".CustomSelectWithSearch_searchResult__qY1GJ"
-const selectedManufacturerDropdownWrapper = ".CustomSelectWithSearch_searchedServicesCat_wrapper__aOGc3"
+const selectedManufacturerError = '[class*="CustomSelectWithSearch_errorTextVisible"]'
+const seletedManufacturerBorder = '[class*="CustomSelectWithSearch_searchResult"]'
+const selectedManufacturerDropdownWrapper = '[class*="CustomSelectWithSearch_searchedServicesCat_wrapper"]'
 const selectedManufacturerOptions = `[data-testid="item-customSelectWithSearch"]`
-const selectedManufacuredNotFoundResult = ".CustomSelectWithSearch_searchedServicesCat_wrapper__aOGc3"
+const selectedManufacuredNotFoundResult = '[class*="CustomSelectWithSearch_searchedServicesCat_wrapper"]'
 const selectedOptions = `[data-testid="div-service-customSelectWithSearch"]`
 const closeOptionsBtn = `[data-testid="closeButton"]`
-const customTextAreaTitle = ".CustomTextAriaDescription_title__eB7WB"
+const customTextAreaTitle = '[class*="CustomTextAriaDescription_title"]'
 const customTextArea = `[data-testid="textarea-customTextAriaDescription"]`
-const addressSelectionTitle = ".AddressSelectionBlock_title__pTi78"
+const addressSelectionTitle = '[class*="AddressSelectionBlock_title"]'
 const mapLabel = `[data-testid="mapLabel"]`
-const addressSelectionError = ".AddressSelectionBlock_errorTextVisible__IAGKS"
-const addressSelectionBtn = ".AddressSelectionBlock_locationBtn__IvqEL"
+const addressSelectionError = '[class*="AddressSelectionBlock_errorTextVisible"]'
+const addressSelectionBtn = '[class*="AddressSelectionBlock_locationBtn"]'
 const mapPopUpWrapper = `[data-testid="mapPopup"]`
-const mapPopUpTitle = ".MapPopup_title__ykbd3"
-const mapPopUpClostBtn = ".MapPopup_icon__aJopq"
+const mapPopUpTitle = '[class*="MapPopup_title"]'
+const mapPopUpClostBtn = '[class*="MapPopup_icon"]'
 const mapPopUpAddress = `[data-testid="address"]`
 const mapPopUp =  "#map"
 const preventBtn = `[data-testid="prevButton"]`
@@ -47,151 +47,151 @@ export class CreateUnitPage extends Page {
     }
 
     getCategorySelectTitle(){
-        return this.page.locator(categorySelectTitle)
+        return super.getElement(categorySelectTitle)
     }
 
     getCategorySelectContent(){
-        return this.page.locator(categorySelectContent)
+        return super.getElement(categorySelectContent)
     }
 
     getArrowDown(){
-        return this.page.getByRole('img', { name: 'Arrow-down' })
+        return super.getElementByImg('Arrow-down')
     }
 
     getCategorySelectBtn(){
-        return this.page.locator(categorySelectBtn)
+        return super.getElement(categorySelectBtn)
     }
 
     getCategorySelectError(){
-        return this.page.locator(categorySelectError)
+        return super.getElement(categorySelectError).first()
     }
 
     getCategorySelectErrorText(){
-        return this.page.locator(categorySelectErrorText)
+        return super.getElement(categorySelectErrorText)
     }
 
     getCategoryPopUp(){
-        return  this.page.locator(categoryPopUp)
+        return  super.getElement(categoryPopUp)
     }
 
     getCategoryPopUpTitle(){
-        return this.page.locator(categoryPopUpTitle)
+        return super.getElement(categoryPopUpTitle)
     }
 
     getCategoryBodyTitle(){
-        return this.page.locator(categoryBodyTitle)
+        return super.getElement(categoryBodyTitle)
     }
 
     getNazvaOgolochenyaTitie(){
-        return this.page.locator(customInputTitle).first()
+        return super.getElement(customInputTitle).first()
     }
 
     getNazvaOgolochenyaInput(){
-        return this.page.locator(customInput).first()
+        return super.getElement(customInput).first()
     }
 
     getNazvaModeliTitle(){
-        return this.page.locator(customInputTitle).nth(1)
+        return super.getElement(customInputTitle).nth(1)
     }
 
     getNazvaModeliInput(){
-        return this.page.locator(customInput).nth(1)
+        return super.getElement(customInput).nth(1)
     }
 
     getErrorMessage(){
-        return this.page.locator(errorMessage)
+        return super.getElement(errorMessage)
     }
 
     getSelectManufacturerTitle(){
-        return this.page.locator(selectManufacturerTitle)
+        return super.getElement(selectManufacturerTitle)
     }
 
     getSelectedManufacturerInput(){
-        return this.page.locator(selectedManufacturerInput)
+        return super.getElement(selectedManufacturerInput)
     }
 
     getSelectedManufacturerError(){
-        return this.page.locator(selectedManufacturerError)
+        return super.getElement(selectedManufacturerError)
     }
 
     getSeletedManufacturerBorder(){
-        return this.page.locator(seletedManufacturerBorder)
+        return super.getElement(seletedManufacturerBorder)
     }
 
     getSelectedManufacturerDropdownWrapper(){
-        return this.page.locator(selectedManufacturerDropdownWrapper)
+        return super.getElement(selectedManufacturerDropdownWrapper)
     }
 
     getSelectedManufacturerOptions(){
-        return this.page.locator(selectedManufacturerOptions)
+        return super.getElement(selectedManufacturerOptions)
     }
 
     getSelectedOptionsInput(){
-        return this.page.locator(selectedOptions)
+        return super.getElement(selectedOptions)
     }
 
     getTechnicalCharacteristicTitle(){
-        return this.page.locator(customTextAreaTitle).first()
+        return super.getElement(customTextAreaTitle).first()
     }
 
     getDetailedDescriptionTitle(){
-        return this.page.locator(customTextAreaTitle).nth(1)
+        return super.getElement(customTextAreaTitle).nth(1)
     }
 
     getSelectedManufacuredNotFoundResult(){
-        return this.page.locator(selectedManufacuredNotFoundResult)
+        return super.getElement(selectedManufacuredNotFoundResult)
     }
 
     getTechnicalCharacteristicTextArea(){
-        return this.page.locator(customTextArea).first()
+        return super.getElement(customTextArea).first()
     }
 
     getDetailedDescriptionTextArea(){
-        return this.page.locator(customTextArea).nth(1)
+        return super.getElement(customTextArea).nth(1)
     }
 
     getCloseOptionsBtn(){
-        return this.page.locator(closeOptionsBtn)
+        return super.getElement(closeOptionsBtn)
     }
     
     getAddressSelectionTitle(){
-        return this.page.locator(addressSelectionTitle)
+        return super.getElement(addressSelectionTitle)
     }
 
     getMapLabel(){
-        return this.page.locator(mapLabel)
+        return super.getElement(mapLabel)
     }
 
     getMapPopUp(){
-        return this.page.locator(mapPopUp)
+        return super.getElement(mapPopUp)
     }
 
     getMapPopUpWrapper(){
-        return this.page.locator(mapPopUpWrapper)
+        return super.getElement(mapPopUpWrapper)
     }
 
     getMapPopUpTitle(){
-        return this.page.locator(mapPopUpTitle)
+        return super.getElement(mapPopUpTitle)
     }
 
     getMapPopUpCloseBtn(){
-        return this.page.locator(mapPopUpClostBtn)
+        return super.getElement(mapPopUpClostBtn)
     }
 
     getMapPopUpAddress(){
-        return this.page.locator(mapPopUpAddress)
+        return super.getElement(mapPopUpAddress)
     }
 
     getPreventBtn(){
-        return this.page.locator(preventBtn)
+        return super.getElement(preventBtn)
     }
 
     getAddressSelectionError(){
-        return this.page.locator(addressSelectionError)
+        return super.getElement(addressSelectionError)
     }
 
     getNextBtn(){
-        return this.page.locator(nextBtn)
+        return super.getElement(nextBtn)
     }
 
     getListOfLocatorRequiredFieldsError(){
@@ -203,8 +203,8 @@ export class CreateUnitPage extends Page {
         ]
     }
 
-    getCategoryTabBtn(index){
-        return  this.page.locator(categoryTabBtn).nth(index)
+    getCategoryTabBtn(index: number){
+        return  super.getElement(categoryTabBtn).nth(index)
     }
 
     getListOfCategorysTabTitle(){
@@ -244,140 +244,140 @@ export class CreateUnitPage extends Page {
         return invalidSymbols
     }
 
-    async typeNazvaOgolochenyaInput(randomValue){
-        await this.getNazvaOgolochenyaInput().pressSequentially(randomValue)
+    async typeNazvaOgolochenyaInput(randomValue: string){
+        await super.typeText(this.getNazvaOgolochenyaInput(), randomValue)
     }
 
-    async fillNazvaOgolochenyaInput(randomValue){
-        await this.getNazvaOgolochenyaInput().fill(randomValue)
+    async fillNazvaOgolochenyaInput(randomValue: string){
+        await super.fillText(this.getNazvaOgolochenyaInput(), randomValue)
     }
 
     async getOgolochenyaInputValue(){
-        return await this.getNazvaOgolochenyaInput().inputValue()
+        return  super.getElementInputValue(this.getNazvaOgolochenyaInput())
     }
 
     async clearNazvaOgolochenyaInput(){
-        await this.getNazvaOgolochenyaInput().clear()
+        await super.clearInputField(this.getNazvaOgolochenyaInput())
     }
 
     async clickNextBtn(){
-        await this.getNextBtn().click()
+        await super.clickLocator(this.getNextBtn())
     }
 
     async clickCategorySelectBtn(){
-        await this.page.locator(categorySelectBtn).click()
+        await super.clickLocator(super.getElement(categorySelectBtn))
     }
 
     async clickCategoryPopUpCloseBtn(){
-        await this.page.locator(categoryPopUpCloseBtn).click()
+        await super.clickLocator(super.getElement(categoryPopUpCloseBtn))
     }
 
     async clickOutsidePopUp(){
-       await this.getCategoryPopUp().click({ position: { x: 0, y: 0 }})
+       await super.clickLocator(this.getCategoryPopUp(), {x: 0, y: 0})
     }
 
     async firstCategoryLocatorCount(){
-       return await this.page.locator(firstCategoryLocator).count()
+       return super.getElementCount(super.getElement(firstCategoryLocator))
     }
 
     async secondCategoryLocatorCount(){
-        return await this.page.locator(secondCategoryLocator).count()
+        return super.getElementCount(super.getElement(secondCategoryLocator))
     }
 
     async thirdCategoryLocatorCount(){
-        return await this.page.locator(thirdCategoryLocator).count()
+        return super.getElementCount(super.getElement(thirdCategoryLocator))
     }
 
     async categoryTabTitlesCount(){
-        return await this.page.locator(categoryTabTitle).count()
+        return super.getElementCount(super.getElement(categoryTabTitle))
     }
 
-    async getCategorysTabTitlesLocatorText(index){
-        return this.page.locator(categoryTabTitle).nth(index).textContent()
+    async getCategorysTabTitlesLocatorText(index: number){
+        return super.getElementTextContent(super.getElement(categoryTabTitle).nth(index))
     }
 
-    async getCategoryTabNumberText(index){
-        return this.page.locator(categoryTabLabelNumber).nth(index).textContent()
+    async getCategoryTabNumberText(index: number){
+        return super.getElementTextContent(super.getElement(categoryTabLabelNumber).nth(index))
     }
 
-    async clickFirstCategoryLocator(index){
-        await this.page.locator(firstCategoryLocator).nth(index).click()
+    async clickFirstCategoryLocator(index: number){
+        await super.clickLocator(super.getElement(firstCategoryLocator).nth(index))
     }
 
-    async clickSecondCategoryLocator(index){
-        await this.page.locator(secondCategoryLocator).nth(index).click()
+    async clickSecondCategoryLocator(index: number){
+        await super.clickLocator(super.getElement(secondCategoryLocator).nth(index))
     }
 
-    async clickThirdCategoryLocator(index){
-        await this.page.locator(thirdCategoryLocator).nth(index).click()
+    async clickThirdCategoryLocator(index: number){
+        await super.clickLocator(super.getElement(thirdCategoryLocator).nth(index))
     }
 
-    async thirdCategoryLocatorText(index){
-        return await this.page.locator(thirdCategoryLocator).nth(index).textContent()
+    async thirdCategoryLocatorText(index: number){
+        return  super.getElementTextContent(super.getElement(thirdCategoryLocator).nth(index))
     }
 
-    async typeSelectedManufacturerInput(value){
-        await this.getSelectedManufacturerInput().pressSequentially(value)
+    async typeSelectedManufacturerInput(value: string){
+        await super.typeText(this.getSelectedManufacturerInput(), value)
     }
 
     async clearSelectedManufacturerInput(){
-        this.page.locator(selectedManufacturerInput).clear()
+        await super.clearInputField(super.getElement(selectedManufacturerInput))
     }
 
     async getSelectedManufacturerInputValue(){
-       return await this.page.locator(selectedManufacturerInput).inputValue()
+       return super.getElementInputValue(super.getElement(selectedManufacturerInput))
     }
 
     async clickSelectedManufacturerOptions(){
-        await this.getSelectedManufacturerOptions().click()
+        await super.clickLocator(this.getSelectedManufacturerOptions())
     }
 
     async clickCloseOptionsBtn(){
-        await this.page.locator(closeOptionsBtn).click()
+        await super.clickLocator(super.getElement(closeOptionsBtn))
     }
 
-    async typeNazvaModeliInput(value){
-        await this.getNazvaModeliInput().pressSequentially(value)
+    async typeNazvaModeliInput(value: string){
+        await super.typeText(this.getNazvaModeliInput(), value)
     }
 
     async clearNazvaModeliInput(){
-        await this.getNazvaModeliInput().clear()
+        await super.clearInputField(this.getNazvaModeliInput())
     }
 
     async getNazvaModeliInputValue(){
-        return await this.getNazvaModeliInput().inputValue()
+        return super.getElementInputValue(this.getNazvaModeliInput())
     }
 
     async clickTechnicalCharacteristicTextArea(){
-        await this.getTechnicalCharacteristicTextArea().click()
+        await super.clickLocator(this.getTechnicalCharacteristicTextArea())
     }
 
     async getTechnicalCharacteristicTextAreaValue(){
-        return await this.getTechnicalCharacteristicTextArea().inputValue()
+        return super.getElementInputValue(this.getTechnicalCharacteristicTextArea())
     }
 
-    async typeTechnicalCharacteristicTextArea(value){
-        await this.getTechnicalCharacteristicTextArea().pressSequentially(value)
+    async typeTechnicalCharacteristicTextArea(value: string){
+        await super.typeText(this.getTechnicalCharacteristicTextArea(), value)
     }
 
     async clickDetailedDescriptionTextArea(){
-        await this.getDetailedDescriptionTextArea().click()
+        await super.clickLocator(this.getDetailedDescriptionTextArea())
     }
 
     async getDetailedDescriptionTextAreaValue(){
-        return this.getDetailedDescriptionTextArea().inputValue()
+        return super.getElementInputValue(this.getDetailedDescriptionTextArea())
     }
 
-    async typeDetailedDescriptionTextArea(value){
-        await this.getDetailedDescriptionTextArea().pressSequentially(value)
+    async typeDetailedDescriptionTextArea(value: string){
+        await super.typeText(this.getDetailedDescriptionTextArea(), value)
     }
 
     async clickAddressSelectionBtn(){
-        return this.page.locator(addressSelectionBtn).click()
+        return super.clickLocator(super.getElement(addressSelectionBtn))
     }
 
     async clickMapPopUpSubmitChoice(){
-        await this.page.getByRole('button', { name: 'Підтвердити вибір' }).click()
+        await super.clickLocator(super.getButtonByText('Підтвердити вибір'))
     }
 
     async getMapPopupBoundingBox(){
@@ -393,14 +393,14 @@ export class CreateUnitPage extends Page {
 }
 
     async getMapPopUpAddressText(){
-        return await this.getMapPopUpAddress().textContent()
+        return super.getElementTextContent(this.getMapPopUpAddress())
     }
 
-    async clickOnThePopUpMap(coordinateX, coordinateY){
-        await this.page.mouse.click(coordinateX, coordinateY)
+    async clickOnThePopUpMap(coordinateX: number, coordinateY: number){
+        await super.clickMouseAtPosition(coordinateX, coordinateY)
     }
 
     async clickPreventBtn(){
-        await this.page.locator(preventBtn).click()
+        await super.clickLocator(super.getElement(preventBtn))
     }
 }

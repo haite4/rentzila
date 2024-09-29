@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+require('dotenv').config()
 
 export default defineConfig({
   globalTimeout: 60 * 60 * 1000,
@@ -17,7 +18,7 @@ export default defineConfig({
  
   use: {
 
-    baseURL: 'https://dev.rentzila.com.ua/',
+    baseURL: process.env.BASE_URL,
 
  
     trace: 'on-first-retry',
