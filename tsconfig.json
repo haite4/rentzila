@@ -9,7 +9,7 @@
       "resolveJsonModule": true,    
       "moduleResolution": "node"      
     },
-    "include": ["helpers/**/*.ts"],
+    "include": ["helpers/**/*.ts", "constants/enums_endpoints.ts", "constants/enums_colors.constant.ts"],
     "exclude": ["node_modules"]
   }
   
