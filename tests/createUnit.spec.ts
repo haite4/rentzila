@@ -1,15 +1,15 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
-import valid_creds from "../data/valid_creds.json"
-import { Endpoints } from "../helpers/enums_endpoints"
-import { AlertMsgColors } from "../helpers/enums_colors"
-
-require('dotenv').config()
+import { Endpoints } from "../constants/enums_endpoints.constant";
+import { AlertMsgColors } from "../constants/enums_colors.constant";
 
 test.describe("Create unit functionality", () => {
   test.beforeEach(async ({ signInHelper, signinPage }) => {
-    await signinPage.open(Endpoints.CreateUnit);
-    await signInHelper.login(valid_creds.email, valid_creds.password);
+    await signinPage.open(Endpoints.CREATEUNIT);
+    await signInHelper.login(
+      process.env.USER_EMAIL ?? "",
+      process.env.USER_PASSWORD ?? ""
+    );
   });
 
   test("TC-294 Verify body title and tab titles", async ({
@@ -59,11 +59,11 @@ test.describe("Create unit functionality", () => {
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getCategorySelectError()).toHaveCSS(
       "border",
-      AlertMsgColors.BorderRed
+      AlertMsgColors.BORDERRED
     );
     await expect(createUnitPage.getCategorySelectErrorText()).toHaveCSS(
       "color",
-      AlertMsgColors.Red
+      AlertMsgColors.RED
     );
     await expect(createUnitPage.getCategorySelectErrorText()).toHaveText(
       "Це поле обов’язкове"
@@ -124,14 +124,14 @@ test.describe("Create unit functionality", () => {
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getNazvaOgolochenyaInput()).toHaveCSS(
       "border-color",
-      AlertMsgColors.Red
+      AlertMsgColors.RED
     );
     await expect(createUnitPage.getErrorMessage()).toHaveText(
       "Це поле обов’язкове"
     );
     await expect(createUnitPage.getErrorMessage()).toHaveCSS(
       "color",
-      AlertMsgColors.Red
+      AlertMsgColors.RED
     );
     await createUnitPage.typeNazvaOgolochenyaInput(
       randomValueHelper.randomWord()
@@ -142,7 +142,7 @@ test.describe("Create unit functionality", () => {
     );
     await expect(createUnitPage.getNazvaOgolochenyaInput()).toHaveCSS(
       "border-color",
-      AlertMsgColors.Red
+      AlertMsgColors.RED
     );
     await createUnitPage.clearNazvaOgolochenyaInput();
     await createUnitPage.fillNazvaOgolochenyaInput(
@@ -154,7 +154,7 @@ test.describe("Create unit functionality", () => {
     );
     await expect(createUnitPage.getNazvaOgolochenyaInput()).toHaveCSS(
       "border-color",
-      AlertMsgColors.Red
+      AlertMsgColors.RED
     );
     await createUnitPage.clearNazvaOgolochenyaInput();
     await createUnitPage.typeNazvaOgolochenyaInput(
@@ -177,7 +177,7 @@ test.describe("Create unit functionality", () => {
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getNazvaOgolochenyaInput()).toHaveCSS(
       "border",
-      AlertMsgColors.BorderGray
+      AlertMsgColors.BORDERGRAY
     );
     await expect(createUnitPage.getErrorMessage()).not.toBeVisible();
   });
@@ -200,11 +200,11 @@ test.describe("Create unit functionality", () => {
     );
     await expect(createUnitPage.getSelectedManufacturerError()).toHaveCSS(
       "color",
-      AlertMsgColors.Red
+      AlertMsgColors.RED
     );
     await expect(createUnitPage.getSeletedManufacturerBorder()).toHaveCSS(
       "border",
-      AlertMsgColors.BorderRed
+      AlertMsgColors.BORDERRED
     );
     await createUnitPage.typeSelectedManufacturerInput("A");
     await expect(
@@ -281,7 +281,7 @@ test.describe("Create unit functionality", () => {
       );
       await expect(createUnitPage.getNazvaModeliInput()).toHaveCSS(
         "border-color",
-        AlertMsgColors.Red
+        AlertMsgColors.RED
       );
       await createUnitPage.clearNazvaModeliInput();
     }
@@ -371,14 +371,14 @@ test.describe("Create unit functionality", () => {
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getMapLabel()).toHaveCSS(
       "border",
-      AlertMsgColors.BorderRed
+      AlertMsgColors.BORDERRED
     );
     await expect(createUnitPage.getAddressSelectionError()).toHaveText(
       "Виберіть коректне місце на мапі України"
     );
     await expect(createUnitPage.getAddressSelectionError()).toHaveCSS(
       "color",
-      AlertMsgColors.Red
+      AlertMsgColors.RED
     );
     await createUnitPage.clickAddressSelectionBtn();
     await expect(createUnitPage.getMapPopUpWrapper()).toBeVisible();
@@ -406,59 +406,65 @@ test.describe("Create unit functionality", () => {
     await expect(createUnitPage.getMapPopUpWrapper()).not.toBeVisible();
   });
 
-  test("TC-326 Verify 'Скасувати'  button", async({createUnitPage, mainPage}) => {
-      await expect(createUnitPage.getPreventBtn()).toHaveText("Скасувати")
-      const [dialog] = await Promise.all([
-        createUnitPage.page.waitForEvent("dialog"),
-        await mainPage.clickOnTheLogo()
-      ]);
-      await dialog.accept()
-      await expect(createUnitPage.page).toHaveURL(process.env.BASE_URL ?? "")
-  })
+  test("TC-326 Verify 'Скасувати'  button", async ({
+    createUnitPage,
+    mainPage,
+  }) => {
+    await expect(createUnitPage.getPreventBtn()).toHaveText("Скасувати");
+    const [dialog] = await Promise.all([
+      createUnitPage.page.waitForEvent("dialog"),
+      await mainPage.clickOnTheLogo(),
+    ]);
+    await dialog.accept();
+    await expect(createUnitPage.page).toHaveURL(process.env.BASE_URL ?? "");
+  });
 
-  test("TC-329 Verify 'Далі' button", async({createUnitPage, randomValueHelper}) => {
-      await expect(createUnitPage.getNextBtn()).toHaveText("Далі")
-      await createUnitPage.clickNextBtn()
-      for(const requiredFields of createUnitPage.getListOfLocatorRequiredFieldsError()){
-        await expect(requiredFields).toBeVisible()
-      }
-      await createUnitPage.clickCategorySelectBtn();
-      await createUnitPage.clickFirstCategoryLocator(0)
-      await createUnitPage.clickSecondCategoryLocator(0);
-      await createUnitPage.clickThirdCategoryLocator(0)
-      await createUnitPage.typeNazvaOgolochenyaInput(
-        randomValueHelper.generateStringWithLength(10)
-      );
-      await createUnitPage.typeSelectedManufacturerInput("Abc");
-      await createUnitPage.clickSelectedManufacturerOptions();
-      await createUnitPage.clickAddressSelectionBtn();
-      const { x, y } = await createUnitPage.getMapPopupBoundingBox();
-      await createUnitPage.getMapPopUp().waitFor({ state: "visible" });
-      await createUnitPage.clickOnThePopUpMap(x, y);
-      await createUnitPage.clickMapPopUpSubmitChoice();
-      await createUnitPage.clickNextBtn()
-      await expect(createUnitPage.getCategoryBodyTitle()).toHaveText(
-        "Створити оголошення"
-      );
+  test("TC-329 Verify 'Далі' button", async ({
+    createUnitPage,
+    randomValueHelper,
+  }) => {
+    await expect(createUnitPage.getNextBtn()).toHaveText("Далі");
+    await createUnitPage.clickNextBtn();
+    for (const requiredFields of createUnitPage.getListOfLocatorRequiredFieldsError()) {
+      await expect(requiredFields).toBeVisible();
+    }
+    await createUnitPage.clickCategorySelectBtn();
+    await createUnitPage.clickFirstCategoryLocator(0);
+    await createUnitPage.clickSecondCategoryLocator(0);
+    await createUnitPage.clickThirdCategoryLocator(0);
+    await createUnitPage.typeNazvaOgolochenyaInput(
+      randomValueHelper.generateStringWithLength(10)
+    );
+    await createUnitPage.typeSelectedManufacturerInput("Abc");
+    await createUnitPage.clickSelectedManufacturerOptions();
+    await createUnitPage.clickAddressSelectionBtn();
+    const { x, y } = await createUnitPage.getMapPopupBoundingBox();
+    await createUnitPage.getMapPopUp().waitFor({ state: "visible" });
+    await createUnitPage.clickOnThePopUpMap(x, y);
+    await createUnitPage.clickMapPopUpSubmitChoice();
+    await createUnitPage.clickNextBtn();
+    await expect(createUnitPage.getCategoryBodyTitle()).toHaveText(
+      "Створити оголошення"
+    );
 
-      for (let i = 0; i < (await createUnitPage.categoryTabTitlesCount()); i++) {
-        expect(await createUnitPage.getCategorysTabTitlesLocatorText(i)).toBe(
-          createUnitPage.getListOfCategorysTabTitle()[i]
+    for (let i = 0; i < (await createUnitPage.categoryTabTitlesCount()); i++) {
+      expect(await createUnitPage.getCategorysTabTitlesLocatorText(i)).toBe(
+        createUnitPage.getListOfCategorysTabTitle()[i]
+      );
+      expect(await createUnitPage.getCategoryTabNumberText(i)).toBe(
+        createUnitPage.getListOfCategoryTabNumber()[i]
+      );
+      if (i === 1) {
+        await expect(createUnitPage.getCategoryTabBtn(1)).toHaveAttribute(
+          "aria-selected",
+          "true"
         );
-        expect(await createUnitPage.getCategoryTabNumberText(i)).toBe(
-          createUnitPage.getListOfCategoryTabNumber()[i]
+      } else {
+        await expect(createUnitPage.getCategoryTabBtn(i)).toHaveAttribute(
+          "aria-selected",
+          "false"
         );
-        if (i === 1) {
-          await expect(createUnitPage.getCategoryTabBtn(1)).toHaveAttribute(
-            "aria-selected",
-            "true"
-          );
-        } else {
-         await expect(createUnitPage.getCategoryTabBtn(i)).toHaveAttribute(
-            "aria-selected",
-            "false"
-          );
-        }
       }
-  })
+    }
+  });
 });
