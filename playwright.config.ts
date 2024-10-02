@@ -1,6 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 require('dotenv').config()
 
+require('dotenv').config()
+
 export default defineConfig({
   globalTimeout: 60 * 60 * 1000,
 
