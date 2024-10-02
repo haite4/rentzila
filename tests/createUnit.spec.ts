@@ -1,10 +1,12 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
-import valid_creds from "../data/valid_creds.json"
-import { Endpoints } from "../helpers/enums_endpoints"
-import { AlertMsgColors } from "../helpers/enums_colors"
+import valid_creds from "../data/valid_creds.json";
+import { Endpoints } from "../helpers/enums_endpoints";
+import { AlertMsgColors } from "../helpers/enums_colors";
+import path from "path";
 
-require('dotenv').config()
+
+require("dotenv").config();
 
 test.describe("Create unit functionality", () => {
   test.beforeEach(async ({ signInHelper, signinPage }) => {
@@ -76,7 +78,7 @@ test.describe("Create unit functionality", () => {
     await createUnitPage.clickCategoryPopUpCloseBtn();
     await expect(createUnitPage.getCategoryPopUp()).toBeHidden();
     await createUnitPage.clickCategorySelectBtn();
-    await createUnitPage.clickOutsidePopUp();
+    await createUnitPage.clickOutsideCategoryPopUp();
     await expect(createUnitPage.getCategoryPopUp()).toBeHidden();
     await createUnitPage.clickCategorySelectBtn();
 
@@ -406,59 +408,282 @@ test.describe("Create unit functionality", () => {
     await expect(createUnitPage.getMapPopUpWrapper()).not.toBeVisible();
   });
 
-  test("TC-326 Verify 'Скасувати'  button", async({createUnitPage, mainPage}) => {
-      await expect(createUnitPage.getPreventBtn()).toHaveText("Скасувати")
-      const [dialog] = await Promise.all([
-        createUnitPage.page.waitForEvent("dialog"),
-        await mainPage.clickOnTheLogo()
-      ]);
-      await dialog.accept()
-      await expect(createUnitPage.page).toHaveURL(process.env.BASE_URL ?? "")
-  })
+  test("TC-326 Verify 'Скасувати'  button", async ({
+    createUnitPage,
+    mainPage,
+  }) => {
+    await expect(createUnitPage.getPreventBtn()).toHaveText("Скасувати");
+    const [dialog] = await Promise.all([
+      createUnitPage.page.waitForEvent("dialog"),
+      await mainPage.clickOnTheLogo(),
+    ]);
+    await dialog.accept();
+    await expect(createUnitPage.page).toHaveURL(process.env.BASE_URL ?? "");
+  });
 
-  test("TC-329 Verify 'Далі' button", async({createUnitPage, randomValueHelper}) => {
-      await expect(createUnitPage.getNextBtn()).toHaveText("Далі")
-      await createUnitPage.clickNextBtn()
-      for(const requiredFields of createUnitPage.getListOfLocatorRequiredFieldsError()){
-        await expect(requiredFields).toBeVisible()
-      }
-      await createUnitPage.clickCategorySelectBtn();
-      await createUnitPage.clickFirstCategoryLocator(0)
-      await createUnitPage.clickSecondCategoryLocator(0);
-      await createUnitPage.clickThirdCategoryLocator(0)
-      await createUnitPage.typeNazvaOgolochenyaInput(
-        randomValueHelper.generateStringWithLength(10)
-      );
-      await createUnitPage.typeSelectedManufacturerInput("Abc");
-      await createUnitPage.clickSelectedManufacturerOptions();
-      await createUnitPage.clickAddressSelectionBtn();
-      const { x, y } = await createUnitPage.getMapPopupBoundingBox();
-      await createUnitPage.getMapPopUp().waitFor({ state: "visible" });
-      await createUnitPage.clickOnThePopUpMap(x, y);
-      await createUnitPage.clickMapPopUpSubmitChoice();
-      await createUnitPage.clickNextBtn()
-      await expect(createUnitPage.getCategoryBodyTitle()).toHaveText(
-        "Створити оголошення"
-      );
+  test("TC-329 Verify 'Далі' button", async ({
+    createUnitPage,
+    randomValueHelper,
+  }) => {
+    await expect(createUnitPage.getNextBtn()).toHaveText("Далі");
+    await createUnitPage.clickNextBtn();
+    for (const requiredFields of createUnitPage.getListOfLocatorRequiredFieldsError()) {
+      await expect(requiredFields).toBeVisible();
+    }
+    await createUnitPage.clickCategorySelectBtn();
+    await createUnitPage.clickFirstCategoryLocator(0);
+    await createUnitPage.clickSecondCategoryLocator(0);
+    await createUnitPage.clickThirdCategoryLocator(0);
+    await createUnitPage.typeNazvaOgolochenyaInput(
+      randomValueHelper.generateStringWithLength(10)
+    );
+    await createUnitPage.typeSelectedManufacturerInput("Abc");
+    await createUnitPage.clickSelectedManufacturerOptions();
+    await createUnitPage.clickAddressSelectionBtn();
+    const { x, y } = await createUnitPage.getMapPopupBoundingBox();
+    await createUnitPage.getMapPopUp().waitFor({ state: "visible" });
+    await createUnitPage.clickOnThePopUpMap(x, y);
+    await createUnitPage.clickMapPopUpSubmitChoice();
+    await createUnitPage.clickNextBtn();
+    await expect(createUnitPage.getCategoryBodyTitle()).toHaveText(
+      "Створити оголошення"
+    );
 
-      for (let i = 0; i < (await createUnitPage.categoryTabTitlesCount()); i++) {
-        expect(await createUnitPage.getCategorysTabTitlesLocatorText(i)).toBe(
-          createUnitPage.getListOfCategorysTabTitle()[i]
+    for (let i = 0; i < (await createUnitPage.categoryTabTitlesCount()); i++) {
+      expect(await createUnitPage.getCategorysTabTitlesLocatorText(i)).toBe(
+        createUnitPage.getListOfCategorysTabTitle()[i]
+      );
+      expect(await createUnitPage.getCategoryTabNumberText(i)).toBe(
+        createUnitPage.getListOfCategoryTabNumber()[i]
+      );
+      if (i === 1) {
+        await expect(createUnitPage.getCategoryTabBtn(1)).toHaveAttribute(
+          "aria-selected",
+          "true"
         );
-        expect(await createUnitPage.getCategoryTabNumberText(i)).toBe(
-          createUnitPage.getListOfCategoryTabNumber()[i]
+      } else {
+        await expect(createUnitPage.getCategoryTabBtn(i)).toHaveAttribute(
+          "aria-selected",
+          "false"
         );
-        if (i === 1) {
-          await expect(createUnitPage.getCategoryTabBtn(1)).toHaveAttribute(
-            "aria-selected",
-            "true"
-          );
-        } else {
-         await expect(createUnitPage.getCategoryTabBtn(i)).toHaveAttribute(
-            "aria-selected",
-            "false"
-          );
-        }
       }
-  })
+    }
+  });
+
+  test("TC-384 Verify same images uploading", async ({
+    createUnitPage,
+    randomValueHelper,
+  }) => {
+    await createUnitPage.clickCategorySelectBtn();
+    await createUnitPage.clickFirstCategoryLocator(0);
+    await createUnitPage.clickSecondCategoryLocator(0);
+    await createUnitPage.clickThirdCategoryLocator(0);
+    await createUnitPage.typeNazvaOgolochenyaInput(
+      randomValueHelper.generateStringWithLength(10)
+    );
+    await createUnitPage.typeSelectedManufacturerInput("Abc");
+    await createUnitPage.clickSelectedManufacturerOptions();
+    await createUnitPage.clickAddressSelectionBtn();
+    const { x, y } = await createUnitPage.getMapPopupBoundingBox();
+    await createUnitPage.getMapPopUp().waitFor({ state: "visible" });
+    await createUnitPage.clickOnThePopUpMap(x, y);
+    await createUnitPage.clickMapPopUpSubmitChoice();
+    await createUnitPage.clickNextBtn();
+    const actions = ["clickCrossBtn", "clickSaveBtn", "clickOutsidePopUp"];
+
+    for (const action of actions) {
+      for (let i = 0; i < 2; i++) {
+        const fileChooserPromise =
+          createUnitPage.page.waitForEvent("filechooser");
+        await createUnitPage.clickImageBlock(i);
+        const fileChooser = await fileChooserPromise;
+        await createUnitPage.setElementFilesinPhotoSection(
+          fileChooser,
+          path.join(__dirname, "..", "data", "images", "jpgimage.jpg")
+        );
+      }
+
+      await expect(createUnitPage.getErrorPopUp()).toBeVisible();
+      switch (action) {
+        case "clickCrossBtn":
+          await expect(createUnitPage.getErrorPopUp()).toHaveText(
+            "Ви не можете завантажити двічі один файл."
+          );
+          await createUnitPage.clickClosePopUpBtn();
+          await expect(createUnitPage.getErrorPopUp()).not.toBeVisible();
+          expect(await createUnitPage.countDraggableElements()).toBe(1);
+          await createUnitPage.deleteUploadedImage();
+          break;
+        case "clickSaveBtn":
+          await expect(createUnitPage.getPopUpBtn()).toHaveText("Зрозуміло");
+          await createUnitPage.clickSubmitPopUpBtn();
+          await expect(createUnitPage.getErrorPopUp()).not.toBeVisible();
+          expect(await createUnitPage.countDraggableElements()).toBe(1);
+          await createUnitPage.deleteUploadedImage();
+          break;
+        case "clickOutsidePopUp":
+          await createUnitPage.clickOutSidePhotoPopUp();
+          await expect(createUnitPage.getErrorPopUp()).not.toBeVisible();
+          expect(await createUnitPage.countDraggableElements()).toBe(1);
+          await createUnitPage.deleteUploadedImage();
+          break;
+      }
+    }
+  });
+
+  test("TC-401 Verify uploading of invalid file type", async ({
+    createUnitPage,
+    randomValueHelper,
+  }) => {
+    await createUnitPage.clickCategorySelectBtn();
+    await createUnitPage.clickFirstCategoryLocator(0);
+    await createUnitPage.clickSecondCategoryLocator(0);
+    await createUnitPage.clickThirdCategoryLocator(0);
+    await createUnitPage.typeNazvaOgolochenyaInput(
+      randomValueHelper.generateStringWithLength(10)
+    );
+    await createUnitPage.typeSelectedManufacturerInput("Abc");
+    await createUnitPage.clickSelectedManufacturerOptions();
+    await createUnitPage.clickAddressSelectionBtn();
+    const { x, y } = await createUnitPage.getMapPopupBoundingBox();
+    await createUnitPage.getMapPopUp().waitFor({ state: "visible" });
+    await createUnitPage.clickOnThePopUpMap(x, y);
+    await createUnitPage.clickMapPopUpSubmitChoice();
+    await createUnitPage.clickNextBtn();
+    const actions = ["clickCrossBtn", "clickSaveBtn", "clickOutsidePopUp"];
+    for (const action of actions) {
+      const fileChooserPromise =
+        createUnitPage.page.waitForEvent("filechooser");
+      await createUnitPage.clickImageBlock();
+      const fileChooser = await fileChooserPromise;
+      await createUnitPage.setElementFilesinPhotoSection(
+        fileChooser,
+        path.join(__dirname, "..", "data", "files", "text.txt")
+      );
+      await expect(createUnitPage.getErrorPopUp()).toBeVisible();
+      switch (action) {
+        case "clickCrossBtn":
+          await expect(createUnitPage.getErrorPopUp()).toHaveText(
+            "Формат зображення не підтримується. Допустимі формати: .jpg, .jpeg, .png. Ви не можете завантажити файл більше 20 МВ."
+          );
+          await createUnitPage.clickClosePopUpBtn();
+          await expect(createUnitPage.getErrorPopUp()).not.toBeVisible();
+          expect(await createUnitPage.countDraggableElements()).toBe(0);
+          break;
+        case "clickSaveBtn":
+          await expect(createUnitPage.getPopUpBtn()).toHaveText("Зрозуміло");
+          await createUnitPage.clickSubmitPopUpBtn();
+          await expect(createUnitPage.getErrorPopUp()).not.toBeVisible();
+          expect(await createUnitPage.countDraggableElements()).toBe(0);
+          break;
+        case "clickOutsidePopUp":
+          await createUnitPage.clickOutSidePhotoPopUp();
+          await expect(createUnitPage.getErrorPopUp()).not.toBeVisible();
+          expect(await createUnitPage.countDraggableElements()).toBe(0);
+          break;
+      }
+    }
+  });
+
+  test("TC-405 Verify uploading of invalid size file", async({createUnitPage, randomValueHelper}) => {
+    await createUnitPage.clickCategorySelectBtn();
+    await createUnitPage.clickFirstCategoryLocator(0);
+    await createUnitPage.clickSecondCategoryLocator(0);
+    await createUnitPage.clickThirdCategoryLocator(0);
+    await createUnitPage.typeNazvaOgolochenyaInput(
+      randomValueHelper.generateStringWithLength(10)
+    );
+    await createUnitPage.typeSelectedManufacturerInput("Abc");
+    await createUnitPage.clickSelectedManufacturerOptions();
+    await createUnitPage.clickAddressSelectionBtn();
+    const { x, y } = await createUnitPage.getMapPopupBoundingBox();
+    await createUnitPage.getMapPopUp().waitFor({ state: "visible" });
+    await createUnitPage.clickOnThePopUpMap(x, y);
+    await createUnitPage.clickMapPopUpSubmitChoice();
+    await createUnitPage.clickNextBtn();
+    const actions = ["clickCrossBtn", "clickSaveBtn", "clickOutsidePopUp"];
+    for (const action of actions) {
+      const fileChooserPromise =
+        createUnitPage.page.waitForEvent("filechooser");
+      await createUnitPage.clickImageBlock();
+      const fileChooser = await fileChooserPromise;
+      await createUnitPage.setElementFilesinPhotoSection(
+        fileChooser,
+        path.join(__dirname, "..", "data", "images", "invalid_size_30mb.jpg")
+      );
+      await expect(createUnitPage.getErrorPopUp()).toBeVisible();
+      switch(action){
+        case "clickCrossBtn":
+          await expect(createUnitPage.getErrorPopUp()).toHaveText(
+            "Формат зображення не підтримується. Допустимі формати: .jpg, .jpeg, .png. Ви не можете завантажити файл більше 20 МВ."
+          );
+          await createUnitPage.clickClosePopUpBtn();
+          await expect(createUnitPage.getErrorPopUp()).not.toBeVisible();
+          expect(await createUnitPage.countDraggableElements()).toBe(0);
+          break;
+        case "clickSaveBtn":
+          await expect(createUnitPage.getPopUpBtn()).toHaveText("Зрозуміло");
+          await createUnitPage.clickSubmitPopUpBtn();
+          await expect(createUnitPage.getErrorPopUp()).not.toBeVisible();
+          expect(await createUnitPage.countDraggableElements()).toBe(0);
+          break;
+        case "clickOutsidePopUp":
+          await createUnitPage.clickOutSidePhotoPopUp();
+          await expect(createUnitPage.getErrorPopUp()).not.toBeVisible();
+          expect(await createUnitPage.countDraggableElements()).toBe(0);
+          break;
+      }
+}})
+
+test("TC-390 Verify 'Назад' button", async ({
+  createUnitPage,
+  randomValueHelper,
+}) => {
+  await createUnitPage.clickCategorySelectBtn();
+  await createUnitPage.clickFirstCategoryLocator(0);
+  await createUnitPage.clickSecondCategoryLocator(0);
+  await createUnitPage.clickThirdCategoryLocator(0);
+  await createUnitPage.typeNazvaOgolochenyaInput(
+    randomValueHelper.generateStringWithLength(10)
+  );
+  await createUnitPage.typeSelectedManufacturerInput("Abc");
+  await createUnitPage.clickSelectedManufacturerOptions();
+  await createUnitPage.clickAddressSelectionBtn();
+  const { x, y } = await createUnitPage.getMapPopupBoundingBox();
+  await createUnitPage.getMapPopUp().waitFor({ state: "visible" });
+  await createUnitPage.clickOnThePopUpMap(x, y);
+  await createUnitPage.clickMapPopUpSubmitChoice();
+  await createUnitPage.clickNextBtn();
+
+  await expect(createUnitPage.getPrevioudBtn()).toHaveText("Назад");
+  await createUnitPage.clickPreviousBtn();
+
+  for (let i = 0; i < (await createUnitPage.categoryTabTitlesCount()); i++) {
+    expect(await createUnitPage.getCategorysTabTitlesLocatorText(i)).toBe(
+      createUnitPage.getListOfCategorysTabTitle()[i]
+    );
+
+    if (i === 0) {
+      await expect(createUnitPage.getCategoryTabBtn(0)).toHaveAttribute(
+        "aria-selected",
+        "true"
+      );
+    } else {
+      await expect(createUnitPage.getCategoryTabBtn(i)).toHaveAttribute(
+        "aria-selected",
+        "false"
+      );
+    }
+  }
+
+  await expect(createUnitPage.getCategorySelectContent()).toBeVisible();
+  await expect(createUnitPage.getNazvaOgolochenyaInput()).toBeVisible();
+  await expect(createUnitPage.getSelectWithSearchManufacturer()).toBeVisible();
+  await expect(createUnitPage.getNazvaModeliInput()).toBeVisible();
+  await expect(
+    createUnitPage.getTechnicalCharacteristicTextArea()
+  ).toBeVisible();
+  await expect(createUnitPage.getDetailedDescriptionTextArea()).toBeVisible();
+  await expect(createUnitPage.getMapLabel()).toBeVisible();
+});
 });

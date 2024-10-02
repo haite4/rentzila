@@ -1,4 +1,4 @@
-import {Locator, Page as PlaywrightPage } from "@playwright/test";
+import {FileChooser, Locator, Page as PlaywrightPage } from "@playwright/test";
 
 const logo = `[data-testid="logo"]`;
 
@@ -101,6 +101,18 @@ export default class Page {
 
   protected getElementCount(locator: Locator){
     return locator.count()
+  }
+
+  protected async setElementInputFiles(locator: Locator, filePath: string | string[]){
+      await locator.setInputFiles(filePath)
+  }
+
+  protected async elementHover(locator: Locator){
+    locator.hover()
+  }
+
+  protected async setElementFiles(fileChooser: FileChooser, filePath: string){
+    await fileChooser.setFiles(filePath)
   }
 
 }
