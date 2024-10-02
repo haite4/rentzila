@@ -12,21 +12,20 @@
     "test:main": "playwright test tests/main.spec.ts --project=chromium --headed --trace on"
   },
   "keywords": [],
-  "author": "",
+  "author": "Stanislav Stankov",
   "license": "ISC",
   "devDependencies": {
     "@faker-js/faker": "^9.0.1",
     "@playwright/test": "^1.47.0",
     "@types/node": "^22.5.4",
     "ts-node": "^10.9.2",
-    "typescript": "^5.6.2"
-  },
-  "dependencies": {
+    "typescript": "^5.6.2",
     "dotenv": "^16.4.5",
     "tsx": "^4.19.1"
   },
+  "dependencies": {},
   "directories": {
     "test": "tests"
   },
-  "description": ""
+  "description": "Performs automation testing to validate critical user journeys and functionality on the Rentzila website."
 }

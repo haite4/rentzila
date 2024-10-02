@@ -1,4 +1,4 @@
-import { Locator} from "@playwright/test"; 
+import { Locator } from "@playwright/test";
 import Page from "./page";
 
 const equipment = `[data-testid="specialEquipment"]`;
@@ -26,8 +26,9 @@ const ogoloshennyaSearch = `[data-testid="searchInput"]`;
 const consultingInputName = '[class*="ConsultationForm_name"] input';
 const consultingInputPhoneNumber = '[class*="ConsultationForm_phone"] input';
 const specialEquipmentText = "specialEquipment";
-const cosultationFormTitleFooter = '[class*="ConsultationForm_title"]'
-const listOfEuipmentTab = '//*[contains(@class, "RentzilaProposes_service")]'
+const cosultationFormTitleFooter = '[class*="ConsultationForm_title"]';
+const listOfEuipmentTab =
+  '//section[@data-testid = "specialEquipment"]//h3[contains(@data-testid, "specialEquipment")]';
 
 export class MainPage extends Page {
   constructor(page: Page["page"]) {
@@ -43,19 +44,21 @@ export class MainPage extends Page {
   }
 
   getListItemServices(): Promise<Locator[]> {
-   return super.getElementAll(super.getElement(populyarniServices, itemServices))
+    return super.getElementAll(
+      super.getElement(populyarniServices, itemServices)
+    );
   }
 
   getListEquipmentServices(): Promise<Locator[]> {
-    return super.getElementAll(super.getElement(equipment, itemServices))
+    return super.getElementAll(super.getElement(equipment, itemServices));
   }
 
   getServicesTitle(): Locator {
-    return super.getElement(populyarniServices, title)
+    return super.getElement(populyarniServices, title);
   }
 
   getEquipmentTitle(): Locator {
-    return super.getElement(equipment, title)
+    return super.getElement(equipment, title);
   }
 
   getFooterContainer(): Locator {
@@ -91,11 +94,11 @@ export class MainPage extends Page {
   }
 
   getOgoloshennya(): Locator {
-   return super.getElementByRole("Оголошення")
+    return super.getElementByRole("Оголошення");
   }
 
   getTender(): Locator {
-    return super.getElementByRole("Тендери")
+    return super.getElementByRole("Тендери");
   }
 
   getZapitiNaRobotu(): Locator {
@@ -154,20 +157,20 @@ export class MainPage extends Page {
     return super.getElement(consultingInputPhoneNumber);
   }
 
-  getLogoOnHeader(){
-    return super.getElement(logo)
+  getLogoOnHeader() {
+    return super.getElement(logo);
   }
 
   getYouStillHaveQuestion(): Locator {
-    return super.getElement(cosultationFormTitleFooter)
+    return super.getElement(cosultationFormTitleFooter);
   }
 
-  getEquimpmentServicesByIndex(index: number){
-    return super.getElement(equipment, itemServices).nth(index)
+  getEquimpmentServicesByIndex(index: number) {
+    return super.getElement(equipment, itemServices).nth(index);
   }
 
-  getListOfEquipmentTab(){
-    return super.getElement(listOfEuipmentTab)
+  getEquipmentTabLocator() {
+    return super.getElement(listOfEuipmentTab);
   }
 
   async scrollToServices(): Promise<void> {
@@ -175,11 +178,15 @@ export class MainPage extends Page {
   }
 
   async getServicesText(locator: Locator): Promise<string | null> {
-    return super.getElementTextContent(super.getSubElement(locator, servicesText))
+    return super.getElementTextContent(
+      super.getSubElement(locator, servicesText)
+    );
   }
 
   async scrollToSpecialEquipment(): Promise<void> {
-    await super.scrollToElementIfNeeded(super.getElementByTestId(specialEquipmentText))
+    await super.scrollToElementIfNeeded(
+      super.getElementByTestId(specialEquipmentText)
+    );
   }
 
   async clickPolitikaConfidencialinostyLink(): Promise<void> {
@@ -191,18 +198,18 @@ export class MainPage extends Page {
   }
 
   async clickUmoviDostupuLink(): Promise<void> {
-    await super.clickLocator(this.getUmoviDostupu())
+    await super.clickLocator(this.getUmoviDostupu());
   }
 
   async clickLogoOnHeaderLink(): Promise<void> {
-    await super.clickLocator(this.getLogoOnHeader())
+    await super.clickLocator(this.getLogoOnHeader());
   }
 
   async clickTenderiLink(): Promise<void> {
-    await super.clickLocator(super.getElementByRole("Тендери"))
+    await super.clickLocator(super.getElementByRole("Тендери"));
   }
 
-  async clickOnTheEquipmentTab(locator: Locator): Promise<void> {
+  async clickOnEquipmentTabByLocator(locator: Locator): Promise<void> {
     await super.clickLocator(locator);
   }
 
@@ -211,25 +218,15 @@ export class MainPage extends Page {
   }
 
   async clickOgoloshennyaLink(): Promise<void> {
-    await super.clickLocator(super.getElementByRole("Оголошення"))
+    await super.clickLocator(super.getElementByRole("Оголошення"));
   }
 
-  async getLocatorOfEquipmentTab(): Promise<Locator[]> {
-
-    const equpmentTabElement = this.getListOfEquipmentTab()
-    const count = await equpmentTabElement.count()
-    const elementsArray: Locator[] = [];
-
-    for (let i = 0; i < count; i++) {
-        elementsArray.push(equpmentTabElement.nth(i));
-    }
-
-    return elementsArray; 
-   
+  async getAllLocatorOfEquipmentTab() {
+    return super.getElementAll(this.getEquipmentTabLocator());
   }
 
-  async clickOnTheEquipmentTabs(index: number){
-    await super.clickLocator(super.getElement(listOfEuipmentTab)[index])
+  async clickOnTheEquipmentTabByIndex(index: number) {
+    await super.clickLocator(super.getElement(listOfEuipmentTab).nth(index));
   }
 
   async clickOnEachServices(locator: Locator): Promise<void> {
@@ -237,7 +234,7 @@ export class MainPage extends Page {
   }
 
   async clickOnTheEquipment(locator: Locator): Promise<void> {
-    await super.clickLocator(locator)
+    await super.clickLocator(locator);
   }
 
   async scrollDownToFooter(): Promise<void> {
@@ -256,6 +253,10 @@ export class MainPage extends Page {
     await super.fillText(this.getConsultingInputPhoneNumber(), phoneNumber);
   }
 
+  async clickOnTheLogo(): Promise<void> {
+    await this.page.locator(logo).first().click();
+  }
+
   async clearConsultingInputName(): Promise<void> {
     await super.clearInputField(this.getConsultingInputName());
   }
@@ -264,8 +265,7 @@ export class MainPage extends Page {
     await super.clearInputField(this.getConsultingInputPhoneNumber());
   }
 
-  async clickLogoFooter(){
-    await super.clickLocator(this.getLogoFooter())
+  async clickLogoFooter() {
+    await super.clickLocator(this.getLogoFooter());
   }
-
 }

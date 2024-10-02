@@ -14,9 +14,9 @@ export class ProductsDetailsPage extends Page {
     return super.getHeadingByText("Основні характеристики");
   }
 
-  getUnitCharacteristicText(text: string){
-    return super.getElement(`//div[contains(@class, "UnitCharacteristics_service") and contains(text(), "${text}")]`);
-
+  getUnitCharacteristicText(text: string) {
+    return super.getElement(
+      `//div[contains(@class, "UnitCharacteristics_service") and contains(text(), "${text}")]`
+    );
   }
-
 }
