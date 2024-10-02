@@ -4,7 +4,7 @@ import { ProductsPage } from "../pages/products.page";
 import { ProductsDetailsPage } from "../pages/products-details.page";
 import { SigninPage } from "../pages/signIn.page";
 import Page from "../pages/page";
-import { ApiHelper } from "../helpers/api_helper";
+import { ApiHelper } from "../api/rentzila.api";
 import { RandomValue } from "../helpers/random_value";
 
 type MyFixtures = {
@@ -35,8 +35,8 @@ export const test = base.extend<MyFixtures>({
     const apiRequestContext = await playwrightRequest.newContext();
     await use(new ApiHelper(apiRequestContext));
   },
-  randomValueHelper: async({}, use) => {
-    await use(new RandomValue())
+  randomValueHelper: async ({}, use) => {
+    await use(new RandomValue());
   },
   signinPage: async({page}, use) => {
     await use(new SigninPage(page))

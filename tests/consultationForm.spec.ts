@@ -1,8 +1,6 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
-import { AlertMsgColors } from "../helpers/enums_colors"
-
-require("dotenv").config();
+import { AlertMsgColors } from "../constants/enums_colors.constant";
 
 test.describe("Consulting form functionality", () => {
   test("TC-226: Verify 'У Вас залишилися питання?' form", async ({
