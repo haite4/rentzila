@@ -1,10 +1,7 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
-import valid_creds from "../data/valid_creds.json";
-import { Endpoints } from "../helpers/enums_endpoints"
-import { AlertMsgColors } from "../helpers/enums_colors"
-
-require('dotenv').config()
+import { Endpoints } from "../constants/enums_endpoints.constant"
+import { AlertMsgColors } from "../constants/enums_colors.constant"
 
 test.describe("Auth page testing", () => {
   test.beforeEach(async ({ signinPage }) => {
@@ -22,51 +19,51 @@ test.describe("Auth page testing", () => {
     );
     await expect(signinPage.getEmailInput()).toHaveCSS(
       "border",
-      AlertMsgColors.BorderRed
+      AlertMsgColors.BORDERRED
     );
     await expect(signinPage.getPasswordInput()).toHaveCSS(
       "border",
-      AlertMsgColors.BorderRed
+      AlertMsgColors.BORDERRED
     );
-    await signinPage.fillLoginEmailInput(valid_creds.email);
+    await signinPage.fillLoginEmailInput(process.env.USER_EMAIL ?? "");
     await signinPage.clickLoginSubmitBtn();
     await expect(signinPage.getEmailInput()).toHaveCSS(
       "border",
-      AlertMsgColors.BorderGray
+      AlertMsgColors.BORDERGRAY
     );
     await expect(signinPage.getPasswordInputErrorMsgLocator()).toHaveText(
       "Поле не може бути порожнім"
     );
     await expect(signinPage.getPasswordInput()).toHaveCSS(
       "border",
-      AlertMsgColors.BorderRed
+      AlertMsgColors.BORDERRED
     );
     await signinPage.clearEmailInput();
     await expect(signinPage.getEmailInput()).toHaveCSS(
       "border",
-      AlertMsgColors.BorderRed
+      AlertMsgColors.BORDERRED
     );
     await expect(signinPage.getEmailInpuErrorMsg()).toHaveText(
       "Поле не може бути порожнім"
     );
-    await signinPage.fillLoginPasswordInput(valid_creds.password);
+    await signinPage.fillLoginPasswordInput(process.env.USER_PASSWORD ?? "");
     await signinPage.clickLoginSubmitBtn();
     await expect(signinPage.getPasswordInput()).toHaveCSS(
       "border",
-      AlertMsgColors.BorderGray
+      AlertMsgColors.BORDERGRAY
     );
   });
 
   test("TC-201 Authorization with valid email and password", async ({
     signinPage,
   }) => {
-      await signinPage.fillLoginEmailInput(valid_creds.email);
+      await signinPage.fillLoginEmailInput(process.env.USER_EMAIL ?? "");
       await expect(signinPage.getEmailInput()).toHaveValue(
-        valid_creds.email
+        process.env.USER_EMAIL ?? ""
       );
-      await signinPage.fillLoginPasswordInput(valid_creds.password);
+      await signinPage.fillLoginPasswordInput(process.env.USER_PASSWORD ?? "");
       await expect(signinPage.getPasswordInput()).toHaveValue(
-        valid_creds.password
+        process.env.USER_PASSWORD ?? ""
       );
       await signinPage.clickHiddenIcon();
       await expect(signinPage.getPasswordInput()).toHaveAttribute(
@@ -83,7 +80,7 @@ test.describe("Auth page testing", () => {
       await signinPage.clickAvatarBlock();
       await expect(signinPage.getDropDownMenuContainer()).toBeVisible();
       expect(await signinPage.getProfileDropdownEmailText()).toBe(
-        valid_creds.email
+        process.env.USER_EMAIL ?? ""
       );
       await signinPage.clickLogoutBtn();
       await signinPage.clickHeaderAuthBtn();
@@ -97,19 +94,19 @@ test.describe("Auth page testing", () => {
       await signinPage.fillLoginEmailInput(phoneNumber);
       await expect(signinPage.getEmailInput()).toHaveCSS(
         "border",
-        AlertMsgColors.BorderGray
+        AlertMsgColors.BORDERGRAY
       );
       await signinPage.fillLoginPasswordInput(process.env.ADMIN_PASSWORD ?? "");
       await expect(signinPage.getPasswordInput()).toHaveCSS(
         "border",
-        AlertMsgColors.BorderGray
+        AlertMsgColors.BORDERGRAY
       );
       await signinPage.clickLoginSubmitBtn();
       await expect(signinPage.page).toHaveURL(process.env.BASE_URL ?? "");
       await signinPage.clickAvatarBlock();
       await expect(signinPage.getDropDownMenuContainer()).toBeVisible();
       await signinPage.clickProfileBtn();
-      await expect(signinPage.page).toHaveURL(`${process.env.BASE_URL}${Endpoints.Profile}`);
+      await expect(signinPage.page).toHaveURL(`${process.env.BASE_URL}${Endpoints.PROFILE}`);
       await expect(signinPage.getMobileInput()).toBeVisible();
       expect(await signinPage.getMobileValue()).toBe(
         process.env.ADMIN_PHONE_NUMBER

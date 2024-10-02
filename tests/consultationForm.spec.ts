@@ -17,24 +17,24 @@ test.describe("Consulting form functionality", () => {
     );
     await expect(mainPage.getConsultingInputName()).toHaveCSS(
       "border-bottom-color",
-      AlertMsgColors.Red
+      AlertMsgColors.RED
     );
     await expect(mainPage.getPhoneNumberFieldCannotBeEmptyError()).toHaveText(
       "Поле не може бути порожнім"
     );
     await expect(mainPage.getConsultingInputPhoneNumber()).toHaveCSS(
       "border-bottom-color",
-      AlertMsgColors.Red
+      AlertMsgColors.RED
     );
     await mainPage.fillConsultingInputName(randomValueHelper.randomName());
     await mainPage.clickOrderConsultationBtn();
     await expect(mainPage.getConsultingInputName()).toHaveCSS(
       "border-bottom-color",
-      AlertMsgColors.Black
+      AlertMsgColors.BLACK
     );
     await expect(mainPage.getConsultingInputPhoneNumber()).toHaveCSS(
       "border-bottom-color",
-      AlertMsgColors.Red
+      AlertMsgColors.RED
     );
     await mainPage.clickOnPhoneNumberInput();
     await expect(mainPage.getConsultingInputPhoneNumber()).toHaveAttribute(
@@ -48,11 +48,11 @@ test.describe("Consulting form functionality", () => {
     await mainPage.clickOrderConsultationBtn();
     await expect(mainPage.getConsultingInputName()).toHaveCSS(
       "border-bottom-color",
-      AlertMsgColors.Red
+      AlertMsgColors.RED
     );
     await expect(mainPage.getConsultingInputPhoneNumber()).toHaveCSS(
       "border-bottom-color",
-      AlertMsgColors.Black
+      AlertMsgColors.BLACK
     );
     await mainPage.fillConsultingInputName(randomValueHelper.randomName());
     await mainPage.clearConsultingInputPhoneNumber();
@@ -63,11 +63,11 @@ test.describe("Consulting form functionality", () => {
     await mainPage.clickOrderConsultationBtn();
     await expect(mainPage.getConsultingInputName()).toHaveCSS(
       "border-bottom-color",
-      AlertMsgColors.Black
+      AlertMsgColors.BLACK
     );
     await expect(mainPage.getConsultingInputPhoneNumber()).toHaveCSS(
       "border-bottom-color",
-      AlertMsgColors.Red
+      AlertMsgColors.RED
     );
     await expect(mainPage.getValidateFieldFailure()).toHaveText(
       "Телефон не пройшов валідацію"
