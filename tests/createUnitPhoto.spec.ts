@@ -1,8 +1,16 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
+import { Endpoints } from "../constants/enums_endpoints.constant";
 import path from "path";
 
 test.describe("test create unit photo section", () => {
+  test.beforeEach(async ({ signInHelper, signinPage }) => {
+    await signinPage.open(Endpoints.CREATEUNIT);
+    await signInHelper.login(
+      process.env.USER_EMAIL ?? "",
+      process.env.USER_PASSWORD ?? ""
+    );
+  });
   test("TC-384 Verify same images uploading", async ({
     createUnitPage,
     randomValueHelper,

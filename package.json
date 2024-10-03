@@ -11,7 +11,9 @@
     "test:footer": "playwright test tests/footer.spec.ts --project=chromium",
     "test:main": "playwright test tests/main.spec.ts --project=chromium --headed",
     "test:signin": "playwright test tests/signIn.spec.ts --project=chromium --trace on --headed",
-    "test:createUnit": "playwright test tests/createUnit.spec.ts --project=chromium --trace on --headed"
+    "test:createUnit": "playwright test tests/createUnit.spec.ts --project=chromium --trace on --headed",
+    "test:createUnitPhoto": "playwright test tests/createUnitPhoto.spec.ts --project=chromium --trace on --headed"
+
   },
   "keywords": [],
   "author": "Stanislav Stankov",
