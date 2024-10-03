@@ -54,6 +54,12 @@ const popUpBtn = '[class*="ItemButtons_darkBlueBtn"]'
 const popUpPhotoWrapper = '[class*="PopupLayout_wrapper"]'
 const previousBtn = `[data-testid="prevButton"]`
 const selectWithSearchManufacturer = `[data-testid="div-wrapper-customSelectWithSearch"]`
+const photoSectionClue = '[class*="ImagesUnitFlow_descr"]'
+const serviceUnitInput =  '[class*="ServicesUnitFlow_searchInput"]'
+const photoSectionTitle = '[class*="ImagesUnitFlow_paragraph"]'
+const mainImageLabel = `[data-testid="mainImageLabel"]`
+const deleteImageBlck = `[data-testid="deleteImage"]`
+const deleteIconWrapper = '[class*="ImagesUnitFlow_deleteIconWrapper"]'
 
 export class CreateUnitPage extends Page {
   constructor(page: Page["page"]) {
@@ -122,6 +128,10 @@ export class CreateUnitPage extends Page {
 
   getSelectedManufacturerInput() {
     return super.getElement(selectedManufacturerInput);
+  }
+
+  getPhotoSectionClue(){
+    return super.getElement(photoSectionClue)
   }
 
   getSelectedManufacturerError() {
@@ -271,8 +281,56 @@ export class CreateUnitPage extends Page {
     return invalidSymbols;
   }
 
+  getServiceUnitInput(){
+    return super.getElement(serviceUnitInput)
+  }
+
+  getPhotoSectionTitle(){
+    return super.getElement(photoSectionTitle)
+  }
+
+  getClickImageBlock(){
+    return super.getElement(clickImageBlock)
+  }
+
+  getImageBlock(){
+    return super.getElement(imageBlock)
+  }
+
+  getAllImageBlock(){
+    return super.getElementAll(this.getImageBlock())
+  }
+
+  getImageBlockByindex(index: number){
+    return this.getImageBlock().nth(index)
+  }
+
+  getAllClickImageBlock(){
+    return super.getElementAll(this.getClickImageBlock())
+  }
+
+  getMainImageLabel(){
+    return super.getElement(mainImageLabel)
+  }
+
+  getDeleteImageByIndex(index: number){
+    return super.getElement(deleteImageBlck).nth(index)
+  }
+
+  getDeleteIconWrapperByindex(index: number){
+    return super.getElement(deleteIconWrapper).nth(index)
+  }
+
+  async clickDeleteIconWrapper(index: number){
+    await super.clickLocator(this.getDeleteIconWrapperByindex(index))
+  }
+
+  async hoverOnImageBlockByIndex(index: number){
+     await super.elementHover(this.getImageBlockByindex(index))
+  }
+
   async clickImageBlock(index: number = 0) {
-    await super.clickLocator(super.getElement(clickImageBlock).nth(index));
+    await super.clickLocator(this.getImageBlock().nth(index))
   }
 
   async clickClosePopUpBtn() {

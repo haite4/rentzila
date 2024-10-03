@@ -102,7 +102,7 @@ export default class Page {
   }
 
   protected async elementHover(locator: Locator){
-    locator.hover()
+    await locator.hover()
   }
 
   protected async setElementFiles(fileChooser: FileChooser, filePath: string){
