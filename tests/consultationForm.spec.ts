@@ -1,8 +1,6 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
-import { AlertMsgColors } from "../helpers/enums_colors"
-
-require("dotenv").config();
+import { AlertMsgColors } from "../constants/enums_colors.constant";
 
 test.describe("Consulting form functionality", () => {
   test("TC-226: Verify 'У Вас залишилися питання?' form", async ({
@@ -19,24 +17,24 @@ test.describe("Consulting form functionality", () => {
     );
     await expect(mainPage.getConsultingInputName()).toHaveCSS(
       "border-bottom-color",
-      AlertMsgColors.Red
+      AlertMsgColors.RED
     );
     await expect(mainPage.getPhoneNumberFieldCannotBeEmptyError()).toHaveText(
       "Поле не може бути порожнім"
     );
     await expect(mainPage.getConsultingInputPhoneNumber()).toHaveCSS(
       "border-bottom-color",
-      AlertMsgColors.Red
+      AlertMsgColors.RED
     );
     await mainPage.fillConsultingInputName(randomValueHelper.randomName());
     await mainPage.clickOrderConsultationBtn();
     await expect(mainPage.getConsultingInputName()).toHaveCSS(
       "border-bottom-color",
-      AlertMsgColors.Black
+      AlertMsgColors.BLACK
     );
     await expect(mainPage.getConsultingInputPhoneNumber()).toHaveCSS(
       "border-bottom-color",
-      AlertMsgColors.Red
+      AlertMsgColors.RED
     );
     await mainPage.clickOnPhoneNumberInput();
     await expect(mainPage.getConsultingInputPhoneNumber()).toHaveAttribute(
@@ -50,11 +48,11 @@ test.describe("Consulting form functionality", () => {
     await mainPage.clickOrderConsultationBtn();
     await expect(mainPage.getConsultingInputName()).toHaveCSS(
       "border-bottom-color",
-      AlertMsgColors.Red
+      AlertMsgColors.RED
     );
     await expect(mainPage.getConsultingInputPhoneNumber()).toHaveCSS(
       "border-bottom-color",
-      AlertMsgColors.Black
+      AlertMsgColors.BLACK
     );
     await mainPage.fillConsultingInputName(randomValueHelper.randomName());
     await mainPage.clearConsultingInputPhoneNumber();
@@ -65,11 +63,11 @@ test.describe("Consulting form functionality", () => {
     await mainPage.clickOrderConsultationBtn();
     await expect(mainPage.getConsultingInputName()).toHaveCSS(
       "border-bottom-color",
-      AlertMsgColors.Black
+      AlertMsgColors.BLACK
     );
     await expect(mainPage.getConsultingInputPhoneNumber()).toHaveCSS(
       "border-bottom-color",
-      AlertMsgColors.Red
+      AlertMsgColors.RED
     );
     await expect(mainPage.getValidateFieldFailure()).toHaveText(
       "Телефон не пройшов валідацію"
