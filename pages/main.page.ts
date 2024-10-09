@@ -190,7 +190,7 @@ export class MainPage extends Page {
   }
 
   async clickPrivacyPolicyLink(): Promise<void> {
-    await super.clickLocator(super.getElement(privacyPolicyTitle));
+    await super.clickLocator(this.getPrivacyPolicy());
   }
 
   async clickCookieUsagePolicyLink(): Promise<void> {

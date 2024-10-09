@@ -17,6 +17,7 @@ test.describe("Create unit functionality", () => {
   test("TC-294 Verify body title and tab titles", async ({
     createUnitPage,
   }) => {
+    await createUnitPage.page.waitForTimeout(2000)
     await expect(createUnitPage.getCategoryBodyTitle()).toBeVisible();
     await expect(createUnitPage.getCategoryBodyTitle()).toHaveText(
       general_msg.createAnnouncment
@@ -46,6 +47,7 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
   }) => {
     test.setTimeout(160000);
+    await createUnitPage.getCategorySelectTitle().waitFor({state:"visible"})
     await expect(createUnitPage.getCategorySelectTitle()).toBeVisible();
     await expect(createUnitPage.getCategorySelectTitle()).toHaveText(
       /^Категорія.*\*$/
@@ -115,6 +117,7 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
     randomValueHelper,
   }) => {
+    await createUnitPage.getAdvertisementTitle().waitFor({state:"visible"})
     await expect(createUnitPage.getAdvertisementTitle()).toBeVisible();
     await expect(createUnitPage.getAdvertisementTitle()).toHaveText(
       /^Назва оголошення.*\*$/
@@ -188,6 +191,7 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
     randomValueHelper,
   }) => {
+    await createUnitPage.getSelectManufacturerTitle().waitFor({state: "visible"})
     await expect(createUnitPage.getSelectManufacturerTitle()).toBeVisible();
     await expect(createUnitPage.getSelectManufacturerTitle()).toHaveText(
       /^Виробник транспортного засобу.*\*$/
@@ -268,6 +272,7 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
     randomValueHelper,
   }) => {
+    await createUnitPage.getNameModelTitle().waitFor({state:"visible"})
     await expect(createUnitPage.getNameModelTitle()).toBeVisible();
     await expect(createUnitPage.getNameModelTitle()).toHaveText(
       general_msg.modelName
@@ -303,6 +308,7 @@ test.describe("Create unit functionality", () => {
     randomValueHelper,
   }) => {
     test.setTimeout(200000);
+    await createUnitPage.getTechnicalCharacteristicTitle().waitFor({state: "visible"})
     await expect(
       createUnitPage.getTechnicalCharacteristicTitle()
     ).toBeVisible();
@@ -362,6 +368,7 @@ test.describe("Create unit functionality", () => {
   test("TC-319 Verify vehicle location division", async ({
     createUnitPage,
   }) => {
+    await createUnitPage.getAddressSelectionTitle().waitFor({state: "visible"})
     await expect(createUnitPage.getAddressSelectionTitle()).toBeVisible();
     await expect(createUnitPage.getAddressSelectionTitle()).toHaveText(
       /^Місце розташування технічного засобу.*\*$/
@@ -401,8 +408,8 @@ test.describe("Create unit functionality", () => {
     await createUnitPage.getMapPopUp().waitFor({ state: "visible" });
     await createUnitPage.clickOnThePopUpMap(x, y);
     await createUnitPage.page.waitForTimeout(500);
-    await createUnitPage.getMapPopUpAddressText();
     const addressText = await createUnitPage.getMapPopUpAddressText();
+    await createUnitPage.page.waitForTimeout(1500);
     await createUnitPage.clickMapPopUpSubmitChoice();
     await expect(createUnitPage.getMapLabel()).toHaveText(addressText ?? "");
     await expect(createUnitPage.getMapPopUpWrapper()).not.toBeVisible();
@@ -425,6 +432,7 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
     randomValueHelper,
   }) => {
+    await createUnitPage.getNextBtn().waitFor({state:"visible"})
     await expect(createUnitPage.getNextBtn()).toHaveText(general_msg.next);
     await createUnitPage.clickNextBtn();
     for (const requiredFields of createUnitPage.getListOfLocatorRequiredFieldsError()) {
@@ -462,6 +470,7 @@ test.describe("Create unit functionality", () => {
           "true"
         );
       } else {
+        await createUnitPage.page.waitForTimeout(1500)
         await expect(createUnitPage.getCategoryTabBtn(i)).toHaveAttribute(
           "aria-selected",
           "false"
