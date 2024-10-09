@@ -101,8 +101,8 @@ export default class Page {
       await locator.setInputFiles(filePath)
   }
 
-  protected async elementHover(locator: Locator){
-    await locator.hover()
+  protected async elementHover(locator: Locator, timeout?: number){
+    await locator.hover({timeout})
   }
 
   protected async setElementFiles(fileChooser: FileChooser, filePath: string){

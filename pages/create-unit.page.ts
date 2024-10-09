@@ -1,5 +1,6 @@
 import { FileChooser } from "@playwright/test";
 import Page from "./page";
+import { time } from "console";
 
 const categorySelectTitle = '[class*="CategorySelect_title"]';
 const categorySelectContent = `[data-testid="categoryName"]`;
@@ -47,19 +48,19 @@ const mapPopUpAddress = `[data-testid="address"]`;
 const mapPopUp = "#map";
 const preventBtn = `[data-testid="prevButton"]`;
 const clickImageBlock = `[data-testid="clickImage"]`;
-const errorPopUp = `[data-testid="errorPopup"]`
-const closePopUpBtn = `[data-testid="closeIcon"]`
-const imageBlock = `[data-testid="imageBlock"]`
-const popUpBtn = '[class*="ItemButtons_darkBlueBtn"]'
-const popUpPhotoWrapper = '[class*="PopupLayout_wrapper"]'
-const previousBtn = `[data-testid="prevButton"]`
-const selectWithSearchManufacturer = `[data-testid="div-wrapper-customSelectWithSearch"]`
-const photoSectionClue = '[class*="ImagesUnitFlow_descr"]'
-const serviceUnitInput =  '[class*="ServicesUnitFlow_searchInput"]'
-const photoSectionTitle = '[class*="ImagesUnitFlow_paragraph"]'
-const mainImageLabel = `[data-testid="mainImageLabel"]`
-const deleteImageBlck = `[data-testid="deleteImage"]`
-const deleteIconWrapper = '[class*="ImagesUnitFlow_deleteIconWrapper"]'
+const errorPopUp = `[data-testid="errorPopup"]`;
+const closePopUpBtn = `[data-testid="closeIcon"]`;
+const imageBlock = `[data-testid="imageBlock"]`;
+const popUpBtn = '[class*="ItemButtons_darkBlueBtn"]';
+const popUpPhotoWrapper = '[class*="PopupLayout_wrapper"]';
+const previousBtn = `[data-testid="prevButton"]`;
+const selectWithSearchManufacturer = `[data-testid="div-wrapper-customSelectWithSearch"]`;
+const photoSectionClue = '[class*="ImagesUnitFlow_descr"]';
+const serviceUnitInput = '[class*="ServicesUnitFlow_searchInput"]';
+const photoSectionTitle = '[class*="ImagesUnitFlow_paragraph"]';
+const mainImageLabel = `[data-testid="mainImageLabel"]`;
+const deleteImageBlck = `[data-testid="deleteImage"]`;
+const deleteIconWrapper = '[class*="ImagesUnitFlow_deleteIconWrapper"]';
 
 export class CreateUnitPage extends Page {
   constructor(page: Page["page"]) {
@@ -102,21 +103,21 @@ export class CreateUnitPage extends Page {
     return super.getElement(categoryBodyTitle);
   }
 
-    getAdvertisementTitle(){
-        return super.getElement(customInputTitle).first()
-    }
+  getAdvertisementTitle() {
+    return super.getElement(customInputTitle).first();
+  }
 
-    getAdvertisementInput(){
-        return super.getElement(customInput).first()
-    }
+  getAdvertisementInput() {
+    return super.getElement(customInput).first();
+  }
 
-    getNameModelTitle(){
-        return super.getElement(customInputTitle).nth(1)
-    }
+  getNameModelTitle() {
+    return super.getElement(customInputTitle).nth(1);
+  }
 
-    getNameModelInput(){
-        return super.getElement(customInput).nth(1)
-    }
+  getNameModelInput() {
+    return super.getElement(customInput).nth(1);
+  }
 
   getErrorMessage() {
     return super.getElement(errorMessage);
@@ -130,8 +131,8 @@ export class CreateUnitPage extends Page {
     return super.getElement(selectedManufacturerInput);
   }
 
-  getPhotoSectionClue(){
-    return super.getElement(photoSectionClue)
+  getPhotoSectionClue() {
+    return super.getElement(photoSectionClue);
   }
 
   getSelectedManufacturerError() {
@@ -247,8 +248,8 @@ export class CreateUnitPage extends Page {
     return super.getElement(previousBtn);
   }
 
-  getSelectWithSearchManufacturer(){
-    return super.getElement(selectWithSearchManufacturer)
+  getSelectWithSearchManufacturer() {
+    return super.getElement(selectWithSearchManufacturer);
   }
 
   getCategoryTabBtn(index: number) {
@@ -273,29 +274,69 @@ export class CreateUnitPage extends Page {
     return ["1234567890123456", "1234567890 12345", "123456789012345 "];
   }
 
-    getListOfInvalidSymbols(includeSpaces: boolean = true): string[]{
-        let invalidSymbols = [" ", "<>", "{}", ";", "^"];
-        if(!includeSpaces){
-            return invalidSymbols.filter(symbol => symbol !== " ")
-        }
-        return invalidSymbols
+  getListOfInvalidSymbols(includeSpaces: boolean = true): string[] {
+    let invalidSymbols = [" ", "<>", "{}", ";", "^"];
+    if (!includeSpaces) {
+      return invalidSymbols.filter((symbol) => symbol !== " ");
     }
+    return invalidSymbols;
+  }
 
-    async typeAdvertisementNameInput(randomValue: string){
-        await super.typeText(this.getAdvertisementInput(), randomValue)
-    }
+  getServiceUnitInput() {
+    return super.getElement(serviceUnitInput);
+  }
 
-    async fillAdvertisementNameInput(randomValue: string){
-        await super.fillText(this.getAdvertisementInput(), randomValue)
-    }
+  getPhotoSectionTitle() {
+    return super.getElement(photoSectionTitle);
+  }
 
-    async getAdvertisementInputValue(){
-        return  super.getElementInputValue(this.getAdvertisementInput())
-    }
+  getClickImageBlock() {
+    return super.getElement(clickImageBlock);
+  }
 
-    async clearAdvertisementInput(){
-        await super.clearInputField(this.getAdvertisementInput())
-    }
+  getImageBlock() {
+    return super.getElement(imageBlock);
+  }
+
+  getAllImageBlock() {
+    return super.getElementAll(this.getImageBlock());
+  }
+
+  getImageBlockByindex(index: number) {
+    return this.getImageBlock().nth(index);
+  }
+
+  getAllClickImageBlock() {
+    return super.getElementAll(this.getClickImageBlock());
+  }
+
+  getMainImageLabel() {
+    return super.getElement(mainImageLabel);
+  }
+
+  getDeleteImageByIndex(index: number) {
+    return super.getElement(deleteImageBlck).nth(index);
+  }
+
+  getDeleteIconWrapperByindex(index: number) {
+    return super.getElement(deleteIconWrapper).nth(index);
+  }
+
+  async typeAdvertisementNameInput(randomValue: string) {
+    await super.typeText(this.getAdvertisementInput(), randomValue);
+  }
+
+  async fillAdvertisementNameInput(randomValue: string) {
+    await super.fillText(this.getAdvertisementInput(), randomValue);
+  }
+
+  async getAdvertisementInputValue() {
+    return super.getElementInputValue(this.getAdvertisementInput());
+  }
+
+  async clearAdvertisementInput() {
+    await super.clearInputField(this.getAdvertisementInput());
+  }
 
   async clickNextBtn() {
     await super.clickLocator(this.getNextBtn());
@@ -390,17 +431,17 @@ export class CreateUnitPage extends Page {
     await super.clickLocator(super.getElement(closeOptionsBtn));
   }
 
-    async typeModelNameiInput(value: string){
-        await super.typeText(this.getNameModelInput(), value)
-    }
+  async typeModelNameiInput(value: string) {
+    await super.typeText(this.getNameModelInput(), value);
+  }
 
-    async clearModelNameiInput(){
-        await super.clearInputField(this.getNameModelInput())
-    }
+  async clearModelNameiInput() {
+    await super.clearInputField(this.getNameModelInput());
+  }
 
-    async getModelNameiInputValue(){
-        return super.getElementInputValue(this.getNameModelInput())
-    }
+  async getModelNameiInputValue() {
+    return super.getElementInputValue(this.getNameModelInput());
+  }
 
   async clickTechnicalCharacteristicTextArea() {
     await super.clickLocator(this.getTechnicalCharacteristicTextArea());
@@ -490,4 +531,21 @@ export class CreateUnitPage extends Page {
   async clickPreviousBtn() {
     await super.clickLocator(this.getPrevioudBtn());
   }
+
+  async clickDeleteIconWrapper(index: number) {
+    await super.clickLocator(this.getDeleteIconWrapperByindex(index));
+  }
+
+  async hoverOnImageBlockByIndex(index: number, timeout: number) {
+    await super.elementHover(this.getImageBlockByindex(index), timeout);
+  }
+
+  async clickImageBlock(index: number = 0) {
+    await super.clickLocator(this.getImageBlock().nth(index));
+  }
+
+  async clickClosePopUpBtn() {
+    await super.clickLocator(this.getClosePopUpBtn());
+  }
+
 }

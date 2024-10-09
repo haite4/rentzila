@@ -16,21 +16,19 @@ test.describe("test create unit photo section", () => {
       await createUnitPage.clickFirstCategoryLocator(0);
       await createUnitPage.clickSecondCategoryLocator(0);
       await createUnitPage.clickThirdCategoryLocator(0);
-      await createUnitPage.typeNazvaOgolochenyaInput(
+      await createUnitPage.typeAdvertisementNameInput(
         randomValueHelper.generateStringWithLength(10)
       );
       await createUnitPage.typeSelectedManufacturerInput("Abc");
       await createUnitPage.clickSelectedManufacturerOptions();
       await createUnitPage.clickAddressSelectionBtn();
-      await createUnitPage.getMapPopUp().waitFor({ state: "visible" });
+      await createUnitPage.page.waitForTimeout(1500)
       await createUnitPage.clickMapPopUpSubmitChoice();
-      await createUnitPage.getNextBtn().waitFor({ state: "visible" });
       await createUnitPage.clickNextBtn();
     }
   );
   test("TC-384 Verify same images uploading", async ({ createUnitPage }) => {
     const actions = ["clickCrossBtn", "clickSaveBtn", "clickOutsidePopUp"];
-
     for (const action of actions) {
       for (let i = 0; i < 2; i++) {
         const fileChooserPromise =
@@ -171,11 +169,11 @@ test.describe("test create unit photo section", () => {
     }
 
     await expect(createUnitPage.getCategorySelectContent()).toBeVisible();
-    await expect(createUnitPage.getNazvaOgolochenyaInput()).toBeVisible();
+    await expect(createUnitPage.getAdvertisementInput()).toBeVisible();
     await expect(
       createUnitPage.getSelectWithSearchManufacturer()
     ).toBeVisible();
-    await expect(createUnitPage.getNazvaModeliInput()).toBeVisible();
+    await expect(createUnitPage.getNameModelInput()).toBeVisible();
     await expect(
       createUnitPage.getTechnicalCharacteristicTextArea()
     ).toBeVisible();
@@ -332,7 +330,7 @@ test.describe("test create unit photo section", () => {
     }
 
     for (let i = 0; i < 12; i++) {
-      await createUnitPage.hoverOnImageBlockByIndex(i);
+      await createUnitPage.hoverOnImageBlockByIndex(i, 1000);
       await expect(createUnitPage.getDeleteImageByIndex(i)).toHaveCSS(
         "justify-content",
         "center"
@@ -340,7 +338,7 @@ test.describe("test create unit photo section", () => {
     }
 
     for (let i = 11; i >= 0; i--) {
-      await createUnitPage.hoverOnImageBlockByIndex(i);
+      await createUnitPage.hoverOnImageBlockByIndex(i, 1000);
       await createUnitPage.clickDeleteIconWrapper(i);
     }
 
