@@ -25,28 +25,35 @@ export const test = base.extend<MyFixtures>({
   mainPage: async ({ page }, use) => {
     await use(new MainPage(page));
   },
+
   productsPage: async ({ page }, use) => {
     await use(new ProductsPage(page));
   },
+
   productsDetailsPage: async ({ page }, use) => {
     await use(new ProductsDetailsPage(page));
   },
+
   basePage: async ({ page }, use) => {
     await use(new Page(page));
   },
+
   apiHelper: async ({}, use) => {
     const apiRequestContext = await playwrightRequest.newContext();
     await use(new ApiHelper(apiRequestContext));
   },
+
   randomValueHelper: async ({}, use) => {
     await use(new RandomValue());
   },
   signinPage: async({page}, use) => {
     await use(new SigninPage(page))
   },
+
   createUnitPage: async({page}, use) => {
     await use(new CreateUnitPage(page))
   },
+  
   signInHelper: async({page, signinPage}, use) => {
     await use(new SignInHelper(page, signinPage))
   }

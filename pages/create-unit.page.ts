@@ -82,19 +82,19 @@ export class CreateUnitPage extends Page {
         return super.getElement(categoryBodyTitle)
     }
 
-    getNazvaOgolochenyaTitie(){
+    getAdvertisementTitle(){
         return super.getElement(customInputTitle).first()
     }
 
-    getNazvaOgolochenyaInput(){
+    getAdvertisementInput(){
         return super.getElement(customInput).first()
     }
 
-    getNazvaModeliTitle(){
+    getNameModelTitle(){
         return super.getElement(customInputTitle).nth(1)
     }
 
-    getNazvaModeliInput(){
+    getNameModelInput(){
         return super.getElement(customInput).nth(1)
     }
 
@@ -244,20 +244,20 @@ export class CreateUnitPage extends Page {
         return invalidSymbols
     }
 
-    async typeNazvaOgolochenyaInput(randomValue: string){
-        await super.typeText(this.getNazvaOgolochenyaInput(), randomValue)
+    async typeAdvertisementNameInput(randomValue: string){
+        await super.typeText(this.getAdvertisementInput(), randomValue)
     }
 
-    async fillNazvaOgolochenyaInput(randomValue: string){
-        await super.fillText(this.getNazvaOgolochenyaInput(), randomValue)
+    async fillAdvertisementNameInput(randomValue: string){
+        await super.fillText(this.getAdvertisementInput(), randomValue)
     }
 
-    async getOgolochenyaInputValue(){
-        return  super.getElementInputValue(this.getNazvaOgolochenyaInput())
+    async getAdvertisementInputValue(){
+        return  super.getElementInputValue(this.getAdvertisementInput())
     }
 
-    async clearNazvaOgolochenyaInput(){
-        await super.clearInputField(this.getNazvaOgolochenyaInput())
+    async clearAdvertisementInput(){
+        await super.clearInputField(this.getAdvertisementInput())
     }
 
     async clickNextBtn(){
@@ -336,16 +336,16 @@ export class CreateUnitPage extends Page {
         await super.clickLocator(super.getElement(closeOptionsBtn))
     }
 
-    async typeNazvaModeliInput(value: string){
-        await super.typeText(this.getNazvaModeliInput(), value)
+    async typeModelNameiInput(value: string){
+        await super.typeText(this.getNameModelInput(), value)
     }
 
-    async clearNazvaModeliInput(){
-        await super.clearInputField(this.getNazvaModeliInput())
+    async clearModelNameiInput(){
+        await super.clearInputField(this.getNameModelInput())
     }
 
-    async getNazvaModeliInputValue(){
-        return super.getElementInputValue(this.getNazvaModeliInput())
+    async getModelNameiInputValue(){
+        return super.getElementInputValue(this.getNameModelInput())
     }
 
     async clickTechnicalCharacteristicTextArea(){

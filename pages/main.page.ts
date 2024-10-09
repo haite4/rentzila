@@ -2,7 +2,7 @@ import { Locator } from "@playwright/test";
 import Page from "./page";
 
 const equipment = `[data-testid="specialEquipment"]`;
-const populyarniServices = 'section[data-testid*="services"]';
+const popularServices  = 'section[data-testid*="services"]';
 const populyarniEquipment = 'section[data-testid*="specialEquipment"]';
 const itemServices = '[class*="RentzilaProposes_proposes_item"]';
 const title = `[data-testid="title"]`;
@@ -12,17 +12,17 @@ const logo = `[data-testid="logo"]`;
 const aboutUsTitle = '[class*="RentzilaAbout_title"]';
 const forBuyersTitle = '[class*="RentzilaForBuyers_title"]';
 const contactsTitle = '[class*="RentzilaContacts_title"]';
-const politikaConfidencialinosty = `[data-testid="politika-konfidenciinosti"]`;
-const pravilaVikoristanyaCookie = `[data-testid="pravila-vikoristannya-failiv-cookie"]`;
-const umoviDostupu = `[data-testid="umovi-dostupu-ta-koristuvannya"]`;
-const zapitiNaRoboru = `[data-testid="zapiti-na-robotu"]`;
+const privacyPolicy  = `[data-testid="politika-konfidenciinosti"]`;
+const cookieUsagePolicy  = `[data-testid="pravila-vikoristannya-failiv-cookie"]`;
+const accessTerms  = `[data-testid="umovi-dostupu-ta-koristuvannya"]`;
+const jobRequests  = `[data-testid="zapiti-na-robotu"]`;
 const copyright = `[data-testid="copyright"]`;
 const contactUsEmail = '[class*="RentzilaContacts_email"]';
-const politikaConfidencialinostyTitle = 'h1[class*="PrivacyPolicy_title"]';
-const politikaVikoristanyaCookieTitle = 'h1[class*="Cookies_title"]';
+const privacyPolicyTitle  = 'h1[class*="PrivacyPolicy_title"]';
+const cookieUsagePolicyTitle  = 'h1[class*="Cookies_title"]';
 const tenderSearchInput = `[data-testid="search"]`;
 const heroSectionTitle = '[class*="HeroSection_title"]';
-const ogoloshennyaSearch = `[data-testid="searchInput"]`;
+const advertisementSearch  = `[data-testid="searchInput"]`;
 const consultingInputName = '[class*="ConsultationForm_name"] input';
 const consultingInputPhoneNumber = '[class*="ConsultationForm_phone"] input';
 const specialEquipmentText = "specialEquipment";
@@ -35,17 +35,17 @@ export class MainPage extends Page {
     super(page);
   }
 
-  getPopulyarniServicesTab(): Locator {
-    return super.getElement(populyarniServices);
+  getPopularServicesTab(): Locator {
+    return super.getElement(popularServices);
   }
 
-  getPopulyarniEuqipmentTab(): Locator {
+  getPopularEquipmentTab(): Locator {
     return super.getElement(populyarniEquipment);
   }
 
   getListItemServices(): Promise<Locator[]> {
     return super.getElementAll(
-      super.getElement(populyarniServices, itemServices)
+      super.getElement(popularServices , itemServices)
     );
   }
 
@@ -54,7 +54,7 @@ export class MainPage extends Page {
   }
 
   getServicesTitle(): Locator {
-    return super.getElement(populyarniServices, title);
+    return super.getElement(popularServices , title);
   }
 
   getEquipmentTitle(): Locator {
@@ -73,8 +73,8 @@ export class MainPage extends Page {
     return super.getElement(aboutUsTitle);
   }
 
-  getPolitikaConfidencialinosty(): Locator {
-    return super.getElement(politikaConfidencialinosty);
+  getPrivacyPolicy(): Locator {
+    return super.getElement(privacyPolicy);
   }
 
   getAnnouncement(): Locator {
@@ -85,15 +85,15 @@ export class MainPage extends Page {
     return super.getElement(contactsTitle);
   }
 
-  getPravilaVikoristanyaCookie(): Locator {
-    return super.getElement(pravilaVikoristanyaCookie);
+  getCookieUsagePolicy(): Locator {
+    return super.getElement(cookieUsagePolicy);
   }
 
-  getUmoviDostupu(): Locator {
-    return super.getElement(umoviDostupu);
+  getAccessTerms(): Locator {
+    return super.getElement(accessTerms);
   }
 
-  getOgoloshennya(): Locator {
+  getAdvertisement(): Locator {
     return super.getElementByRole("Оголошення");
   }
 
@@ -101,8 +101,8 @@ export class MainPage extends Page {
     return super.getElementByRole("Тендери");
   }
 
-  getZapitiNaRobotu(): Locator {
-    return super.getElement(zapitiNaRoboru);
+  getJobRequests(): Locator {
+    return super.getElement(jobRequests);
   }
 
   getCopyright(): Locator {
@@ -113,24 +113,24 @@ export class MainPage extends Page {
     return super.getElement(contactUsEmail);
   }
 
-  getPolitikaConfidencialinostyTitle(): Locator {
-    return super.getElement(politikaConfidencialinostyTitle);
+  getPrivacyPolicyTitle(): Locator {
+    return super.getElement(privacyPolicyTitle);
   }
 
-  getPolitikaVikoristanyaCookieTitle(): Locator {
-    return super.getElement(politikaVikoristanyaCookieTitle);
+  getCookieUsagePolicyTitle(): Locator {
+    return super.getElement(cookieUsagePolicyTitle);
   }
 
-  getumoviDostupuTitle(): Locator {
-    return super.getElement(umoviDostupu);
+  getAccessTermsTitle(): Locator {
+    return super.getElement(accessTerms);
   }
 
   getTenderSearchInput(): Locator {
     return super.getElement(tenderSearchInput);
   }
 
-  getOgoloshennyaSearch(): Locator {
-    return super.getElement(ogoloshennyaSearch);
+  getAdvertisementSearch(): Locator {
+    return super.getElement(advertisementSearch);
   }
 
   getHeroSectionTitle(): Locator {
@@ -174,7 +174,7 @@ export class MainPage extends Page {
   }
 
   async scrollToServices(): Promise<void> {
-    await super.scrollToElementIfNeeded(populyarniServices);
+    await super.scrollToElementIfNeeded(popularServices);
   }
 
   async getServicesText(locator: Locator): Promise<string | null> {
@@ -189,16 +189,16 @@ export class MainPage extends Page {
     );
   }
 
-  async clickPolitikaConfidencialinostyLink(): Promise<void> {
-    await super.clickLocator(super.getElement(politikaConfidencialinosty));
+  async clickPrivacyPolicyLink(): Promise<void> {
+    await super.clickLocator(super.getElement(privacyPolicyTitle));
   }
 
-  async clickPravilaVikoristanyaCookieLink(): Promise<void> {
-    await super.clickLocator(this.getPravilaVikoristanyaCookie());
+  async clickCookieUsagePolicyLink(): Promise<void> {
+    await super.clickLocator(this.getCookieUsagePolicy());
   }
 
-  async clickUmoviDostupuLink(): Promise<void> {
-    await super.clickLocator(this.getUmoviDostupu());
+  async clickAccessTermsLink(): Promise<void> {
+    await super.clickLocator(this.getAccessTerms());
   }
 
   async clickLogoOnHeaderLink(): Promise<void> {
@@ -217,7 +217,7 @@ export class MainPage extends Page {
     await super.clickLocator(this.getConsultingInputPhoneNumber());
   }
 
-  async clickOgoloshennyaLink(): Promise<void> {
+  async clickAdvertisementLink(): Promise<void> {
     await super.clickLocator(super.getElementByRole("Оголошення"));
   }
 
@@ -254,7 +254,7 @@ export class MainPage extends Page {
   }
 
   async clickOnTheLogo(): Promise<void> {
-    await this.page.locator(logo).first().click();
+    await super.clickLocator(super.getElement(logo).first());
   }
 
   async clearConsultingInputName(): Promise<void> {
