@@ -20,8 +20,9 @@ test.describe("Main page testing", () => {
 
     for (const locator of await mainPage.getListItemServices()) {
       const text = await mainPage.getServicesText(locator);
-
       await mainPage.clickOnEachServices(locator);
+
+      await mainPage.page.waitForURL(`${process.env.BASE_URL}${Endpoints.PRODUCTS}`)
 
       await expect(mainPage.page).toHaveURL(
         `${process.env.BASE_URL}${Endpoints.PRODUCTS}`
@@ -52,6 +53,7 @@ test.describe("Main page testing", () => {
     mainPage,
     productsPage,
   }) => {
+    test.setTimeout(30000)
     await mainPage.open();
     await mainPage.scrollToSpecialEquipment();
     await expect(mainPage.getEquipmentTitle()).toBeVisible();
