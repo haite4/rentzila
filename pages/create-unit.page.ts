@@ -102,21 +102,21 @@ export class CreateUnitPage extends Page {
     return super.getElement(categoryBodyTitle);
   }
 
-  getNazvaOgolochenyaTitie() {
-    return super.getElement(customInputTitle).first();
-  }
+    getAdvertisementTitle(){
+        return super.getElement(customInputTitle).first()
+    }
 
-  getNazvaOgolochenyaInput() {
-    return super.getElement(customInput).first();
-  }
+    getAdvertisementInput(){
+        return super.getElement(customInput).first()
+    }
 
-  getNazvaModeliTitle() {
-    return super.getElement(customInputTitle).nth(1);
-  }
+    getNameModelTitle(){
+        return super.getElement(customInputTitle).nth(1)
+    }
 
-  getNazvaModeliInput() {
-    return super.getElement(customInput).nth(1);
-  }
+    getNameModelInput(){
+        return super.getElement(customInput).nth(1)
+    }
 
   getErrorMessage() {
     return super.getElement(errorMessage);
@@ -273,85 +273,29 @@ export class CreateUnitPage extends Page {
     return ["1234567890123456", "1234567890 12345", "123456789012345 "];
   }
 
-  getListOfInvalidSymbols(includeSpaces: boolean = true): string[] {
-    let invalidSymbols = [" ", "<>", "{}", ";", "^"];
-    if (!includeSpaces) {
-      return invalidSymbols.filter((symbol) => symbol !== " ");
+    getListOfInvalidSymbols(includeSpaces: boolean = true): string[]{
+        let invalidSymbols = [" ", "<>", "{}", ";", "^"];
+        if(!includeSpaces){
+            return invalidSymbols.filter(symbol => symbol !== " ")
+        }
+        return invalidSymbols
     }
-    return invalidSymbols;
-  }
 
-  getServiceUnitInput(){
-    return super.getElement(serviceUnitInput)
-  }
+    async typeAdvertisementNameInput(randomValue: string){
+        await super.typeText(this.getAdvertisementInput(), randomValue)
+    }
 
-  getPhotoSectionTitle(){
-    return super.getElement(photoSectionTitle)
-  }
+    async fillAdvertisementNameInput(randomValue: string){
+        await super.fillText(this.getAdvertisementInput(), randomValue)
+    }
 
-  getClickImageBlock(){
-    return super.getElement(clickImageBlock)
-  }
+    async getAdvertisementInputValue(){
+        return  super.getElementInputValue(this.getAdvertisementInput())
+    }
 
-  getImageBlock(){
-    return super.getElement(imageBlock)
-  }
-
-  getAllImageBlock(){
-    return super.getElementAll(this.getImageBlock())
-  }
-
-  getImageBlockByindex(index: number){
-    return this.getImageBlock().nth(index)
-  }
-
-  getAllClickImageBlock(){
-    return super.getElementAll(this.getClickImageBlock())
-  }
-
-  getMainImageLabel(){
-    return super.getElement(mainImageLabel)
-  }
-
-  getDeleteImageByIndex(index: number){
-    return super.getElement(deleteImageBlck).nth(index)
-  }
-
-  getDeleteIconWrapperByindex(index: number){
-    return super.getElement(deleteIconWrapper).nth(index)
-  }
-
-  async clickDeleteIconWrapper(index: number){
-    await super.clickLocator(this.getDeleteIconWrapperByindex(index))
-  }
-
-  async hoverOnImageBlockByIndex(index: number){
-     await super.elementHover(this.getImageBlockByindex(index))
-  }
-
-  async clickImageBlock(index: number = 0) {
-    await super.clickLocator(this.getImageBlock().nth(index))
-  }
-
-  async clickClosePopUpBtn() {
-    await super.clickLocator(this.getClosePopUpBtn());
-  }
-
-  async typeNazvaOgolochenyaInput(randomValue: string) {
-    await super.typeText(this.getNazvaOgolochenyaInput(), randomValue);
-  }
-
-  async fillNazvaOgolochenyaInput(randomValue: string) {
-    await super.fillText(this.getNazvaOgolochenyaInput(), randomValue);
-  }
-
-  async getOgolochenyaInputValue() {
-    return super.getElementInputValue(this.getNazvaOgolochenyaInput());
-  }
-
-  async clearNazvaOgolochenyaInput() {
-    await super.clearInputField(this.getNazvaOgolochenyaInput());
-  }
+    async clearAdvertisementInput(){
+        await super.clearInputField(this.getAdvertisementInput())
+    }
 
   async clickNextBtn() {
     await super.clickLocator(this.getNextBtn());
@@ -446,17 +390,17 @@ export class CreateUnitPage extends Page {
     await super.clickLocator(super.getElement(closeOptionsBtn));
   }
 
-  async typeNazvaModeliInput(value: string) {
-    await super.typeText(this.getNazvaModeliInput(), value);
-  }
+    async typeModelNameiInput(value: string){
+        await super.typeText(this.getNameModelInput(), value)
+    }
 
-  async clearNazvaModeliInput() {
-    await super.clearInputField(this.getNazvaModeliInput());
-  }
+    async clearModelNameiInput(){
+        await super.clearInputField(this.getNameModelInput())
+    }
 
-  async getNazvaModeliInputValue() {
-    return super.getElementInputValue(this.getNazvaModeliInput());
-  }
+    async getModelNameiInputValue(){
+        return super.getElementInputValue(this.getNameModelInput())
+    }
 
   async clickTechnicalCharacteristicTextArea() {
     await super.clickLocator(this.getTechnicalCharacteristicTextArea());
