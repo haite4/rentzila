@@ -109,4 +109,14 @@ export default class Page {
     await fileChooser.setFiles(filePath)
   }
 
+  protected async writeTextToClipboard(textToCopy: string){
+    await this.page.evaluate((text) => {
+      navigator.clipboard.writeText(text)
+    }, textToCopy)
+  }
+
+  protected async pressBtn(commands: string){
+    await this.page.keyboard.press(commands)
+  }
+
 }
