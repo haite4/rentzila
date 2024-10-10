@@ -30,6 +30,7 @@ test.describe("test create unit photo section", () => {
       await createUnitPage.clickNextBtn();
     }
   );
+  
   test("TC-384 Verify same images uploading", async ({ createUnitPage }) => {
     for (const action of createUnitPage.getActionsList()) {
       for (let i = 0; i < 2; i++) {
