@@ -18,21 +18,21 @@ export class ApiHelper {
     this.request = request;
   }
 
-  private async getJwtToken(
-    email: string | undefined,
-    password: string | undefined,
-    tokenCache: string | null
-  ): Promise<string | null> {
-    if (tokenCache) {
-      return tokenCache;
+  private async getJwtToken(credentials: {
+    email?: string;
+    password?: string;
+    tokenCache?: string;
+  }): Promise<string | null> {
+    if (credentials.tokenCache) {
+      return credentials.tokenCache;
     }
 
     const response = await this.request.post(
       `${process.env.BASE_URL}${Endpoints.API_AUTH_CREATE}`,
       {
         data: {
-          email,
-          password,
+          email: credentials.email,
+          password: credentials.password,
         },
       }
     );
@@ -41,20 +41,20 @@ export class ApiHelper {
   }
 
   private async createAdminJwtToken() {
-    this.adminAccessToken = await this.getJwtToken(
-      process.env.ADMIN_EMAIL,
-      process.env.ADMIN_PASSWORD,
-      this.adminAccessToken
-    );
+    this.adminAccessToken = await this.getJwtToken({
+      email: process.env.ADMIN_EMAIL,
+      password: process.env.ADMIN_PASSWORD,
+      tokenCache: this.adminAccessToken ?? undefined,
+    });
     return this.adminAccessToken;
   }
 
   private async createUserJwtToken() {
-    this.userAccessToken = await this.getJwtToken(
-      process.env.USER_EMAIL,
-      process.env.USER_PASSWORD,
-      this.userAccessToken
-    );
+    this.userAccessToken = await this.getJwtToken({
+      email: process.env.USER_EMAIL,
+      password: process.env.USER_PASSWORD,
+      tokenCache: this.userAccessToken ?? undefined,
+    });
     return this.userAccessToken;
   }
 
