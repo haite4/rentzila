@@ -16,7 +16,7 @@ test.describe("test create unit price section", () => {
           await createUnitPage.clickFirstCategoryLocator(0);
           await createUnitPage.clickSecondCategoryLocator(0);
           await createUnitPage.clickThirdCategoryLocator(0);
-          await createUnitPage.typeNazvaOgolochenyaInput(
+          await createUnitPage.typeAdvertisementNameInput(
             randomValueHelper.generateStringWithLength(10)
           );
           await createUnitPage.typeSelectedManufacturerInput("Abc");

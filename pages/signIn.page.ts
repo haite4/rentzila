@@ -1,4 +1,5 @@
 import Page from "./page";
+import error_msg from "../data/errors_msg.json";
 
 const headerAuthBtn = '[class*="NavbarAuthBlock_buttonEnter"]';
 const loginPopup = `[data-testid="loginPopup"]`;
@@ -15,8 +16,6 @@ const profileBtn = `[data-testid="profile"]`;
 const mobileInput = "#mobile";
 const logoutBtnOnTheProfile = `[data-testid="logOut"]`;
 const loginFormError = '[class*="LoginForm_error"]';
-
-require("dotenv").config();
 
 export class SigninPage extends Page {
   constructor(page: Page["page"]) {
@@ -61,8 +60,8 @@ export class SigninPage extends Page {
 
   getListOfErrorMsg() {
     const errorMsg = [
-      "Пароль повинен містити як мінімум 1 цифру, 1 велику літеру і 1 малу літеру, також не повинен містити кирилицю та пробіли",
-      "Будь ласка, введіть як мінімум 8 символів",
+      error_msg.passwordRequirements,
+      error_msg.minimumCharacterRequirement,
     ];
     return errorMsg;
   }

@@ -1,6 +1,7 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
 import { Endpoints } from "../constants/enums_endpoints.constant";
+import general_msg from "../data/general_msg.json";
 
 test.describe("Main page testing", () => {
   test.slow();
@@ -11,7 +12,7 @@ test.describe("Main page testing", () => {
   }) => {
     await mainPage.open();
     await mainPage.scrollToServices();
-    await expect(mainPage.getPopulyarniServicesTab()).toBeVisible();
+    await expect(mainPage.getPopularServicesTab()).toBeVisible();
     await expect(mainPage.getServicesTitle()).toBeVisible();
     for (const services of await mainPage.getListItemServices()) {
       await expect(services).toBeVisible();
@@ -19,8 +20,11 @@ test.describe("Main page testing", () => {
 
     for (const locator of await mainPage.getListItemServices()) {
       const text = await mainPage.getServicesText(locator);
-
       await mainPage.clickOnEachServices(locator);
+
+      await mainPage.page.waitForURL(
+        `${process.env.BASE_URL}${Endpoints.PRODUCTS}`
+      );
 
       await expect(mainPage.page).toHaveURL(
         `${process.env.BASE_URL}${Endpoints.PRODUCTS}`
@@ -38,7 +42,7 @@ test.describe("Main page testing", () => {
       ).toBeVisible();
       await expect(
         productsDetailsPage.getUnitCharacteristicsTitle()
-      ).toHaveText("Послуги, які надає технічний засіб:");
+      ).toHaveText(general_msg.servicesProvidedByTechnicalMeans);
       await expect(
         productsDetailsPage.getUnitCharacteristicText(text ?? "")
       ).toHaveCount(1);
@@ -51,10 +55,11 @@ test.describe("Main page testing", () => {
     mainPage,
     productsPage,
   }) => {
+    test.setTimeout(30000);
     await mainPage.open();
     await mainPage.scrollToSpecialEquipment();
     await expect(mainPage.getEquipmentTitle()).toBeVisible();
-    await expect(mainPage.getPopulyarniEuqipmentTab()).toBeVisible();
+    await expect(mainPage.getPopularEquipmentTab()).toBeVisible();
 
     for (const equipmentTab of await mainPage.getAllLocatorOfEquipmentTab()) {
       await mainPage.clickOnEquipmentTabByLocator(equipmentTab);

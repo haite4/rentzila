@@ -1,4 +1,4 @@
-import {FileChooser, Locator, Page as PlaywrightPage } from "@playwright/test";
+import { FileChooser, Locator, Page as PlaywrightPage } from "@playwright/test";
 
 export default class Page {
   public page: PlaywrightPage;
@@ -25,16 +25,19 @@ export default class Page {
     return locator.all();
   }
 
-  protected async clickLocator(locator: Locator, position?: { x: number, y: number }){
+  protected async clickLocator(
+    locator: Locator,
+    position?: { x: number; y: number }
+  ) {
     if (position) {
       await locator.click({ position });
-  } else {
+    } else {
       await locator.click();
-  }
+    }
   }
 
-  protected async clickMouseAtPosition(x: number, y: number){
-    await this.page.mouse.click(x, y)
+  protected async clickMouseAtPosition(x: number, y: number) {
+    await this.page.mouse.click(x, y);
   }
 
   protected async fillText(locator: Locator, text: string) {
@@ -73,12 +76,12 @@ export default class Page {
     return this.page.getByRole("heading", { name: text });
   }
 
-  protected getElementByImg(text: string){
-    return this.page.getByRole('img', { name: text })
+  protected getElementByImg(text: string) {
+    return this.page.getByRole("img", { name: text });
   }
 
-  protected getElementByText(text: string){
-    return this.page.getByText(text)
+  protected getElementByText(text: string) {
+    return this.page.getByText(text);
   }
 
   protected getElementByTestId(selector: string) {
@@ -89,24 +92,27 @@ export default class Page {
     return this.page.getByLabel(text);
   }
 
-  protected async getElementInputValue(locator: Locator){
-    return locator.inputValue()
+  protected async getElementInputValue(locator: Locator) {
+    return locator.inputValue();
   }
 
-  protected getElementCount(locator: Locator){
-    return locator.count()
+  protected getElementCount(locator: Locator) {
+    return locator.count();
   }
 
-  protected async setElementInputFiles(locator: Locator, filePath: string | string[]){
-      await locator.setInputFiles(filePath)
+  protected async setElementInputFiles(
+    locator: Locator,
+    filePath: string | string[]
+  ) {
+    await locator.setInputFiles(filePath);
   }
 
-  protected async elementHover(locator: Locator){
-    await locator.hover()
+  protected async elementHover(locator: Locator, timeout?: number) {
+    await locator.hover({ timeout });
   }
 
-  protected async setElementFiles(fileChooser: FileChooser, filePath: string){
-    await fileChooser.setFiles(filePath)
+  protected async setElementFiles(fileChooser: FileChooser, filePath: string) {
+    await fileChooser.setFiles(filePath);
   }
 
   protected async writeTextToClipboard(textToCopy: string){

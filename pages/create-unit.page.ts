@@ -1,5 +1,6 @@
 import { FileChooser, Locator } from "@playwright/test";
 import Page from "./page";
+import path from "path";
 
 const categorySelectTitle = '[class*="CategorySelect_title"]';
 const categorySelectContent = `[data-testid="categoryName"]`;
@@ -123,19 +124,19 @@ export class CreateUnitPage extends Page {
     return super.getElement(categoryBodyTitle);
   }
 
-  getNazvaOgolochenyaTitie() {
+  getAdvertisementTitle() {
     return super.getElement(customInputTitle).first();
   }
 
-  getNazvaOgolochenyaInput() {
+  getAdvertisementInput() {
     return super.getElement(customInput).first();
   }
 
-  getNazvaModeliTitle() {
+  getNameModelTitle() {
     return super.getElement(customInputTitle).nth(1);
   }
 
-  getNazvaModeliInput() {
+  getNameModelInput() {
     return super.getElement(customInput).nth(1);
   }
 
@@ -151,8 +152,8 @@ export class CreateUnitPage extends Page {
     return super.getElement(selectedManufacturerInput);
   }
 
-  getPhotoSectionClue(){
-    return super.getElement(photoSectionClue)
+  getPhotoSectionClue() {
+    return super.getElement(photoSectionClue);
   }
 
   getSelectedManufacturerError() {
@@ -268,8 +269,8 @@ export class CreateUnitPage extends Page {
     return super.getElement(previousBtn);
   }
 
-  getSelectWithSearchManufacturer(){
-    return super.getElement(selectWithSearchManufacturer)
+  getSelectWithSearchManufacturer() {
+    return super.getElement(selectWithSearchManufacturer);
   }
 
   getCategoryTabBtn(index: number) {
@@ -294,6 +295,27 @@ export class CreateUnitPage extends Page {
     return ["1234567890123456", "1234567890 12345", "123456789012345 "];
   }
 
+  getArrayImages() {
+    return [
+      "1.jpg",
+      "2.jpg",
+      "3.jpg",
+      "4.jpg",
+      "5.jpg",
+      "6.jpg",
+      "7.jpg",
+      "8.jpg",
+      "9.jpg",
+      "10.jpg",
+      "11.jpg",
+      "12.jpg",
+    ];
+  }
+
+  getActionsList() {
+    return ["clickCrossBtn", "clickSaveBtn", "clickOutsidePopUp"];
+  }
+
   getListOfInvalidSymbols(includeSpaces: boolean = true): string[] {
     let invalidSymbols = [" ", "<>", "{}", ";", "^"];
     if (!includeSpaces) {
@@ -302,40 +324,40 @@ export class CreateUnitPage extends Page {
     return invalidSymbols;
   }
 
-  getServiceUnitInput(){
-    return super.getElement(serviceUnitInput)
+  getServiceUnitInput() {
+    return super.getElement(serviceUnitInput);
   }
 
-  getPhotoSectionTitle(){
-    return super.getElement(photoSectionTitle)
+  getPhotoSectionTitle() {
+    return super.getElement(photoSectionTitle);
   }
 
-  getClickImageBlock(){
-    return super.getElement(clickImageBlock)
+  getClickImageBlock() {
+    return super.getElement(clickImageBlock);
   }
 
-  getImageBlock(){
-    return super.getElement(imageBlock)
+  getImageBlock() {
+    return super.getElement(imageBlock);
   }
 
-  getAllImageBlock(){
-    return super.getElementAll(this.getImageBlock())
+  getAllImageBlock() {
+    return super.getElementAll(this.getImageBlock());
   }
 
-  getImageBlockByindex(index: number){
-    return this.getImageBlock().nth(index)
+  getImageBlockByindex(index: number) {
+    return this.getImageBlock().nth(index);
   }
 
-  getAllClickImageBlock(){
-    return super.getElementAll(this.getClickImageBlock())
+  getAllClickImageBlock() {
+    return super.getElementAll(this.getClickImageBlock());
   }
 
-  getMainImageLabel(){
-    return super.getElement(mainImageLabel)
+  getMainImageLabel() {
+    return super.getElement(mainImageLabel);
   }
 
-  getDeleteImageByIndex(index: number){
-    return super.getElement(deleteImageBlck).nth(index)
+  getDeleteImageByIndex(index: number) {
+    return super.getElement(deleteImageBlck).nth(index);
   }
 
   getDeleteIconWrapperByindex(index: number){
@@ -434,8 +456,8 @@ export class CreateUnitPage extends Page {
     await super.clickLocator(this.getDeleteIconWrapperByindex(index))
   }
 
-  async hoverOnImageBlockByIndex(index: number){
-     await super.elementHover(this.getImageBlockByindex(index))
+  async hoverOnImageBlockByIndex(index: number, timeout: number){
+     await super.elementHover(this.getImageBlockByindex(index), timeout)
   }
 
   async clickImageBlock(index: number = 0) {
@@ -446,20 +468,20 @@ export class CreateUnitPage extends Page {
     await super.clickLocator(this.getClosePopUpBtn());
   }
 
-  async typeNazvaOgolochenyaInput(randomValue: string) {
-    await super.typeText(this.getNazvaOgolochenyaInput(), randomValue);
+  async typeAdvertisementNameInput(randomValue: string) {
+    await super.typeText(this.getNameModelInput(), randomValue);
   }
 
-  async fillNazvaOgolochenyaInput(randomValue: string) {
-    await super.fillText(this.getNazvaOgolochenyaInput(), randomValue);
+  async fillAdvertisementNameInput(randomValue: string) {
+    await super.fillText(this.getAdvertisementInput(), randomValue);
   }
 
-  async getOgolochenyaInputValue() {
-    return super.getElementInputValue(this.getNazvaOgolochenyaInput());
+  async getAdvertisementInputValue() {
+    return super.getElementInputValue(this.getAdvertisementInput());
   }
 
-  async clearNazvaOgolochenyaInput() {
-    await super.clearInputField(this.getNazvaOgolochenyaInput());
+  async clearAdvertisementInput() {
+    await super.clearInputField(this.getAdvertisementInput());
   }
 
   async clickNextBtn() {
@@ -555,16 +577,16 @@ export class CreateUnitPage extends Page {
     await super.clickLocator(super.getElement(closeOptionsBtn));
   }
 
-  async typeNazvaModeliInput(value: string) {
-    await super.typeText(this.getNazvaModeliInput(), value);
+  async typeModelNameInput(value: string) {
+    await super.typeText(this.getNameModelInput(), value);
   }
 
-  async clearNazvaModeliInput() {
-    await super.clearInputField(this.getNazvaModeliInput());
+  async clearModelNameInput() {
+    await super.clearInputField(this.getNameModelInput());
   }
 
-  async getNazvaModeliInputValue() {
-    return super.getElementInputValue(this.getNazvaModeliInput());
+  async getModelNameInputValue() {
+    return super.getElementInputValue(this.getNameModelInput());
   }
 
   async clickTechnicalCharacteristicTextArea() {
@@ -654,6 +676,16 @@ export class CreateUnitPage extends Page {
 
   async clickPreviousBtn() {
     await super.clickLocator(this.getPrevioudBtn());
+  }
+
+  async fileChoser(folder: string, fileName: string, index: number = 0) {
+    const fileChooserPromise = this.page.waitForEvent("filechooser");
+    await this.clickImageBlock(index);
+    const fileChooser = await fileChooserPromise;
+    await this.setElementFilesinPhotoSection(
+      fileChooser,
+      path.join(__dirname, "..", "data", folder, fileName)
+    );
   }
 
   async fillServiceUnitInput(text: string){

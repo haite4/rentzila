@@ -2,6 +2,8 @@ import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
 import { Endpoints } from "../constants/enums_endpoints.constant";
 import { AlertMsgColors } from "../constants/enums_colors.constant";
+import general_msg from "../data/general_msg.json";
+import error_msg from "../data/errors_msg.json";
 
 test.describe("Create unit functionality", () => {
   test.beforeEach(async ({ signInHelper, signinPage }) => {
@@ -15,9 +17,10 @@ test.describe("Create unit functionality", () => {
   test("TC-294 Verify body title and tab titles", async ({
     createUnitPage,
   }) => {
+    await createUnitPage.page.waitForTimeout(2000);
     await expect(createUnitPage.getCategoryBodyTitle()).toBeVisible();
     await expect(createUnitPage.getCategoryBodyTitle()).toHaveText(
-      "Створити оголошення"
+      general_msg.createAnnouncment
     );
     for (let i = 0; i < (await createUnitPage.categoryTabTitlesCount()); i++) {
       expect(await createUnitPage.getCategorysTabTitlesLocatorText(i)).toBe(
@@ -44,12 +47,13 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
   }) => {
     test.setTimeout(160000);
+    await createUnitPage.getCategorySelectTitle().waitFor({ state: "visible" });
     await expect(createUnitPage.getCategorySelectTitle()).toBeVisible();
     await expect(createUnitPage.getCategorySelectTitle()).toHaveText(
       /^Категорія.*\*$/
     );
     await expect(createUnitPage.getCategorySelectContent()).toHaveText(
-      "Виберіть категорію"
+      general_msg.selectCategory
     );
     await expect(createUnitPage.getCategorySelectBtn()).toHaveCSS(
       "justify-content",
@@ -66,12 +70,12 @@ test.describe("Create unit functionality", () => {
       AlertMsgColors.RED
     );
     await expect(createUnitPage.getCategorySelectErrorText()).toHaveText(
-      "Це поле обов’язкове"
+      error_msg.fieldRequired
     );
     await createUnitPage.clickCategorySelectBtn();
     await expect(createUnitPage.getCategoryPopUp()).toBeVisible();
     await expect(createUnitPage.getCategoryPopUpTitle()).toHaveText(
-      "Вибір категорії технічного засобу"
+      general_msg.selectTechnicalCategory
     );
     await createUnitPage.clickCategoryPopUpCloseBtn();
     await expect(createUnitPage.getCategoryPopUp()).toBeHidden();
@@ -113,69 +117,71 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
     randomValueHelper,
   }) => {
-    await expect(createUnitPage.getNazvaOgolochenyaTitie()).toBeVisible();
-    await expect(createUnitPage.getNazvaOgolochenyaTitie()).toHaveText(
+    await createUnitPage.getAdvertisementTitle().waitFor({ state: "visible" });
+    await expect(createUnitPage.getAdvertisementTitle()).toBeVisible();
+    await expect(createUnitPage.getAdvertisementTitle()).toHaveText(
       /^Назва оголошення.*\*$/
     );
-    await expect(createUnitPage.getNazvaOgolochenyaInput()).toHaveAttribute(
+    await expect(createUnitPage.getAdvertisementInput()).toHaveAttribute(
       "placeholder",
-      "Введіть назву оголошення"
+      general_msg.enterTheNameOfTheAd
     );
     await createUnitPage.clickNextBtn();
-    await expect(createUnitPage.getNazvaOgolochenyaInput()).toHaveCSS(
+    await expect(createUnitPage.getAdvertisementInput()).toHaveCSS(
       "border-color",
       AlertMsgColors.RED
     );
     await expect(createUnitPage.getErrorMessage()).toHaveText(
-      "Це поле обов’язкове"
+      error_msg.fieldRequired
     );
     await expect(createUnitPage.getErrorMessage()).toHaveCSS(
       "color",
       AlertMsgColors.RED
     );
-    await createUnitPage.typeNazvaOgolochenyaInput(
+    await createUnitPage.typeAdvertisementNameInput(
+      randomValueHelper.randomWord()
+    );
+    await createUnitPage.clickNextBtn();
+    await createUnitPage.getErrorMessage().waitFor({state:"visible"})
+    await expect(createUnitPage.getErrorMessage()).toHaveText(
+      error_msg.adTitlShouldAtleast10CharactersLong
+    );
+    await expect(createUnitPage.getAdvertisementInput()).toHaveCSS(
+      "border-color",
+      AlertMsgColors.RED
+    );
+    await createUnitPage.clearAdvertisementInput();
+    await createUnitPage.fillAdvertisementNameInput(
       randomValueHelper.randomWord()
     );
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getErrorMessage()).toHaveText(
-      "У назві оголошення повинно бути не менше 10 символів"
+      error_msg.adTitlShouldAtleast10CharactersLong
     );
-    await expect(createUnitPage.getNazvaOgolochenyaInput()).toHaveCSS(
+    await expect(createUnitPage.getAdvertisementInput()).toHaveCSS(
       "border-color",
       AlertMsgColors.RED
     );
-    await createUnitPage.clearNazvaOgolochenyaInput();
-    await createUnitPage.fillNazvaOgolochenyaInput(
-      randomValueHelper.randomWord()
-    );
-    await createUnitPage.clickNextBtn();
-    await expect(createUnitPage.getErrorMessage()).toHaveText(
-      "У назві оголошення повинно бути не менше 10 символів"
-    );
-    await expect(createUnitPage.getNazvaOgolochenyaInput()).toHaveCSS(
-      "border-color",
-      AlertMsgColors.RED
-    );
-    await createUnitPage.clearNazvaOgolochenyaInput();
-    await createUnitPage.typeNazvaOgolochenyaInput(
+    await createUnitPage.clearAdvertisementInput();
+    await createUnitPage.typeAdvertisementNameInput(
       randomValueHelper.generateStringWithLength(101)
     );
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getErrorMessage()).toHaveText(
-      "У назві оголошення може бути не більше 100 символів"
+      error_msg.adTitleCanHaveNoMoreThan100Characters
     );
-    expect(await createUnitPage.getOgolochenyaInputValue()).toHaveLength(100);
-    await createUnitPage.clearNazvaOgolochenyaInput();
-    await createUnitPage.typeNazvaOgolochenyaInput("<>{};^");
-    await expect(createUnitPage.getNazvaOgolochenyaInput()).not.toContainText(
-      "<>{};^"
+    expect(await createUnitPage.getAdvertisementInputValue()).toHaveLength(100);
+    await createUnitPage.clearAdvertisementInput();
+    await createUnitPage.typeAdvertisementNameInput(general_msg.invalidSymbols);
+    await expect(createUnitPage.getAdvertisementInput()).not.toContainText(
+      general_msg.invalidSymbols
     );
-    await createUnitPage.clearNazvaOgolochenyaInput();
-    await createUnitPage.typeNazvaOgolochenyaInput(
+    await createUnitPage.clearAdvertisementInput();
+    await createUnitPage.typeAdvertisementNameInput(
       randomValueHelper.generateStringWithLength(10)
     );
     await createUnitPage.clickNextBtn();
-    await expect(createUnitPage.getNazvaOgolochenyaInput()).toHaveCSS(
+    await expect(createUnitPage.getAdvertisementInput()).toHaveCSS(
       "border",
       AlertMsgColors.BORDERGRAY
     );
@@ -186,17 +192,20 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
     randomValueHelper,
   }) => {
+    await createUnitPage
+      .getSelectManufacturerTitle()
+      .waitFor({ state: "visible" });
     await expect(createUnitPage.getSelectManufacturerTitle()).toBeVisible();
     await expect(createUnitPage.getSelectManufacturerTitle()).toHaveText(
       /^Виробник транспортного засобу.*\*$/
     );
     await expect(createUnitPage.getSelectedManufacturerInput()).toHaveAttribute(
       "placeholder",
-      "Введіть виробника транспортного засобу"
+      general_msg.enterVehicleManufacturer
     );
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getSelectedManufacturerError()).toHaveText(
-      "Це поле обов’язкове"
+      error_msg.fieldRequired
     );
     await expect(createUnitPage.getSelectedManufacturerError()).toHaveCSS(
       "color",
@@ -206,41 +215,47 @@ test.describe("Create unit functionality", () => {
       "border",
       AlertMsgColors.BORDERRED
     );
-    await createUnitPage.typeSelectedManufacturerInput("A");
+    await createUnitPage.typeSelectedManufacturerInput(general_msg.A);
     await expect(
       createUnitPage.getSelectedManufacturerDropdownWrapper()
     ).toBeVisible();
     await createUnitPage.clearSelectedManufacturerInput();
-    await createUnitPage.typeSelectedManufacturerInput("АТЭК");
+    await createUnitPage.typeSelectedManufacturerInput(
+      general_msg.manufacturerInUpperCase
+    );
     await expect(createUnitPage.getSelectedManufacturerOptions()).toHaveText(
-      "АТЭК"
+      general_msg.manufacturerInUpperCase
     );
     await createUnitPage.clearSelectedManufacturerInput();
-    await createUnitPage.typeSelectedManufacturerInput("Атэк");
+    await createUnitPage.typeSelectedManufacturerInput(
+      general_msg.manufacturerInLowerCase
+    );
     await expect(createUnitPage.getSelectedManufacturerOptions()).toHaveText(
-      "АТЭК"
+      general_msg.manufacturerInUpperCase
     );
     await createUnitPage.clearSelectedManufacturerInput();
-    await createUnitPage.typeSelectedManufacturerInput(" ");
+    await createUnitPage.typeSelectedManufacturerInput(general_msg.emptyString);
     expect(
       await createUnitPage.getSelectedManufacturerInputValue()
     ).toHaveLength(0);
     await expect(
       createUnitPage.getSelectedManufacturerDropdownWrapper()
     ).not.toBeVisible();
-    await createUnitPage.typeSelectedManufacturerInput("<>{};^");
+    await createUnitPage.typeSelectedManufacturerInput(
+      general_msg.invalidSymbols
+    );
     expect(
       await createUnitPage.getSelectedManufacturerInputValue()
     ).toHaveLength(0);
     await expect(
       createUnitPage.getSelectedManufacturerDropdownWrapper()
     ).not.toBeVisible();
-    await createUnitPage.typeSelectedManufacturerInput("123456789");
+    await createUnitPage.typeSelectedManufacturerInput(
+      general_msg.numberOneThroughnine
+    );
     await expect(
       createUnitPage.getSelectedManufacuredNotFoundResult()
-    ).toHaveText(
-      "На жаль, виробника “123456789“ не знайдено в нашій базі. Щоб додати виробника - зв`яжіться із службою підтримки9 / 100"
-    );
+    ).toHaveText(error_msg.manufacturerNotFoundMsg);
     await createUnitPage.clearSelectedManufacturerInput();
     await createUnitPage.typeSelectedManufacturerInput(
       randomValueHelper.generateStringWithLength(101)
@@ -249,11 +264,17 @@ test.describe("Create unit functionality", () => {
       await createUnitPage.getSelectedManufacturerInputValue()
     ).toHaveLength(100);
     await createUnitPage.clearSelectedManufacturerInput();
-    await createUnitPage.typeSelectedManufacturerInput("Abc");
+    await createUnitPage.typeSelectedManufacturerInput(
+      general_msg.abcLowerCase
+    );
     await createUnitPage.clickSelectedManufacturerOptions();
-    await expect(createUnitPage.getSelectedOptionsInput()).toHaveText("ABC");
+    await expect(createUnitPage.getSelectedOptionsInput()).toHaveText(
+      general_msg.abcUpperCase
+    );
     await createUnitPage.clickCloseOptionsBtn();
-    await createUnitPage.typeSelectedManufacturerInput("Abc");
+    await createUnitPage.typeSelectedManufacturerInput(
+      general_msg.abcLowerCase
+    );
     await createUnitPage.clickSelectedManufacturerOptions();
     await expect(createUnitPage.getCloseOptionsBtn()).toBeVisible();
     await createUnitPage.clickCloseOptionsBtn();
@@ -266,31 +287,32 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
     randomValueHelper,
   }) => {
-    await expect(createUnitPage.getNazvaModeliTitle()).toBeVisible();
-    await expect(createUnitPage.getNazvaModeliTitle()).toHaveText(
-      "Назва моделі"
+    await createUnitPage.getNameModelTitle().waitFor({ state: "visible" });
+    await expect(createUnitPage.getNameModelTitle()).toBeVisible();
+    await expect(createUnitPage.getNameModelTitle()).toHaveText(
+      general_msg.modelName
     );
-    await expect(createUnitPage.getNazvaModeliInput()).toHaveAttribute(
+    await expect(createUnitPage.getNameModelInput()).toHaveAttribute(
       "placeholder",
-      "Введіть назву моделі"
+      general_msg.enterModelName
     );
     for (const invalidVariants of createUnitPage.getListOfInvalidVariant()) {
-      await createUnitPage.typeNazvaModeliInput(invalidVariants);
+      await createUnitPage.typeModelNameInput(invalidVariants);
       await expect(createUnitPage.getErrorMessage()).toHaveText(
-        "У назві моделі може бути не більше 15 символів"
+        general_msg.modelNameLengthLimitMessage
       );
-      await expect(createUnitPage.getNazvaModeliInput()).toHaveCSS(
+      await expect(createUnitPage.getNameModelInput()).toHaveCSS(
         "border-color",
         AlertMsgColors.RED
       );
-      await createUnitPage.clearNazvaModeliInput();
+      await createUnitPage.clearModelNameInput();
     }
 
     for (const invalidSymbols of createUnitPage.getListOfInvalidSymbols(true)) {
-      await createUnitPage.typeNazvaModeliInput(invalidSymbols);
-      expect(await createUnitPage.getNazvaModeliInputValue()).toHaveLength(0);
+      await createUnitPage.typeModelNameInput(invalidSymbols);
+      expect(await createUnitPage.getModelNameInputValue()).toHaveLength(0);
     }
-    await createUnitPage.typeNazvaModeliInput(
+    await createUnitPage.typeModelNameInput(
       randomValueHelper.generateStringWithLength(15)
     );
     await expect(createUnitPage.getErrorMessage()).not.toBeVisible();
@@ -301,11 +323,14 @@ test.describe("Create unit functionality", () => {
     randomValueHelper,
   }) => {
     test.setTimeout(200000);
+    await createUnitPage
+      .getTechnicalCharacteristicTitle()
+      .waitFor({ state: "visible" });
     await expect(
       createUnitPage.getTechnicalCharacteristicTitle()
     ).toBeVisible();
     await expect(createUnitPage.getTechnicalCharacteristicTitle()).toHaveText(
-      "Технічні характеристики"
+      general_msg.technicalSpecifications
     );
     await createUnitPage.clickTechnicalCharacteristicTextArea();
     expect(
@@ -334,7 +359,7 @@ test.describe("Create unit functionality", () => {
     test.setTimeout(200000);
     await expect(createUnitPage.getDetailedDescriptionTitle()).toBeVisible();
     await expect(createUnitPage.getDetailedDescriptionTitle()).toHaveText(
-      "Детальний опис"
+      general_msg.detailedDescription
     );
     await createUnitPage.clickDetailedDescriptionTextArea();
     expect(
@@ -360,11 +385,16 @@ test.describe("Create unit functionality", () => {
   test("TC-319 Verify vehicle location division", async ({
     createUnitPage,
   }) => {
+    await createUnitPage
+      .getAddressSelectionTitle()
+      .waitFor({ state: "visible" });
     await expect(createUnitPage.getAddressSelectionTitle()).toBeVisible();
     await expect(createUnitPage.getAddressSelectionTitle()).toHaveText(
       /^Місце розташування технічного засобу.*\*$/
     );
-    await expect(createUnitPage.getMapLabel()).toHaveText("Виберіть на мапі");
+    await expect(createUnitPage.getMapLabel()).toHaveText(
+      general_msg.selectOnMap
+    );
     await expect(createUnitPage.getMapLabel()).not.toHaveClass(
       "AddressSelectionBlock_mapLabelChosen__PBJoF"
     );
@@ -374,7 +404,7 @@ test.describe("Create unit functionality", () => {
       AlertMsgColors.BORDERRED
     );
     await expect(createUnitPage.getAddressSelectionError()).toHaveText(
-      "Виберіть коректне місце на мапі України"
+      general_msg.selectCorrectLocationOnMapOfUkraine
     );
     await expect(createUnitPage.getAddressSelectionError()).toHaveCSS(
       "color",
@@ -383,24 +413,24 @@ test.describe("Create unit functionality", () => {
     await createUnitPage.clickAddressSelectionBtn();
     await expect(createUnitPage.getMapPopUpWrapper()).toBeVisible();
     await expect(createUnitPage.getMapPopUpTitle()).toHaveText(
-      "Техніка на мапі"
+      general_msg.equipmentOnMap
     );
     await expect(createUnitPage.getMapPopUpCloseBtn()).toBeVisible();
     await expect(createUnitPage.getMapPopUpAddress()).toHaveText(
-      "Київ, вулиця Володимирська 21/20 Україна, Київська область"
+      general_msg.defaultAddress
     );
     await createUnitPage.clickMapPopUpSubmitChoice();
     await expect(createUnitPage.getMapPopUpWrapper()).not.toBeVisible();
     await expect(createUnitPage.getMapLabel()).toHaveText(
-      "Київ, вулиця Володимирська 21/20 Україна, Київська область"
+      general_msg.defaultAddress
     );
     await createUnitPage.clickAddressSelectionBtn();
     const { x, y } = await createUnitPage.getMapPopupBoundingBox();
     await createUnitPage.getMapPopUp().waitFor({ state: "visible" });
     await createUnitPage.clickOnThePopUpMap(x, y);
     await createUnitPage.page.waitForTimeout(500);
-    await createUnitPage.getMapPopUpAddressText();
     const addressText = await createUnitPage.getMapPopUpAddressText();
+    await createUnitPage.page.waitForTimeout(1500);
     await createUnitPage.clickMapPopUpSubmitChoice();
     await expect(createUnitPage.getMapLabel()).toHaveText(addressText ?? "");
     await expect(createUnitPage.getMapPopUpWrapper()).not.toBeVisible();
@@ -410,7 +440,7 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
     mainPage,
   }) => {
-    await expect(createUnitPage.getPreventBtn()).toHaveText("Скасувати");
+    await expect(createUnitPage.getPreventBtn()).toHaveText(general_msg.cancel);
     const [dialog] = await Promise.all([
       createUnitPage.page.waitForEvent("dialog"),
       await mainPage.clickOnTheLogo(),
@@ -423,7 +453,8 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
     randomValueHelper,
   }) => {
-    await expect(createUnitPage.getNextBtn()).toHaveText("Далі");
+    await createUnitPage.getNextBtn().waitFor({ state: "visible" });
+    await expect(createUnitPage.getNextBtn()).toHaveText(general_msg.next);
     await createUnitPage.clickNextBtn();
     for (const requiredFields of createUnitPage.getListOfLocatorRequiredFieldsError()) {
       await expect(requiredFields).toBeVisible();
@@ -432,10 +463,12 @@ test.describe("Create unit functionality", () => {
     await createUnitPage.clickFirstCategoryLocator(0);
     await createUnitPage.clickSecondCategoryLocator(0);
     await createUnitPage.clickThirdCategoryLocator(0);
-    await createUnitPage.typeNazvaOgolochenyaInput(
+    await createUnitPage.typeAdvertisementNameInput(
       randomValueHelper.generateStringWithLength(10)
     );
-    await createUnitPage.typeSelectedManufacturerInput("Abc");
+    await createUnitPage.typeSelectedManufacturerInput(
+      general_msg.abcLowerCase
+    );
     await createUnitPage.clickSelectedManufacturerOptions();
     await createUnitPage.clickAddressSelectionBtn();
     const { x, y } = await createUnitPage.getMapPopupBoundingBox();
@@ -444,7 +477,7 @@ test.describe("Create unit functionality", () => {
     await createUnitPage.clickMapPopUpSubmitChoice();
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getCategoryBodyTitle()).toHaveText(
-      "Створити оголошення"
+      general_msg.createAnnouncment
     );
 
     for (let i = 0; i < (await createUnitPage.categoryTabTitlesCount()); i++) {
@@ -454,6 +487,7 @@ test.describe("Create unit functionality", () => {
       expect(await createUnitPage.getCategoryTabNumberText(i)).toBe(
         createUnitPage.getListOfCategoryTabNumber()[i]
       );
+      await createUnitPage.page.waitForTimeout(1500);
       if (i === 1) {
         await expect(createUnitPage.getCategoryTabBtn(1)).toHaveAttribute(
           "aria-selected",
