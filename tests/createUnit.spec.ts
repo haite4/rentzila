@@ -282,7 +282,7 @@ test.describe("Create unit functionality", () => {
       general_msg.enterModelName
     );
     for (const invalidVariants of createUnitPage.getListOfInvalidVariant()) {
-      await createUnitPage.typeModelNameiInput(invalidVariants);
+      await createUnitPage.typeModelNameInput(invalidVariants);
       await expect(createUnitPage.getErrorMessage()).toHaveText(
         general_msg.modelNameLengthLimitMessage
       );
@@ -290,14 +290,14 @@ test.describe("Create unit functionality", () => {
         "border-color",
         AlertMsgColors.RED
       );
-      await createUnitPage.clearModelNameiInput();
+      await createUnitPage.clearModelNameInput();
     }
 
     for (const invalidSymbols of createUnitPage.getListOfInvalidSymbols(true)) {
-      await createUnitPage.typeModelNameiInput(invalidSymbols);
-      expect(await createUnitPage.getModelNameiInputValue()).toHaveLength(0);
+      await createUnitPage.typeModelNameInput(invalidSymbols);
+      expect(await createUnitPage.getModelNameInputValue()).toHaveLength(0);
     }
-    await createUnitPage.typeModelNameiInput(
+    await createUnitPage.typeModelNameInput(
       randomValueHelper.generateStringWithLength(15)
     );
     await expect(createUnitPage.getErrorMessage()).not.toBeVisible();

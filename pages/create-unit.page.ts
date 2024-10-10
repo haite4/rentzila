@@ -336,15 +336,15 @@ export class CreateUnitPage extends Page {
         await super.clickLocator(super.getElement(closeOptionsBtn))
     }
 
-    async typeModelNameiInput(value: string){
+    async typeModelNameInput(value: string){
         await super.typeText(this.getNameModelInput(), value)
     }
 
-    async clearModelNameiInput(){
+    async clearModelNameInput(){
         await super.clearInputField(this.getNameModelInput())
     }
 
-    async getModelNameiInputValue(){
+    async getModelNameInputValue(){
         return super.getElementInputValue(this.getNameModelInput())
     }
 
