@@ -428,7 +428,7 @@ test.describe("Create unit functionality", () => {
     const { x, y } = await createUnitPage.getMapPopupBoundingBox();
     await createUnitPage.getMapPopUp().waitFor({ state: "visible" });
     await createUnitPage.clickOnThePopUpMap(x, y);
-    await createUnitPage.page.waitForTimeout(500);
+    await createUnitPage.page.waitForTimeout(1500);
     const addressText = await createUnitPage.getMapPopUpAddressText();
     await createUnitPage.page.waitForTimeout(1500);
     await createUnitPage.clickMapPopUpSubmitChoice();
@@ -474,6 +474,7 @@ test.describe("Create unit functionality", () => {
     const { x, y } = await createUnitPage.getMapPopupBoundingBox();
     await createUnitPage.getMapPopUp().waitFor({ state: "visible" });
     await createUnitPage.clickOnThePopUpMap(x, y);
+    await createUnitPage.page.waitForTimeout(1500)
     await createUnitPage.clickMapPopUpSubmitChoice();
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getCategoryBodyTitle()).toHaveText(
@@ -493,7 +494,6 @@ test.describe("Create unit functionality", () => {
           "true"
         );
       } else {
-        await createUnitPage.page.waitForTimeout(1500);
         await expect(createUnitPage.getCategoryTabBtn(i)).toHaveAttribute(
           "aria-selected",
           "false"

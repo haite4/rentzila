@@ -25,8 +25,15 @@ test.describe("test create unit photo section", () => {
       );
       await createUnitPage.clickSelectedManufacturerOptions();
       await createUnitPage.clickAddressSelectionBtn();
+      
+      const { x, y } = await createUnitPage.getMapPopupBoundingBox();
+      await createUnitPage.getMapPopUp().waitFor({ state: "visible" });
       await createUnitPage.page.waitForTimeout(1500);
+      await createUnitPage.clickOnThePopUpMap(x, y);
+      await createUnitPage.page.waitForTimeout(1500);
+
       await createUnitPage.clickMapPopUpSubmitChoice();
+      await createUnitPage.page.waitForTimeout(1500);
       await createUnitPage.clickNextBtn();
     }
   );

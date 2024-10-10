@@ -316,6 +316,42 @@ export class CreateUnitPage extends Page {
     return ["clickCrossBtn", "clickSaveBtn", "clickOutsidePopUp"];
   }
 
+  getOptionsText() {
+    return [
+      "Готівкою / на картку",
+      "Безготівковий розрахунок (без ПДВ)",
+      "Безготівковий розрахунок (з ПДВ)",
+    ];
+  }
+
+  getInvalidDataList() {
+    return ["123 456", "123456 ", " ", "abc", "!@#$%.,"];
+  }
+
+  getInvalidDataListWithAdditionalValue(){
+    return ["123 456", "123456 ","1234567890" , " ", "abc", "!@#$%.,"]
+  }
+
+  getListOfCopyPasteActions(){
+    return ["type", "copy-paste"]
+  }
+
+  getListOfMeasurementUnits() {
+    return [
+      "година",
+      "зміна",
+      "тонна",
+      "гектар",
+      "метр кв.",
+      "метр куб.",
+      "Кілометр",
+    ];
+  }
+
+  getListOfPriceTimeVariant() {
+    return ["8 год", "4 год"];
+  }
+
   getListOfInvalidSymbols(includeSpaces: boolean = true): string[] {
     let invalidSymbols = [" ", "<>", "{}", ";", "^"];
     if (!includeSpaces) {
@@ -360,108 +396,108 @@ export class CreateUnitPage extends Page {
     return super.getElement(deleteImageBlck).nth(index);
   }
 
-  getDeleteIconWrapperByindex(index: number){
-    return super.getElement(deleteIconWrapper).nth(index)
+  getDeleteIconWrapperByindex(index: number) {
+    return super.getElement(deleteIconWrapper).nth(index);
   }
 
-  getServiceSearchResults(){
-    return super.getElement(serviceSearchResults)
+  getServiceSearchResults() {
+    return super.getElement(serviceSearchResults);
   }
 
-  getPricePayementMethodUnitTitle(){
-    return super.getElement(pricePaymentMethodUnitTitle)
+  getPricePayementMethodUnitTitle() {
+    return super.getElement(pricePaymentMethodUnitTitle);
   }
 
-  getPaymentMethodCustomSelectValue(index: number = 0){
-    return super.getElement(paymentMethodCustomSelectValue).nth(index)
+  getPaymentMethodCustomSelectValue(index: number = 0) {
+    return super.getElement(paymentMethodCustomSelectValue).nth(index);
   }
 
-  getPaymentMethodOptions(){
-    return super.getElement(paymentMethodOptionSpan)
+  getPaymentMethodOptions() {
+    return super.getElement(paymentMethodOptionSpan);
   }
 
-  getAllPaymentMethodOptions(){
-    return super.getElementAll(this.getPaymentMethodOptions())
+  getAllPaymentMethodOptions() {
+    return super.getElementAll(this.getPaymentMethodOptions());
   }
 
-  getPriceCustomSelect(){
-    return super.getElement(priceCustomSelect)
+  getPriceCustomSelect() {
+    return super.getElement(priceCustomSelect);
   }
 
-  getPaymentMethodOptionBlock(){
-    return super.getElement(paymentMethodOptionBlock)
+  getPaymentMethodOptionBlock() {
+    return super.getElement(paymentMethodOptionBlock);
   }
 
-  getPaymentMethodOptionBlockByIndex(index: number){
-   return this.getPaymentMethodOptionBlock().nth(index)
+  getPaymentMethodOptionBlockByIndex(index: number) {
+    return this.getPaymentMethodOptionBlock().nth(index);
   }
 
-  getPriceCostMinimumOrderTitle(){
-    return super.getElement(priceCostMinimumOrderTitle)
+  getPriceCostMinimumOrderTitle() {
+    return super.getElement(priceCostMinimumOrderTitle);
   }
 
-  getPriceInput(index: number = 0){
-    return super.getElement(priceInput).nth(index)
+  getPriceInput(index: number = 0) {
+    return super.getElement(priceInput).nth(index);
   }
 
-  getPriceCurrencyInput(index: number = 0){
-    return super.getElement(priceCurrencyInput).nth(index)
+  getPriceCurrencyInput(index: number = 0) {
+    return super.getElement(priceCurrencyInput).nth(index);
   }
 
-  getCostOfServicesTitle(){
-    return super.getElement(costOfServicesTitle)
+  getCostOfServicesTitle() {
+    return super.getElement(costOfServicesTitle);
   }
 
-  getPriceSectionClue(){
-    return super.getElement(priceSectionClue)
+  getPriceSectionClue() {
+    return super.getElement(priceSectionClue);
   }
 
-  getAddPriceBtn(){
-    return super.getElement(addPriceBtn)
+  getAddPriceBtn() {
+    return super.getElement(addPriceBtn);
   }
 
-  getSelectServicePrice(){
-    return super.getElement(selectServicePrice)
+  getSelectServicePrice() {
+    return super.getElement(selectServicePrice);
   }
 
-  getArrowImage(index: number = 0){
-    return super.getElement(priceArrowImage).nth(index)
+  getArrowImage(index: number = 0) {
+    return super.getElement(priceArrowImage).nth(index);
   }
 
-  getPriceTimeSelectOption(){
-    return super.getElement(priceTimeSelectOption)
+  getPriceTimeSelectOption() {
+    return super.getElement(priceTimeSelectOption);
   }
 
-  getAllPriceTimeSelectOption(){
-    return super.getElementAll(this.getPriceTimeSelectOption())
+  getAllPriceTimeSelectOption() {
+    return super.getElementAll(this.getPriceTimeSelectOption());
   }
 
-  getServiceUnitFlowTitle(){
-    return super.getElement(serviceUnitFlowTitle)
+  getServiceUnitFlowTitle() {
+    return super.getElement(serviceUnitFlowTitle);
   }
 
-  getPriceRequiredFieldClue(){
-    return super.getElement(priceRequiredFieldClue)
+  getPriceRequiredFieldClue() {
+    return super.getElement(priceRequiredFieldClue);
   }
 
-  getPriceUnitInputWrapper(){
-    return super.getElement(priceUnitInputWrapper).first()
+  getPriceUnitInputWrapper() {
+    return super.getElement(priceUnitInputWrapper).first();
   }
 
-  getPriceMinimumAmountClue(){
-    return super.getElement(priceMinimumAmountClue)
+  getPriceMinimumAmountClue() {
+    return super.getElement(priceMinimumAmountClue);
   }
 
-  async clickDeleteIconWrapper(index: number){
-    await super.clickLocator(this.getDeleteIconWrapperByindex(index))
+  async clickDeleteIconWrapper(index: number) {
+    await super.clickLocator(this.getDeleteIconWrapperByindex(index));
   }
 
-  async hoverOnImageBlockByIndex(index: number, timeout: number){
-     await super.elementHover(this.getImageBlockByindex(index), timeout)
+  async hoverOnImageBlockByIndex(index: number, timeout: number) {
+    await super.elementHover(this.getImageBlockByindex(index), timeout);
   }
 
   async clickImageBlock(index: number = 0) {
-    await super.clickLocator(this.getImageBlock().nth(index))
+    await super.clickLocator(this.getImageBlock().nth(index));
   }
 
   async clickClosePopUpBtn() {
@@ -469,7 +505,7 @@ export class CreateUnitPage extends Page {
   }
 
   async typeAdvertisementNameInput(randomValue: string) {
-    await super.typeText(this.getNameModelInput(), randomValue);
+    await super.typeText(this.getAdvertisementInput(), randomValue);
   }
 
   async fillAdvertisementNameInput(randomValue: string) {
@@ -688,63 +724,63 @@ export class CreateUnitPage extends Page {
     );
   }
 
-  async fillServiceUnitInput(text: string){
-    await super.fillText(this.getServiceUnitInput(), text)
+  async fillServiceUnitInput(text: string) {
+    await super.fillText(this.getServiceUnitInput(), text);
   }
 
-  async clickOnFirstServiceSearchResults(){
-    await super.clickLocator(this.getServiceSearchResults().first())
+  async clickOnFirstServiceSearchResults() {
+    await super.clickLocator(this.getServiceSearchResults().first());
   }
 
-  async clickPriceCustomSelect(){
-    await super.clickLocator(this.getPriceCustomSelect())
+  async clickPriceCustomSelect() {
+    await super.clickLocator(this.getPriceCustomSelect());
   }
 
-  async clickPaymentMethodOptionBlockByIndex(index: number){
-    await super.clickLocator(this.getPaymentMethodOptionBlockByIndex(index))
+  async clickPaymentMethodOptionBlockByIndex(index: number) {
+    await super.clickLocator(this.getPaymentMethodOptionBlockByIndex(index));
   }
 
-  async fillPriceInput(text: string, index: number = 0){
-    await super.fillText(this.getPriceInput(index), text)
+  async fillPriceInput(text: string, index: number = 0) {
+    await super.fillText(this.getPriceInput(index), text);
   }
 
-  async typePriceInput(text: string, index: number = 0){
-    await super.typeText(this.getPriceInput(index), text)
+  async typePriceInput(text: string, index: number = 0) {
+    await super.typeText(this.getPriceInput(index), text);
   }
 
-  async clearPriceInput(index: number = 0){
-    await super.clearInputField(this.getPriceInput(index))
+  async clearPriceInput(index: number = 0) {
+    await super.clearInputField(this.getPriceInput(index));
   }
 
-  async clickAddPriceBtn(){
-    await super.clickLocator(this.getAddPriceBtn())
+  async clickAddPriceBtn() {
+    await super.clickLocator(this.getAddPriceBtn());
   }
 
-  async clickPaymentMethodCustomSelectValue(index: number = 0){
-    await super.clickLocator(this.getPaymentMethodCustomSelectValue(index))
+  async clickPaymentMethodCustomSelectValue(index: number = 0) {
+    await super.clickLocator(this.getPaymentMethodCustomSelectValue(index));
   }
 
-  async clickOnPriceCustomSelectOption(locator: Locator){
-    await super.clickLocator(locator)
+  async clickOnPriceCustomSelectOption(locator: Locator) {
+    await super.clickLocator(locator);
   }
 
-  async clickPriceWorkingShift(){
-    await super.clickLocator(super.getElement(priceWorkingShift))
+  async clickPriceWorkingShift() {
+    await super.clickLocator(super.getElement(priceWorkingShift));
   }
 
-  async clickRemovePriceBtn(){
-    await super.clickLocator(super.getElement(removePriceBtn))
+  async clickRemovePriceBtn() {
+    await super.clickLocator(super.getElement(removePriceBtn));
   }
 
-  async writeToClipboardSymbols(symbols: string){
-    await super.writeTextToClipboard(symbols)
+  async writeToClipboardSymbols(symbols: string) {
+    await super.writeTextToClipboard(symbols);
   }
 
-  async clickPriceInput(index: number = 0){
-    await super.clickLocator(this.getPriceInput(index))
+  async clickPriceInput(index: number = 0) {
+    await super.clickLocator(this.getPriceInput(index));
   }
 
-  async pressCommand(commands: string){
-    await super.pressBtn(commands)
+  async pressCommand(commands: string) {
+    await super.pressBtn(commands);
   }
 }
