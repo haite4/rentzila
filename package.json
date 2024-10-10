@@ -2,9 +2,8 @@
   "name": "rentzila_project",
   "version": "1.0.0",
   "scripts": {
-    "test:chromium": "playwright test --project=chromium --headed",
     "test": "playwright test --project=chromium --headed",
-    "trace": "playwright test --trace on --project=chromium",
+    "test:trace": "playwright test --trace on --project=chromium",
     "show:report": "playwright show-report",
     "test:headless": "playwright test",
     "test:consultation": "playwright test tests/consultationForm.spec.ts --project=chromium --headed --trace on",

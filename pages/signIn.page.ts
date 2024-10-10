@@ -1,5 +1,5 @@
 import Page from "./page";
-import error_msg from "../data/errors_msg.json"
+import error_msg from "../data/errors_msg.json";
 
 const headerAuthBtn = '[class*="NavbarAuthBlock_buttonEnter"]';
 const loginPopup = `[data-testid="loginPopup"]`;
@@ -61,7 +61,7 @@ export class SigninPage extends Page {
   getListOfErrorMsg() {
     const errorMsg = [
       error_msg.passwordRequirements,
-      error_msg.minimumCharacterRequirement
+      error_msg.minimumCharacterRequirement,
     ];
     return errorMsg;
   }

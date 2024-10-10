@@ -1,8 +1,8 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
 import { AlertMsgColors } from "../constants/enums_colors.constant";
-import error_msg from "../data/errors_msg.json"
-import success_msg from "../data/success_msg.json"
+import error_msg from "../data/errors_msg.json";
+import success_msg from "../data/success_msg.json";
 
 test.describe("Consulting form functionality", () => {
   test("TC-226: Verify 'У Вас залишилися питання?' form", async ({

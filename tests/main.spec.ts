@@ -1,7 +1,7 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
 import { Endpoints } from "../constants/enums_endpoints.constant";
-import general_msg from "../data/general_msg.json"
+import general_msg from "../data/general_msg.json";
 
 test.describe("Main page testing", () => {
   test.slow();
@@ -22,7 +22,9 @@ test.describe("Main page testing", () => {
       const text = await mainPage.getServicesText(locator);
       await mainPage.clickOnEachServices(locator);
 
-      await mainPage.page.waitForURL(`${process.env.BASE_URL}${Endpoints.PRODUCTS}`)
+      await mainPage.page.waitForURL(
+        `${process.env.BASE_URL}${Endpoints.PRODUCTS}`
+      );
 
       await expect(mainPage.page).toHaveURL(
         `${process.env.BASE_URL}${Endpoints.PRODUCTS}`
@@ -53,7 +55,7 @@ test.describe("Main page testing", () => {
     mainPage,
     productsPage,
   }) => {
-    test.setTimeout(30000)
+    test.setTimeout(30000);
     await mainPage.open();
     await mainPage.scrollToSpecialEquipment();
     await expect(mainPage.getEquipmentTitle()).toBeVisible();

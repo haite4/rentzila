@@ -11,6 +11,4 @@
     "minimumCharacterRequirement": "Будь ласка, введіть як мінімум 8 символів",
     "duplicateFileDownloadError": "Ви не можете завантажити двічі один файл.",
     "unsupportedImageFormatError": "Формат зображення не підтримується. Допустимі формати: .jpg, .jpeg, .png. Ви не можете завантажити файл більше 20 МВ."
-
-
 }
