@@ -25,6 +25,10 @@
     "next": "Далі",
     "searchAdvertisementsOrServices": "Пошук оголошень або послуг",
     "searchTenderByKeywords": "Пошук тендера за ключовими словами",
-    "servicesProvidedByTechnicalMeans": "Послуги, які надає технічний засіб:"
+    "servicesProvidedByTechnicalMeans": "Послуги, які надає технічний засіб:",
+    "understood": "Зрозуміло",
+    "back": "Назад",
+    "addPhotosInstruction": "Додайте в оголошення від 1 до 12 фото технічного засобу розміром до 20 МВ у форматі .jpg, .jpeg, .png. Перше фото буде основним.",
+    "main": "Головне"
 
 }

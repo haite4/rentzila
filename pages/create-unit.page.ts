@@ -1,6 +1,6 @@
 import { FileChooser } from "@playwright/test";
 import Page from "./page";
-import { time } from "console";
+import path from "path";
 
 const categorySelectTitle = '[class*="CategorySelect_title"]';
 const categorySelectContent = `[data-testid="categoryName"]`;
@@ -272,6 +272,27 @@ export class CreateUnitPage extends Page {
 
   getListOfInvalidVariant() {
     return ["1234567890123456", "1234567890 12345", "123456789012345 "];
+  }
+
+  getArrayImages() {
+    return [
+      "1.jpg",
+      "2.jpg",
+      "3.jpg",
+      "4.jpg",
+      "5.jpg",
+      "6.jpg",
+      "7.jpg",
+      "8.jpg",
+      "9.jpg",
+      "10.jpg",
+      "11.jpg",
+      "12.jpg",
+    ];
+  }
+
+  getActionsList() {
+    return ["clickCrossBtn", "clickSaveBtn", "clickOutsidePopUp"];
   }
 
   getListOfInvalidSymbols(includeSpaces: boolean = true): string[] {
@@ -548,4 +569,13 @@ export class CreateUnitPage extends Page {
     await super.clickLocator(this.getClosePopUpBtn());
   }
 
+  async fileChoser(folder: string, fileName: string, index: number = 0,) {
+    const fileChooserPromise = this.page.waitForEvent("filechooser");
+    await this.clickImageBlock(index);
+    const fileChooser = await fileChooserPromise;
+    await this.setElementFilesinPhotoSection(
+      fileChooser,
+      path.join(__dirname, "..", "data", folder, fileName)
+    );
+  }
 }
