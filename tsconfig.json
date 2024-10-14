@@ -6,8 +6,8 @@
       "rootDir": "./",
       "strict": true,
       "esModuleInterop": true,
-      "resolveJsonModule": true,    
-      "moduleResolution": "node"      
+      "resolveJsonModule": true,     
+      "moduleResolution": "node"     
     },
     "include": ["helpers/**/*.ts", "constants/enums_endpoints.ts", "constants/enums_colors.constant.ts"],
     "exclude": ["node_modules"]
