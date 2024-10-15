@@ -1,6 +1,6 @@
 import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
-import general_msg from "../data/general_msg.json"
+import general_msg from "../data/general_msg.json";
 import { Endpoints } from "../constants/enums_endpoints.constant";
 
 test.describe("Footer functionality", () => {
@@ -23,20 +23,28 @@ test.describe("Footer functionality", () => {
     await expect(mainPage.getCopyright()).toBeVisible();
     await expect(mainPage.getPrivacyPolicy()).toBeVisible();
     await mainPage.clickPrivacyPolicyLink();
-    await mainPage.page.waitForURL(`${process.env.BASE_URL}${Endpoints.PRIVACYPOLICY}`)
+    await mainPage.page.waitForURL(
+      `${process.env.BASE_URL}${Endpoints.PRIVACYPOLICY}`
+    );
     await expect(mainPage.page).toHaveURL(/.*privacy-policy.*/);
     await expect(mainPage.getPrivacyPolicyTitle()).toBeVisible();
     await mainPage.scrollDownToFooter();
     await mainPage.clickCookieUsagePolicyLink();
-    await mainPage.page.waitForURL(`${process.env.BASE_URL}${Endpoints.COOKIEPOLICY}`)
+    await mainPage.page.waitForURL(
+      `${process.env.BASE_URL}${Endpoints.COOKIEPOLICY}`
+    );
     await expect(mainPage.page).toHaveURL(/.*cookie-policy.*/);
     await expect(mainPage.getCookieUsagePolicyTitle()).toBeVisible();
     await mainPage.clickAccessTermsLink();
-    await mainPage.page.waitForURL(`${process.env.BASE_URL}${Endpoints.TERMSCONDITION}`)
+    await mainPage.page.waitForURL(
+      `${process.env.BASE_URL}${Endpoints.TERMSCONDITION}`
+    );
     await expect(mainPage.page).toHaveURL(/.*terms-conditions.*/);
     await expect(mainPage.getAccessTermsTitle()).toBeVisible();
     await mainPage.clickAdvertisementLink();
-    await mainPage.page.waitForURL(`${process.env.BASE_URL}${Endpoints.PRODUCTS}`)
+    await mainPage.page.waitForURL(
+      `${process.env.BASE_URL}${Endpoints.PRODUCTS}`
+    );
     await expect(mainPage.page).toHaveURL(/.*products.*/);
     await expect(mainPage.getAdvertisementSearch()).toBeVisible();
     await expect(mainPage.getAdvertisementSearch()).toHaveAttribute(
@@ -47,7 +55,9 @@ test.describe("Footer functionality", () => {
     await expect(mainPage.getHeroSectionTitle()).toBeVisible();
     await mainPage.scrollDownToFooter();
     await mainPage.clickTenderiLink();
-    await mainPage.page.waitForURL(`${process.env.BASE_URL}${Endpoints.TENDERSMAP}`)
+    await mainPage.page.waitForURL(
+      `${process.env.BASE_URL}${Endpoints.TENDERSMAP}`
+    );
     await expect(mainPage.page).toHaveURL(/.*tenders-map.*/);
     await expect(mainPage.getTenderSearchInput()).toBeVisible();
     await expect(mainPage.getTenderSearchInput()).toHaveAttribute(

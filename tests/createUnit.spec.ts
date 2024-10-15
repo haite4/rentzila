@@ -2,8 +2,8 @@ import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
 import { Endpoints } from "../constants/enums_endpoints.constant";
 import { AlertMsgColors } from "../constants/enums_colors.constant";
-import general_msg from "../data/general_msg.json"
-import error_msg from "../data/errors_msg.json"
+import general_msg from "../data/general_msg.json";
+import error_msg from "../data/errors_msg.json";
 
 test.describe("Create unit functionality", () => {
   test.beforeEach(async ({ signInHelper, signinPage }) => {
@@ -17,7 +17,7 @@ test.describe("Create unit functionality", () => {
   test("TC-294 Verify body title and tab titles", async ({
     createUnitPage,
   }) => {
-    await createUnitPage.page.waitForTimeout(2000)
+    await createUnitPage.page.waitForTimeout(2000);
     await expect(createUnitPage.getCategoryBodyTitle()).toBeVisible();
     await expect(createUnitPage.getCategoryBodyTitle()).toHaveText(
       general_msg.createAnnouncment
@@ -47,7 +47,7 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
   }) => {
     test.setTimeout(160000);
-    await createUnitPage.getCategorySelectTitle().waitFor({state:"visible"})
+    await createUnitPage.getCategorySelectTitle().waitFor({ state: "visible" });
     await expect(createUnitPage.getCategorySelectTitle()).toBeVisible();
     await expect(createUnitPage.getCategorySelectTitle()).toHaveText(
       /^Категорія.*\*$/
@@ -80,7 +80,7 @@ test.describe("Create unit functionality", () => {
     await createUnitPage.clickCategoryPopUpCloseBtn();
     await expect(createUnitPage.getCategoryPopUp()).toBeHidden();
     await createUnitPage.clickCategorySelectBtn();
-    await createUnitPage.clickOutsidePopUp();
+    await createUnitPage.clickOutsideCategoryPopUp();
     await expect(createUnitPage.getCategoryPopUp()).toBeHidden();
     await createUnitPage.clickCategorySelectBtn();
 
@@ -117,7 +117,7 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
     randomValueHelper,
   }) => {
-    await createUnitPage.getAdvertisementTitle().waitFor({state:"visible"})
+    await createUnitPage.getAdvertisementTitle().waitFor({ state: "visible" });
     await expect(createUnitPage.getAdvertisementTitle()).toBeVisible();
     await expect(createUnitPage.getAdvertisementTitle()).toHaveText(
       /^Назва оголошення.*\*$/
@@ -191,7 +191,9 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
     randomValueHelper,
   }) => {
-    await createUnitPage.getSelectManufacturerTitle().waitFor({state: "visible"})
+    await createUnitPage
+      .getSelectManufacturerTitle()
+      .waitFor({ state: "visible" });
     await expect(createUnitPage.getSelectManufacturerTitle()).toBeVisible();
     await expect(createUnitPage.getSelectManufacturerTitle()).toHaveText(
       /^Виробник транспортного засобу.*\*$/
@@ -217,12 +219,16 @@ test.describe("Create unit functionality", () => {
       createUnitPage.getSelectedManufacturerDropdownWrapper()
     ).toBeVisible();
     await createUnitPage.clearSelectedManufacturerInput();
-    await createUnitPage.typeSelectedManufacturerInput(general_msg.manufacturerInUpperCase);
+    await createUnitPage.typeSelectedManufacturerInput(
+      general_msg.manufacturerInUpperCase
+    );
     await expect(createUnitPage.getSelectedManufacturerOptions()).toHaveText(
       general_msg.manufacturerInUpperCase
     );
     await createUnitPage.clearSelectedManufacturerInput();
-    await createUnitPage.typeSelectedManufacturerInput(general_msg.manufacturerInLowerCase);
+    await createUnitPage.typeSelectedManufacturerInput(
+      general_msg.manufacturerInLowerCase
+    );
     await expect(createUnitPage.getSelectedManufacturerOptions()).toHaveText(
       general_msg.manufacturerInUpperCase
     );
@@ -234,19 +240,21 @@ test.describe("Create unit functionality", () => {
     await expect(
       createUnitPage.getSelectedManufacturerDropdownWrapper()
     ).not.toBeVisible();
-    await createUnitPage.typeSelectedManufacturerInput(general_msg.invalidSymbols);
+    await createUnitPage.typeSelectedManufacturerInput(
+      general_msg.invalidSymbols
+    );
     expect(
       await createUnitPage.getSelectedManufacturerInputValue()
     ).toHaveLength(0);
     await expect(
       createUnitPage.getSelectedManufacturerDropdownWrapper()
     ).not.toBeVisible();
-    await createUnitPage.typeSelectedManufacturerInput(general_msg.numberOneThroughnine);
+    await createUnitPage.typeSelectedManufacturerInput(
+      general_msg.numberOneThroughnine
+    );
     await expect(
       createUnitPage.getSelectedManufacuredNotFoundResult()
-    ).toHaveText(
-      error_msg.manufacturerNotFoundMsg
-    );
+    ).toHaveText(error_msg.manufacturerNotFoundMsg);
     await createUnitPage.clearSelectedManufacturerInput();
     await createUnitPage.typeSelectedManufacturerInput(
       randomValueHelper.generateStringWithLength(101)
@@ -255,11 +263,17 @@ test.describe("Create unit functionality", () => {
       await createUnitPage.getSelectedManufacturerInputValue()
     ).toHaveLength(100);
     await createUnitPage.clearSelectedManufacturerInput();
-    await createUnitPage.typeSelectedManufacturerInput(general_msg.abcLowerCase);
+    await createUnitPage.typeSelectedManufacturerInput(
+      general_msg.abcLowerCase
+    );
     await createUnitPage.clickSelectedManufacturerOptions();
-    await expect(createUnitPage.getSelectedOptionsInput()).toHaveText(general_msg.abcUpperCase);
+    await expect(createUnitPage.getSelectedOptionsInput()).toHaveText(
+      general_msg.abcUpperCase
+    );
     await createUnitPage.clickCloseOptionsBtn();
-    await createUnitPage.typeSelectedManufacturerInput(general_msg.abcLowerCase);
+    await createUnitPage.typeSelectedManufacturerInput(
+      general_msg.abcLowerCase
+    );
     await createUnitPage.clickSelectedManufacturerOptions();
     await expect(createUnitPage.getCloseOptionsBtn()).toBeVisible();
     await createUnitPage.clickCloseOptionsBtn();
@@ -272,7 +286,7 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
     randomValueHelper,
   }) => {
-    await createUnitPage.getNameModelTitle().waitFor({state:"visible"})
+    await createUnitPage.getNameModelTitle().waitFor({ state: "visible" });
     await expect(createUnitPage.getNameModelTitle()).toBeVisible();
     await expect(createUnitPage.getNameModelTitle()).toHaveText(
       general_msg.modelName
@@ -308,7 +322,9 @@ test.describe("Create unit functionality", () => {
     randomValueHelper,
   }) => {
     test.setTimeout(200000);
-    await createUnitPage.getTechnicalCharacteristicTitle().waitFor({state: "visible"})
+    await createUnitPage
+      .getTechnicalCharacteristicTitle()
+      .waitFor({ state: "visible" });
     await expect(
       createUnitPage.getTechnicalCharacteristicTitle()
     ).toBeVisible();
@@ -368,12 +384,16 @@ test.describe("Create unit functionality", () => {
   test("TC-319 Verify vehicle location division", async ({
     createUnitPage,
   }) => {
-    await createUnitPage.getAddressSelectionTitle().waitFor({state: "visible"})
+    await createUnitPage
+      .getAddressSelectionTitle()
+      .waitFor({ state: "visible" });
     await expect(createUnitPage.getAddressSelectionTitle()).toBeVisible();
     await expect(createUnitPage.getAddressSelectionTitle()).toHaveText(
       /^Місце розташування технічного засобу.*\*$/
     );
-    await expect(createUnitPage.getMapLabel()).toHaveText(general_msg.selectOnMap);
+    await expect(createUnitPage.getMapLabel()).toHaveText(
+      general_msg.selectOnMap
+    );
     await expect(createUnitPage.getMapLabel()).not.toHaveClass(
       "AddressSelectionBlock_mapLabelChosen__PBJoF"
     );
@@ -432,7 +452,7 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
     randomValueHelper,
   }) => {
-    await createUnitPage.getNextBtn().waitFor({state:"visible"})
+    await createUnitPage.getNextBtn().waitFor({ state: "visible" });
     await expect(createUnitPage.getNextBtn()).toHaveText(general_msg.next);
     await createUnitPage.clickNextBtn();
     for (const requiredFields of createUnitPage.getListOfLocatorRequiredFieldsError()) {
@@ -445,7 +465,9 @@ test.describe("Create unit functionality", () => {
     await createUnitPage.typeAdvertisementNameInput(
       randomValueHelper.generateStringWithLength(10)
     );
-    await createUnitPage.typeSelectedManufacturerInput(general_msg.abcLowerCase);
+    await createUnitPage.typeSelectedManufacturerInput(
+      general_msg.abcLowerCase
+    );
     await createUnitPage.clickSelectedManufacturerOptions();
     await createUnitPage.clickAddressSelectionBtn();
     const { x, y } = await createUnitPage.getMapPopupBoundingBox();
@@ -470,7 +492,7 @@ test.describe("Create unit functionality", () => {
           "true"
         );
       } else {
-        await createUnitPage.page.waitForTimeout(1500)
+        await createUnitPage.page.waitForTimeout(1500);
         await expect(createUnitPage.getCategoryTabBtn(i)).toHaveAttribute(
           "aria-selected",
           "false"

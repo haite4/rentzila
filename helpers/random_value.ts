@@ -127,4 +127,8 @@ export class RandomValue {
     return faker.string.alphanumeric(length)
 }
 
+randomIndexForImagesArray(arary: string[]){
+  return Math.floor(Math.random() * (arary.length - 1)) + 1;
+}
+
 }

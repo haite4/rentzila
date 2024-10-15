@@ -2,7 +2,7 @@ import { Locator } from "@playwright/test";
 import Page from "./page";
 
 const equipment = `[data-testid="specialEquipment"]`;
-const popularServices  = 'section[data-testid*="services"]';
+const popularServices = 'section[data-testid*="services"]';
 const populyarniEquipment = 'section[data-testid*="specialEquipment"]';
 const itemServices = '[class*="RentzilaProposes_proposes_item"]';
 const title = `[data-testid="title"]`;
@@ -12,17 +12,17 @@ const logo = `[data-testid="logo"]`;
 const aboutUsTitle = '[class*="RentzilaAbout_title"]';
 const forBuyersTitle = '[class*="RentzilaForBuyers_title"]';
 const contactsTitle = '[class*="RentzilaContacts_title"]';
-const privacyPolicy  = `[data-testid="politika-konfidenciinosti"]`;
-const cookieUsagePolicy  = `[data-testid="pravila-vikoristannya-failiv-cookie"]`;
-const accessTerms  = `[data-testid="umovi-dostupu-ta-koristuvannya"]`;
-const jobRequests  = `[data-testid="zapiti-na-robotu"]`;
+const privacyPolicy = `[data-testid="politika-konfidenciinosti"]`;
+const cookieUsagePolicy = `[data-testid="pravila-vikoristannya-failiv-cookie"]`;
+const accessTerms = `[data-testid="umovi-dostupu-ta-koristuvannya"]`;
+const jobRequests = `[data-testid="zapiti-na-robotu"]`;
 const copyright = `[data-testid="copyright"]`;
 const contactUsEmail = '[class*="RentzilaContacts_email"]';
-const privacyPolicyTitle  = 'h1[class*="PrivacyPolicy_title"]';
-const cookieUsagePolicyTitle  = 'h1[class*="Cookies_title"]';
+const privacyPolicyTitle = 'h1[class*="PrivacyPolicy_title"]';
+const cookieUsagePolicyTitle = 'h1[class*="Cookies_title"]';
 const tenderSearchInput = `[data-testid="search"]`;
 const heroSectionTitle = '[class*="HeroSection_title"]';
-const advertisementSearch  = `[data-testid="searchInput"]`;
+const advertisementSearch = `[data-testid="searchInput"]`;
 const consultingInputName = '[class*="ConsultationForm_name"] input';
 const consultingInputPhoneNumber = '[class*="ConsultationForm_phone"] input';
 const specialEquipmentText = "specialEquipment";
@@ -44,9 +44,7 @@ export class MainPage extends Page {
   }
 
   getListItemServices(): Promise<Locator[]> {
-    return super.getElementAll(
-      super.getElement(popularServices , itemServices)
-    );
+    return super.getElementAll(super.getElement(popularServices, itemServices));
   }
 
   getListEquipmentServices(): Promise<Locator[]> {
@@ -54,7 +52,7 @@ export class MainPage extends Page {
   }
 
   getServicesTitle(): Locator {
-    return super.getElement(popularServices , title);
+    return super.getElement(popularServices, title);
   }
 
   getEquipmentTitle(): Locator {
