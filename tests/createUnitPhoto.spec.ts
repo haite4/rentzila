@@ -25,7 +25,11 @@ test.describe("test create unit photo section", () => {
       );
       await createUnitPage.clickSelectedManufacturerOptions();
       await createUnitPage.clickAddressSelectionBtn();
-      await createUnitPage.page.waitForTimeout(1500);
+
+      const { x, y } = await createUnitPage.getMapPopupBoundingBox();
+      await createUnitPage.getMapPopUp().waitFor({ state: "visible" });
+      await createUnitPage.clickOnThePopUpMap(x, y);
+      await createUnitPage.page.waitForTimeout(3000);
       await createUnitPage.clickMapPopUpSubmitChoice();
       await createUnitPage.clickNextBtn();
     }
@@ -204,6 +208,7 @@ test.describe("test create unit photo section", () => {
   });
 
   test("TC-593 Verify image uploading", async ({ createUnitPage }) => {
+    await createUnitPage.getPhotoSectionTitle().waitFor({state:"visible"})
     await expect(createUnitPage.getPhotoSectionTitle()).toBeVisible();
     await expect(createUnitPage.getPhotoSectionTitle()).toHaveText(
       /^Фото технічного засобу.*\*$/

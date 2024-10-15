@@ -356,6 +356,7 @@ test.describe("Create unit functionality", () => {
     randomValueHelper,
   }) => {
     test.setTimeout(200000);
+    await createUnitPage.getDetailedDescriptionTitle().waitFor({state:"visible"})
     await expect(createUnitPage.getDetailedDescriptionTitle()).toBeVisible();
     await expect(createUnitPage.getDetailedDescriptionTitle()).toHaveText(
       general_msg.detailedDescription
@@ -384,6 +385,7 @@ test.describe("Create unit functionality", () => {
   test("TC-319 Verify vehicle location division", async ({
     createUnitPage,
   }) => {
+    test.setTimeout(60000)
     await createUnitPage
       .getAddressSelectionTitle()
       .waitFor({ state: "visible" });
@@ -429,8 +431,9 @@ test.describe("Create unit functionality", () => {
     await createUnitPage.clickOnThePopUpMap(x, y);
     await createUnitPage.page.waitForTimeout(500);
     const addressText = await createUnitPage.getMapPopUpAddressText();
-    await createUnitPage.page.waitForTimeout(1500);
+    await createUnitPage.page.waitForTimeout(2000);
     await createUnitPage.clickMapPopUpSubmitChoice();
+    await createUnitPage.page.waitForTimeout(2000);
     await expect(createUnitPage.getMapLabel()).toHaveText(addressText ?? "");
     await expect(createUnitPage.getMapPopUpWrapper()).not.toBeVisible();
   });

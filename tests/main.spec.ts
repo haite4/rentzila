@@ -21,7 +21,7 @@ test.describe("Main page testing", () => {
     for (const locator of await mainPage.getListItemServices()) {
       const text = await mainPage.getServicesText(locator);
       await mainPage.clickOnEachServices(locator);
-
+      await mainPage.page.waitForTimeout(2000);
       await mainPage.page.waitForURL(
         `${process.env.BASE_URL}${Endpoints.PRODUCTS}`
       );
@@ -37,6 +37,7 @@ test.describe("Main page testing", () => {
       await expect(checkboxLabel).toBeVisible();
       await expect(checkboxLabel).toBeChecked();
       await productsPage.clickUnitCardImage();
+      await mainPage.page.waitForTimeout(2000);
       await expect(
         productsDetailsPage.getUnitCharacteristicsTitle()
       ).toBeVisible();
