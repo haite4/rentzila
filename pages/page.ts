@@ -25,8 +25,16 @@ export default class Page {
     return locator.all();
   }
 
-  protected async clickLocator(locator: Locator) {
-    await locator.click();
+  protected async clickLocator(locator: Locator, position?: { x: number, y: number }){
+    if (position) {
+      await locator.click({ position });
+  } else {
+      await locator.click();
+  }
+  }
+
+  protected async clickMouseAtPosition(x: number, y: number){
+    await this.page.mouse.click(x, y)
   }
 
   protected async fillText(locator: Locator, text: string) {
@@ -65,8 +73,12 @@ export default class Page {
     return this.page.getByRole("heading", { name: text });
   }
 
-  protected getElementByText(text: string) {
-    return this.page.getByText(text);
+  protected getElementByImg(text: string){
+    return this.page.getByRole('img', { name: text })
+  }
+
+  protected getElementByText(text: string){
+    return this.page.getByText(text)
   }
 
   protected getElementByTestId(selector: string) {
@@ -79,6 +91,10 @@ export default class Page {
 
   protected async getElementInputValue(locator: Locator){
     return locator.inputValue()
+  }
+
+  protected getElementCount(locator: Locator){
+    return locator.count()
   }
 
 }

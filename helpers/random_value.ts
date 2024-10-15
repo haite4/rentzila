@@ -8,6 +8,10 @@ export class RandomValue {
     return faker.person.firstName();
   }
 
+  randomWord(){
+    return faker.lorem.word({length: {min: 5, max: 9}})
+  }
+  
   validPhoneNumberOptions() {
     const validOptionsList: string[] = [];
     const phoneNumber = process.env.ADMIN_PHONE_NUMBER ?? "";
@@ -118,4 +122,9 @@ export class RandomValue {
 
     return password;
   }
+
+  generateStringWithLength(length: number){
+    return faker.string.alphanumeric(length)
+}
+
 }

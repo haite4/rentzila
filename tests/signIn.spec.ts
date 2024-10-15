@@ -2,6 +2,7 @@ import { expect } from "@playwright/test";
 import { test } from "../fixtures/fixtures";
 import { Endpoints } from "../constants/enums_endpoints.constant"
 import { AlertMsgColors } from "../constants/enums_colors.constant"
+import error_msg from "../data/errors_msg.json"
 
 test.describe("Auth page testing", () => {
   test.beforeEach(async ({ signinPage }) => {
@@ -12,10 +13,10 @@ test.describe("Auth page testing", () => {
     await signinPage.clickLoginSubmitBtn();
     await expect(signinPage.getLoginPopUp()).toBeVisible();
     await expect(signinPage.getEmailInpuErrorMsg()).toHaveText(
-      "Поле не може бути порожнім"
+      error_msg.fieldCantBeEmpty
     );
     await expect(signinPage.getPasswordInputErrorMsgLocator()).toHaveText(
-      "Поле не може бути порожнім"
+      error_msg.fieldCantBeEmpty
     );
     await expect(signinPage.getEmailInput()).toHaveCSS(
       "border",
@@ -32,7 +33,7 @@ test.describe("Auth page testing", () => {
       AlertMsgColors.BORDERGRAY
     );
     await expect(signinPage.getPasswordInputErrorMsgLocator()).toHaveText(
-      "Поле не може бути порожнім"
+      error_msg.fieldCantBeEmpty
     );
     await expect(signinPage.getPasswordInput()).toHaveCSS(
       "border",
@@ -44,7 +45,7 @@ test.describe("Auth page testing", () => {
       AlertMsgColors.BORDERRED
     );
     await expect(signinPage.getEmailInpuErrorMsg()).toHaveText(
-      "Поле не може бути порожнім"
+      error_msg.fieldCantBeEmpty
     );
     await signinPage.fillLoginPasswordInput(process.env.USER_PASSWORD ?? "");
     await signinPage.clickLoginSubmitBtn();
@@ -122,7 +123,7 @@ test.describe("Auth page testing", () => {
       await signinPage.fillLoginEmailInput(invalidPhoneNumber);
       await signinPage.clickLoginSubmitBtn();
       await expect(signinPage.getEmailInpuErrorMsg()).toHaveText(
-        "Неправильний формат email або номера телефону"
+        error_msg.incorrectPhoneNumberOrEmailFormat
       );
       await signinPage.clearLoginInputs();
     }
@@ -134,7 +135,7 @@ test.describe("Auth page testing", () => {
       await signinPage.fillLoginEmailInput(InvalidEmail);
       await signinPage.clickLoginSubmitBtn();
       await expect(signinPage.getEmailInpuErrorMsg()).toHaveText(
-        "Неправильний формат email або номера телефону"
+        error_msg.incorrectPhoneNumberOrEmailFormat
       );
       await signinPage.clearLoginInputs();
     }
@@ -157,7 +158,7 @@ test.describe("Auth page testing", () => {
    await signinPage.fillLoginEmailInput(process.env.ADMIN_EMAIL ?? "");
    await signinPage.fillLoginPasswordInput(randomValueHelper.generateRandomPassword(10))
    await signinPage.clickLoginSubmitBtn();
-   await expect(signinPage.getLoginFormErrorText()).toHaveText("Невірний e-mail або пароль")
+   await expect(signinPage.getLoginFormErrorText()).toHaveText(error_msg.incorrectEmailOrPassword)
   });
 
 });
