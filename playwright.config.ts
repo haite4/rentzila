@@ -21,8 +21,8 @@ export default defineConfig({
 
     baseURL: process.env.BASE_URL,
 
- 
     trace: 'on-first-retry',
+  
   },
 
 

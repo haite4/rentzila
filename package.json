@@ -3,14 +3,14 @@
   "version": "1.0.0",
   "scripts": {
     "test:chromium": "playwright test --project=chromium --headed",
-    "test": "playwright test --project=chromium",
+    "test": "playwright test --project=chromium --headed",
     "trace": "playwright test --trace on --project=chromium",
     "show:report": "playwright show-report",
     "test:headless": "playwright test",
-    "test:consultation": "playwright test tests/consultationForm.spec.ts --project=chromium --headed --trace on",
+    "test:consultation": "playwright test tests/consultationForm.spec.ts --project=chromium --trace on",
     "test:footer": "playwright test tests/footer.spec.ts --project=chromium",
-    "test:main": "playwright test tests/main.spec.ts --project=chromium --headed",
-    "test:signin": "playwright test tests/signIn.spec.ts --project=chromium --trace on --headed"
+    "test:main": "playwright test tests/main.spec.ts --project=chromium  --trace on",
+    "test:signin": "playwright test tests/signIn.spec.ts --project=chromium --headed"
   },
   "keywords": [],
   "author": "Stanislav Stankov",
