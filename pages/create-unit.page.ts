@@ -1,4 +1,4 @@
-import { FileChooser } from "@playwright/test";
+import { FileChooser, Locator } from "@playwright/test";
 import Page from "./page";
 import path from "path";
 
@@ -48,19 +48,40 @@ const mapPopUpAddress = `[data-testid="address"]`;
 const mapPopUp = "#map";
 const preventBtn = `[data-testid="prevButton"]`;
 const clickImageBlock = `[data-testid="clickImage"]`;
-const errorPopUp = `[data-testid="errorPopup"]`;
-const closePopUpBtn = `[data-testid="closeIcon"]`;
-const imageBlock = `[data-testid="imageBlock"]`;
-const popUpBtn = '[class*="ItemButtons_darkBlueBtn"]';
-const popUpPhotoWrapper = '[class*="PopupLayout_wrapper"]';
-const previousBtn = `[data-testid="prevButton"]`;
-const selectWithSearchManufacturer = `[data-testid="div-wrapper-customSelectWithSearch"]`;
-const photoSectionClue = '[class*="ImagesUnitFlow_descr"]';
-const serviceUnitInput = '[class*="ServicesUnitFlow_searchInput"]';
-const photoSectionTitle = '[class*="ImagesUnitFlow_paragraph"]';
-const mainImageLabel = `[data-testid="mainImageLabel"]`;
-const deleteImageBlck = `[data-testid="deleteImage"]`;
-const deleteIconWrapper = '[class*="ImagesUnitFlow_deleteIconWrapper"]';
+const errorPopUp = `[data-testid="errorPopup"]`
+const closePopUpBtn = `[data-testid="closeIcon"]`
+const imageBlock = `[data-testid="imageBlock"]`
+const popUpBtn = '[class*="ItemButtons_darkBlueBtn"]'
+const popUpPhotoWrapper = '[class*="PopupLayout_wrapper"]'
+const previousBtn = `[data-testid="prevButton"]`
+const selectWithSearchManufacturer = `[data-testid="div-wrapper-customSelectWithSearch"]`
+const photoSectionClue = '[class*="ImagesUnitFlow_descr"]'
+const serviceUnitInput =  '[class*="ServicesUnitFlow_searchInput"] input'
+const photoSectionTitle = '[class*="ImagesUnitFlow_paragraph"]'
+const mainImageLabel = `[data-testid="mainImageLabel"]`
+const deleteImageBlck = `[data-testid="deleteImage"]`
+const deleteIconWrapper = '[class*="ImagesUnitFlow_deleteIconWrapper"]'
+const serviceSearchResults = `[data-testid="searchItem-servicesUnitFlow"]`
+const pricePaymentMethodUnitTitle = '//div[contains(@class, "PricesUnitFlow_paragraph")][contains(text(), "Спосіб оплати")]'
+const priceCostMinimumOrderTitle = '//div[contains(@class, "PricesUnitFlow_paragraph")][contains(text(), "Вартість мінімального замовлення")]'
+const costOfServicesTitle = '//div[contains(@class, "PricesUnitFlow_paragraph")][contains(text(), "Вартість Ваших послуг")]'
+const paymentMethodCustomSelectValue = '[class*="CustomSelect_value"]'
+const paymentMethodOptionSpan = '[class*="CustomSelect_option"] span'
+const priceCustomSelect = `[data-testid="div_CustomSelect"]`
+const paymentMethodOptionBlock = `[data-testid="item-customSelect"]`
+const priceInput = '[class*="RowUnitPrice_priceInput"]'
+const priceCurrencyInput = '[class*="RowUnitPrice_currencyText"]'
+const priceSectionClue = '[class*="PricesUnitFlow_description"]'
+const addPriceBtn = `[data-testid="addPriceButton_ServicePrice"]`
+const selectServicePrice = '[class*="ServicePrice_service"] div'
+const priceArrowImage = `[data-testid="arrowImage"]`
+const priceTimeSelectOption = `[data-testid="span-customSelect"]`
+const priceWorkingShift = '//span[contains(@data-testid, "span-customSelect") and contains(text(), "зміна")]';
+const removePriceBtn = `[data-testid="div_removePrice_RowUnitPrice"]`
+const serviceUnitFlowTitle = '[class*="ServicesUnitFlow_title"]'
+const priceUnitInputWrapper = `[data-testid="input_wrapper_RowUnitPrice"]`
+const priceRequiredFieldClue = `[data-testid="div_required_RowUnitPrice"]`
+const priceMinimumAmountClue = '[class*="RowUnitPrice_error"]'
 
 export class CreateUnitPage extends Page {
   constructor(page: Page["page"]) {
@@ -295,6 +316,42 @@ export class CreateUnitPage extends Page {
     return ["clickCrossBtn", "clickSaveBtn", "clickOutsidePopUp"];
   }
 
+  getOptionsText() {
+    return [
+      "Готівкою / на картку",
+      "Безготівковий розрахунок (без ПДВ)",
+      "Безготівковий розрахунок (з ПДВ)",
+    ];
+  }
+
+  getInvalidDataList() {
+    return ["123 456", "123456 ", " ", "abc", "!@#$%.,"];
+  }
+
+  getInvalidDataListWithAdditionalValue(){
+    return ["123 456", "123456 ","1234567890" , " ", "abc", "!@#$%.,"]
+  }
+
+  getListOfCopyPasteActions(){
+    return ["type", "copy-paste"]
+  }
+
+  getListOfMeasurementUnits() {
+    return [
+      "година",
+      "зміна",
+      "тонна",
+      "гектар",
+      "метр кв.",
+      "метр куб.",
+      "Кілометр",
+    ];
+  }
+
+  getListOfPriceTimeVariant() {
+    return ["8 год", "4 год"];
+  }
+
   getListOfInvalidSymbols(includeSpaces: boolean = true): string[] {
     let invalidSymbols = [" ", "<>", "{}", ";", "^"];
     if (!includeSpaces) {
@@ -341,6 +398,110 @@ export class CreateUnitPage extends Page {
 
   getDeleteIconWrapperByindex(index: number) {
     return super.getElement(deleteIconWrapper).nth(index);
+  }
+
+  getServiceSearchResults() {
+    return super.getElement(serviceSearchResults);
+  }
+
+  getPricePayementMethodUnitTitle() {
+    return super.getElement(pricePaymentMethodUnitTitle);
+  }
+
+  getPaymentMethodCustomSelectValue(index: number = 0) {
+    return super.getElement(paymentMethodCustomSelectValue).nth(index);
+  }
+
+  getPaymentMethodOptions() {
+    return super.getElement(paymentMethodOptionSpan);
+  }
+
+  getAllPaymentMethodOptions() {
+    return super.getElementAll(this.getPaymentMethodOptions());
+  }
+
+  getPriceCustomSelect() {
+    return super.getElement(priceCustomSelect);
+  }
+
+  getPaymentMethodOptionBlock() {
+    return super.getElement(paymentMethodOptionBlock);
+  }
+
+  getPaymentMethodOptionBlockByIndex(index: number) {
+    return this.getPaymentMethodOptionBlock().nth(index);
+  }
+
+  getPriceCostMinimumOrderTitle() {
+    return super.getElement(priceCostMinimumOrderTitle);
+  }
+
+  getPriceInput(index: number = 0) {
+    return super.getElement(priceInput).nth(index);
+  }
+
+  getPriceCurrencyInput(index: number = 0) {
+    return super.getElement(priceCurrencyInput).nth(index);
+  }
+
+  getCostOfServicesTitle() {
+    return super.getElement(costOfServicesTitle);
+  }
+
+  getPriceSectionClue() {
+    return super.getElement(priceSectionClue);
+  }
+
+  getAddPriceBtn() {
+    return super.getElement(addPriceBtn);
+  }
+
+  getSelectServicePrice() {
+    return super.getElement(selectServicePrice);
+  }
+
+  getArrowImage(index: number = 0) {
+    return super.getElement(priceArrowImage).nth(index);
+  }
+
+  getPriceTimeSelectOption() {
+    return super.getElement(priceTimeSelectOption);
+  }
+
+  getAllPriceTimeSelectOption() {
+    return super.getElementAll(this.getPriceTimeSelectOption());
+  }
+
+  getServiceUnitFlowTitle() {
+    return super.getElement(serviceUnitFlowTitle);
+  }
+
+  getPriceRequiredFieldClue() {
+    return super.getElement(priceRequiredFieldClue);
+  }
+
+  getPriceUnitInputWrapper() {
+    return super.getElement(priceUnitInputWrapper).first();
+  }
+
+  getPriceMinimumAmountClue() {
+    return super.getElement(priceMinimumAmountClue);
+  }
+
+  async clickDeleteIconWrapper(index: number) {
+    await super.clickLocator(this.getDeleteIconWrapperByindex(index));
+  }
+
+  async hoverOnImageBlockByIndex(index: number, timeout: number) {
+    await super.elementHover(this.getImageBlockByindex(index), timeout);
+  }
+
+  async clickImageBlock(index: number = 0) {
+    await super.clickLocator(this.getImageBlock().nth(index));
+  }
+
+  async clickClosePopUpBtn() {
+    await super.clickLocator(this.getClosePopUpBtn());
   }
 
   async typeAdvertisementNameInput(randomValue: string) {
@@ -553,22 +714,6 @@ export class CreateUnitPage extends Page {
     await super.clickLocator(this.getPrevioudBtn());
   }
 
-  async clickDeleteIconWrapper(index: number) {
-    await super.clickLocator(this.getDeleteIconWrapperByindex(index));
-  }
-
-  async hoverOnImageBlockByIndex(index: number, timeout: number) {
-    await super.elementHover(this.getImageBlockByindex(index), timeout);
-  }
-
-  async clickImageBlock(index: number = 0) {
-    await super.clickLocator(this.getImageBlock().nth(index));
-  }
-
-  async clickClosePopUpBtn() {
-    await super.clickLocator(this.getClosePopUpBtn());
-  }
-
   async fileChoser(folder: string, fileName: string, index: number = 0) {
     const fileChooserPromise = this.page.waitForEvent("filechooser");
     await this.clickImageBlock(index);
@@ -577,5 +722,65 @@ export class CreateUnitPage extends Page {
       fileChooser,
       path.join(__dirname, "..", "data", folder, fileName)
     );
+  }
+
+  async fillServiceUnitInput(text: string) {
+    await super.fillText(this.getServiceUnitInput(), text);
+  }
+
+  async clickOnFirstServiceSearchResults() {
+    await super.clickLocator(this.getServiceSearchResults().first());
+  }
+
+  async clickPriceCustomSelect() {
+    await super.clickLocator(this.getPriceCustomSelect());
+  }
+
+  async clickPaymentMethodOptionBlockByIndex(index: number) {
+    await super.clickLocator(this.getPaymentMethodOptionBlockByIndex(index));
+  }
+
+  async fillPriceInput(text: string, index: number = 0) {
+    await super.fillText(this.getPriceInput(index), text);
+  }
+
+  async typePriceInput(text: string, index: number = 0) {
+    await super.typeText(this.getPriceInput(index), text);
+  }
+
+  async clearPriceInput(index: number = 0) {
+    await super.clearInputField(this.getPriceInput(index));
+  }
+
+  async clickAddPriceBtn() {
+    await super.clickLocator(this.getAddPriceBtn());
+  }
+
+  async clickPaymentMethodCustomSelectValue(index: number = 0) {
+    await super.clickLocator(this.getPaymentMethodCustomSelectValue(index));
+  }
+
+  async clickOnPriceCustomSelectOption(locator: Locator) {
+    await super.clickLocator(locator);
+  }
+
+  async clickPriceWorkingShift() {
+    await super.clickLocator(super.getElement(priceWorkingShift));
+  }
+
+  async clickRemovePriceBtn() {
+    await super.clickLocator(super.getElement(removePriceBtn));
+  }
+
+  async writeToClipboardSymbols(symbols: string) {
+    await super.writeTextToClipboard(symbols);
+  }
+
+  async clickPriceInput(index: number = 0) {
+    await super.clickLocator(this.getPriceInput(index));
+  }
+
+  async pressCommand(commands: string) {
+    await super.pressBtn(commands);
   }
 }
