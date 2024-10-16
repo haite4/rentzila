@@ -434,6 +434,8 @@ test.describe("Create unit functionality", () => {
     await createUnitPage.page.waitForTimeout(5000);
     await createUnitPage.clickMapPopUpSubmitChoice();
     await createUnitPage.page.waitForTimeout(5000);
+    console.log("Address text", addressText)
+    console.log("Map Label text", await createUnitPage.getMapLabel().textContent())
     await expect(createUnitPage.getMapLabel()).toHaveText(addressText ?? "");
     await expect(createUnitPage.getMapPopUpWrapper()).not.toBeVisible();
   });
