@@ -30,8 +30,6 @@ jobs:
           echo "USER_PASSWORD=${{ secrets.USER_PASSWORD }}" >> $GITHUB_ENV
           echo "USER_PHONE_NUMBER=${{ secrets.USER_PHONE_NUMBER }}" >> $GITHUB_ENV
 
-      # - name: Install Playwright Browsers
-      #   run: npx playwright install --with-deps
       - name: Run playwright Tests
         run: npm run test
         continue-on-error: true
