@@ -495,12 +495,12 @@ test.describe("Create unit functionality", () => {
           "true"
         );
       } else {
-        await createUnitPage.page.waitForTimeout(1500);
         await expect(createUnitPage.getCategoryTabBtn(i)).toHaveAttribute(
           "aria-selected",
           "false"
         );
       }
+      await createUnitPage.page.waitForTimeout(1500);
     }
   });
 });
