@@ -433,7 +433,7 @@ test.describe("Create unit functionality", () => {
     const addressText = await createUnitPage.getMapPopUpAddressText();
     await createUnitPage.page.waitForTimeout(2000);
     await createUnitPage.clickMapPopUpSubmitChoice();
-    await createUnitPage.page.waitForTimeout(2000);
+    await createUnitPage.page.waitForTimeout(5000);
     await expect(createUnitPage.getMapLabel()).toHaveText(addressText ?? "");
     await expect(createUnitPage.getMapPopUpWrapper()).not.toBeVisible();
   });
