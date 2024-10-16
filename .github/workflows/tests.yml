@@ -45,7 +45,7 @@ jobs:
           path: gh-pages
 
       - name: Build test report
-        uses: simple-elf/allure-report-action@master
+        uses: simple-elf/allure-report-action@main
         if: always()
         id: allure-report
         with:
