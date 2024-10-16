@@ -62,7 +62,7 @@ test.describe("Create unit functionality", () => {
     await expect(createUnitPage.getArrowDown()).toBeVisible();
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getCategorySelectError()).toHaveCSS(
-      "border",
+      "border-color",
       AlertMsgColors.BORDERRED
     );
     await expect(createUnitPage.getCategorySelectErrorText()).toHaveCSS(
@@ -181,7 +181,7 @@ test.describe("Create unit functionality", () => {
     );
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getAdvertisementInput()).toHaveCSS(
-      "border",
+      "border-color",
       AlertMsgColors.BORDERGRAY
     );
     await expect(createUnitPage.getErrorMessage()).not.toBeVisible();
@@ -211,7 +211,7 @@ test.describe("Create unit functionality", () => {
       AlertMsgColors.RED
     );
     await expect(createUnitPage.getSeletedManufacturerBorder()).toHaveCSS(
-      "border",
+      "border-color",
       AlertMsgColors.BORDERRED
     );
     await createUnitPage.typeSelectedManufacturerInput(general_msg.A);
@@ -401,7 +401,7 @@ test.describe("Create unit functionality", () => {
     );
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getMapLabel()).toHaveCSS(
-      "border",
+      "border-color",
       AlertMsgColors.BORDERRED
     );
     await expect(createUnitPage.getAddressSelectionError()).toHaveText(

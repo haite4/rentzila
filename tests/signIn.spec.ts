@@ -19,29 +19,29 @@ test.describe("Auth page testing", () => {
       error_msg.fieldCantBeEmpty
     );
     await expect(signinPage.getEmailInput()).toHaveCSS(
-      "border",
+      "border-color",
       AlertMsgColors.BORDERRED
     );
     await expect(signinPage.getPasswordInput()).toHaveCSS(
-      "border",
+      "border-color",
       AlertMsgColors.BORDERRED
     );
     await signinPage.fillLoginEmailInput(process.env.USER_EMAIL ?? "");
     await signinPage.clickLoginSubmitBtn();
     await expect(signinPage.getEmailInput()).toHaveCSS(
-      "border",
+      "border-color",
       AlertMsgColors.BORDERGRAY
     );
     await expect(signinPage.getPasswordInputErrorMsgLocator()).toHaveText(
       error_msg.fieldCantBeEmpty
     );
     await expect(signinPage.getPasswordInput()).toHaveCSS(
-      "border",
+      "border-color",
       AlertMsgColors.BORDERRED
     );
     await signinPage.clearEmailInput();
     await expect(signinPage.getEmailInput()).toHaveCSS(
-      "border",
+      "border-color",
       AlertMsgColors.BORDERRED
     );
     await expect(signinPage.getEmailInpuErrorMsg()).toHaveText(
@@ -50,7 +50,7 @@ test.describe("Auth page testing", () => {
     await signinPage.fillLoginPasswordInput(process.env.USER_PASSWORD ?? "");
     await signinPage.clickLoginSubmitBtn();
     await expect(signinPage.getPasswordInput()).toHaveCSS(
-      "border",
+      "border-color",
       AlertMsgColors.BORDERGRAY
     );
   });
@@ -145,12 +145,12 @@ test.describe("Auth page testing", () => {
     for (const phoneNumber of randomValueHelper.validPhoneNumberOptions()) {
       await signinPage.fillLoginEmailInput(phoneNumber);
       await expect(signinPage.getEmailInput()).toHaveCSS(
-        "border",
+        "border-color",
         AlertMsgColors.BORDERGRAY
       );
       await signinPage.fillLoginPasswordInput(process.env.ADMIN_PASSWORD ?? "");
       await expect(signinPage.getPasswordInput()).toHaveCSS(
-        "border",
+        "border-color",
         AlertMsgColors.BORDERGRAY
       );
       await signinPage.clickLoginSubmitBtn();

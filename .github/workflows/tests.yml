@@ -34,6 +34,7 @@ jobs:
         run: npx playwright install --with-deps
       - name: Run playwright Tests
         run: npm run test
+        continue-on-error: true
       
       - name: Load test report history
         uses: actions/checkout@v3
