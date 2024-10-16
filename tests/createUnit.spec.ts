@@ -490,17 +490,18 @@ test.describe("Create unit functionality", () => {
         createUnitPage.getListOfCategoryTabNumber()[i]
       );
       if (i === 1) {
+        await createUnitPage.page.waitForTimeout(5000)
         await expect(createUnitPage.getCategoryTabBtn(1)).toHaveAttribute(
           "aria-selected",
           "true"
         );
       } else {
+        await createUnitPage.page.waitForTimeout(5000)
         await expect(createUnitPage.getCategoryTabBtn(i)).toHaveAttribute(
           "aria-selected",
           "false"
         );
       }
-      await createUnitPage.page.waitForTimeout(1500);
     }
   });
 });
