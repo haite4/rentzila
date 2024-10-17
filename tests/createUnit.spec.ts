@@ -490,17 +490,16 @@ test.describe("Create unit functionality", () => {
       expect(await createUnitPage.getCategoryTabNumberText(i)).toBe(
         createUnitPage.getListOfCategoryTabNumber()[i]
       );
-      await createUnitPage.page.waitForTimeout(5000)
       if (i === 1) {
         await expect(createUnitPage.getCategoryTabBtn(1)).toHaveAttribute(
           "aria-selected",
           "true"
         );
       } else {
-        await createUnitPage.page.waitForTimeout(5000)
         await expect(createUnitPage.getCategoryTabBtn(i)).toHaveAttribute(
           "aria-selected",
-          "false"
+          "false",
+          {timeout: 10000}
         );
       }
     }
