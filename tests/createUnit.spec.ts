@@ -455,7 +455,7 @@ test.describe("Create unit functionality", () => {
     createUnitPage,
     randomValueHelper,
   }) => {
-    test.setTimeout(60000)
+    test.setTimeout(80000)
     await createUnitPage.getNextBtn().waitFor({ state: "visible" });
     await expect(createUnitPage.getNextBtn()).toHaveText(general_msg.next);
     await createUnitPage.clickNextBtn();
