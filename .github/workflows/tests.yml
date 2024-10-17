@@ -34,6 +34,13 @@ jobs:
       - name: Run playwright Tests
         run: npm run test
         continue-on-error: true
+
+      - name: Clean up unused tools
+        run: |
+          sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
+          sudo rm -rf "/usr/local/share/boost"
+          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
       
       - name: Load test report history
         uses: actions/checkout@v3
