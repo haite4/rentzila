@@ -490,7 +490,7 @@ test.describe("Create unit functionality", () => {
       expect(await createUnitPage.getCategoryTabNumberText(i)).toBe(
         createUnitPage.getListOfCategoryTabNumber()[i]
       );
-      await createUnitPage.page.waitForTimeout(10000)
+      await createUnitPage.page.waitForTimeout(5000)
       if (i === 1) {
         await expect(createUnitPage.getCategoryTabBtn(1)).toHaveAttribute(
           "aria-selected",
