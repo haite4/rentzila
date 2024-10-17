@@ -492,13 +492,11 @@ test.describe("Create unit functionality", () => {
       );
       await createUnitPage.page.waitForTimeout(10000)
       if (i === 1) {
-        await createUnitPage.getCategoryTabBtn(i).waitFor({state: "visible"})
         await expect(createUnitPage.getCategoryTabBtn(1)).toHaveAttribute(
           "aria-selected",
           "true"
         );
       } else {
-        await createUnitPage.getCategoryTabBtn(i).waitFor({state: "hidden"})
         await expect(createUnitPage.getCategoryTabBtn(i)).toHaveAttribute(
           "aria-selected",
           "false"
