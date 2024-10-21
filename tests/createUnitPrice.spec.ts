@@ -220,7 +220,7 @@ test.describe("test create unit price section", () => {
     await expect(createUnitPage.getNextBtn()).toHaveText(general_msg.next);
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getPriceUnitInputWrapper()).toHaveCSS(
-      "border",
+      "border-color",
       AlertMsgColors.BORDERRED
     );
     await expect(createUnitPage.getPriceRequiredFieldClue()).toHaveText(
@@ -266,7 +266,7 @@ test.describe("test create unit price section", () => {
     await expect(createUnitPage.getPriceInput()).toHaveValue(general_msg.one);
     await createUnitPage.clickNextBtn();
     await expect(createUnitPage.getPriceUnitInputWrapper()).toHaveCSS(
-      "border",
+      "border-color",
       AlertMsgColors.BORDERRED
     );
     await expect(createUnitPage.getPriceMinimumAmountClue()).toHaveText(
@@ -278,7 +278,7 @@ test.describe("test create unit price section", () => {
     );
     await createUnitPage.clearPriceInput();
     await expect(createUnitPage.getPriceUnitInputWrapper()).toHaveCSS(
-      "border",
+      "border-color",
       AlertMsgColors.BORDERRED
     );
     await expect(createUnitPage.getPriceRequiredFieldClue()).toHaveText(
@@ -288,7 +288,7 @@ test.describe("test create unit price section", () => {
     await expect(createUnitPage.getPriceRequiredFieldClue()).not.toBeVisible();
     await expect(createUnitPage.getPriceMinimumAmountClue()).not.toBeVisible();
     await expect(createUnitPage.getPriceUnitInputWrapper()).toHaveCSS(
-      "border",
+      "border-color",
       AlertMsgColors.BORDERGRAY
     );
   });
@@ -308,7 +308,7 @@ test.describe("test create unit price section", () => {
             await createUnitPage.clearPriceInput();
             await createUnitPage.writeToClipboardSymbols(option);
             await createUnitPage.clickPriceInput();
-            await createUnitPage.pressCommand("Control+A");
+            await createUnitPage.pressCommand("Control+V");
             break;
         }
 
