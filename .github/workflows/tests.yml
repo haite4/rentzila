@@ -37,7 +37,7 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run playwright Tests
-        run: npm test:createUnitPrice
+        run: npm run test:createUnitPrice
         continue-on-error: true
 
       - name: Generate Allure report
