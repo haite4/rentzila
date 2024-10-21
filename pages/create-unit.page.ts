@@ -82,6 +82,14 @@ const serviceUnitFlowTitle = '[class*="ServicesUnitFlow_title"]'
 const priceUnitInputWrapper = `[data-testid="input_wrapper_RowUnitPrice"]`
 const priceRequiredFieldClue = `[data-testid="div_required_RowUnitPrice"]`
 const priceMinimumAmountClue = '[class*="RowUnitPrice_error"]'
+const servicesParagraphNotExist = '[class*="AddNewItem_paragraph"]'
+const addNewServicesBtn = `[data-testid="btn-addNewItem"]`
+const addNewServicesIconPlus = `[data-testid="svg-plus-addNewItem"]`
+const selectedServices = '[class*="ServicesUnitFlow_servicesWrapper"] [data-testid="item-servicesUnitFlow"]'
+const searchItemServicesResult = '[class*="ServicesUnitFlow_flexForServices"]'
+const removeServicesBtn = `[data-testid="remove-servicesUnitFlow"]`
+const technicalServiceDescription = `//div[contains(@class, 'ServicesUnitFlow_paragraph') and contains(text(), "Послуги, які надає технічний засіб:")]`
+const servicesInfoClue = `[data-testid="add-info"]`
 
 export class CreateUnitPage extends Page {
   constructor(page: Page["page"]) {
@@ -488,6 +496,42 @@ export class CreateUnitPage extends Page {
     return super.getElement(priceMinimumAmountClue);
   }
 
+  getServicesParagraphNotExist(){
+    return super.getElement(servicesParagraphNotExist)
+  }
+
+  getAddNewServicesBtn(){
+    return super.getElement(addNewServicesBtn)
+  }
+
+  getAddNewServicesIconPlus(){
+    return super.getElement(addNewServicesIconPlus)
+  }
+
+  getSelectedServices(){
+    return super.getElement(selectedServices)
+  }
+
+  getSearchItemServicesResultByIndex(index: number){
+    return super.getElement(searchItemServicesResult).nth(index)
+  }
+
+  getSearchItemServicesResult(){
+    return super.getElement(searchItemServicesResult)
+  }
+
+  getRemoveServicesBtnByIndex(index: number){
+    return super.getElement(removeServicesBtn).nth(index)
+  }
+
+  getTechnicalServiceDescription(){
+    return super.getElement(technicalServiceDescription)
+  }
+
+  getServicesInfoClue(){
+    return super.getElement(servicesInfoClue)
+  }
+
   async clickDeleteIconWrapper(index: number) {
     await super.clickLocator(this.getDeleteIconWrapperByindex(index));
   }
@@ -783,4 +827,21 @@ export class CreateUnitPage extends Page {
   async pressCommand(commands: string) {
     await super.pressBtn(commands);
   }
+
+  async clickAddNewServicesBtn(){
+   await super.clickLocator(this.getAddNewServicesBtn())
+  }
+
+  async getAllSearchItemServicesResult(){
+    return super.getElementAll(this.getSearchItemServicesResult())
+  }
+
+  async clickSearchItemServicesResulByIndex(index: number){
+    await super.clickLocator(this.getSearchItemServicesResultByIndex(index))
+  }
+
+  async clickRemoveServicesBtnByIndex(index: number){
+    await super.clickLocator(this.getRemoveServicesBtnByIndex(index))
+  }
+
 }

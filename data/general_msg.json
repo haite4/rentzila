@@ -44,5 +44,7 @@
   "oneThousand": "1000",
   "one": "1",
   "zero": "0",
-  "empty": ""
+  "empty": "",
+  "createService": "Створити послугу",
+  "letterG": "Г"
 }

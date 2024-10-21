@@ -12,9 +12,8 @@
     "test:signin": "playwright test tests/signIn.spec.ts --project=chromium --trace on --headed",
     "test:createUnit": "playwright test tests/createUnit.spec.ts --project=chromium --trace on --headed",
     "test:createUnitPhoto": "playwright test tests/createUnitPhoto.spec.ts --project=chromium --trace on --headed",
-    "test:createUnitPrice": "playwright test tests/createUnitPrice.spec.ts --project=chromium --trace on --headed --workers 4"
-
-
+    "test:createUnitPrice": "playwright test tests/createUnitPrice.spec.ts --project=chromium --trace on --headed --workers 4",
+    "test:createUnitServices": "playwright test tests/createUnitServices.spec.ts --project=chromium --trace on --headed --workers 4"
   },
   "keywords": [],
   "author": "Stanislav Stankov",
