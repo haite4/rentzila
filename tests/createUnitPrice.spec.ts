@@ -308,7 +308,7 @@ test.describe("test create unit price section", () => {
             await createUnitPage.clearPriceInput();
             await createUnitPage.writeToClipboardSymbols(option);
             await createUnitPage.clickPriceInput();
-            await createUnitPage.pressCommand("Control+Shift+V");
+            await createUnitPage.pressCommand("Control+A");
             break;
         }
 
