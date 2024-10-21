@@ -308,12 +308,7 @@ test.describe("test create unit price section", () => {
             await createUnitPage.clearPriceInput();
             await createUnitPage.writeToClipboardSymbols(option);
             await createUnitPage.clickPriceInput();
-            // await createUnitPage.pressCommand("Control+V");
-            if (process.platform === "win32") {
-              await createUnitPage.pressCommand("Control+V");
-            } else {
-              await createUnitPage.pressCommand("Control+Shift+V");
-            }
+            await createUnitPage.pressCommand("Control+Shift+V");
             break;
         }
 
