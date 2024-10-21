@@ -31,6 +31,7 @@ test.describe("test create unit photo section", () => {
       await createUnitPage.clickOnThePopUpMap(x, y);
       await createUnitPage.page.waitForTimeout(3000);
       await createUnitPage.clickMapPopUpSubmitChoice();
+      await createUnitPage.page.waitForTimeout(1500);
       await createUnitPage.clickNextBtn();
     }
   );
