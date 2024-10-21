@@ -41,6 +41,7 @@ test.describe("test create unit price section", () => {
       await createUnitPage.clickNextBtn();
     }
   );
+  
   test("TC-417 Verify 'Спосіб оплати' section", async ({ createUnitPage }) => {
     await expect(createUnitPage.getPricePayementMethodUnitTitle()).toHaveText(
       /^Спосіб оплати.*\*$/
