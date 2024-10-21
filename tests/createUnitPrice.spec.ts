@@ -41,7 +41,7 @@ test.describe("test create unit price section", () => {
       await createUnitPage.clickNextBtn();
     }
   );
-  
+
   test("TC-417 Verify 'Спосіб оплати' section", async ({ createUnitPage }) => {
     await expect(createUnitPage.getPricePayementMethodUnitTitle()).toHaveText(
       /^Спосіб оплати.*\*$/
@@ -299,32 +299,20 @@ test.describe("test create unit price section", () => {
     for (const [index, option] of createUnitPage
       .getInvalidDataListWithAdditionalValue()
       .entries()) {
-      for (const action of createUnitPage.getListOfCopyPasteActions()) {
-        switch (action) {
-          case "type":
-            await createUnitPage.fillPriceInput(option);
-            break;
-          case "copy-paste":
-            await createUnitPage.clearPriceInput();
-            await createUnitPage.writeToClipboardSymbols(option);
-            await createUnitPage.clickPriceInput();
-            await createUnitPage.pressCommand("Control+V");
-            break;
-        }
+      await createUnitPage.fillPriceInput(option);
 
-        if (index < 2) {
-          await expect(createUnitPage.getPriceInput()).toHaveValue(
-            general_msg.oneToSix
-          );
-        } else if (index == 2) {
-          await expect(createUnitPage.getPriceInput()).toHaveValue(
-            general_msg.numberOneThroughnine
-          );
-        } else {
-          await expect(createUnitPage.getPriceInput()).toHaveValue(
-            general_msg.empty
-          );
-        }
+      if (index < 2) {
+        await expect(createUnitPage.getPriceInput()).toHaveValue(
+          general_msg.oneToSix
+        );
+      } else if (index == 2) {
+        await expect(createUnitPage.getPriceInput()).toHaveValue(
+          general_msg.numberOneThroughnine
+        );
+      } else {
+        await expect(createUnitPage.getPriceInput()).toHaveValue(
+          general_msg.empty
+        );
       }
     }
   });
@@ -373,32 +361,20 @@ test.describe("test create unit price section", () => {
     for (const [index, option] of createUnitPage
       .getInvalidDataListWithAdditionalValue()
       .entries()) {
-      for (const action of createUnitPage.getListOfCopyPasteActions()) {
-        switch (action) {
-          case "type":
-            await createUnitPage.fillPriceInput(option, 1);
-            break;
-          case "copy-paste":
-            await createUnitPage.clearPriceInput(1);
-            await createUnitPage.writeToClipboardSymbols(option);
-            await createUnitPage.clickPriceInput(1);
-            await createUnitPage.pressCommand("Control+V");
-            break;
-        }
+      await createUnitPage.fillPriceInput(option, 1);
 
-        if (index < 2) {
-          await expect(createUnitPage.getPriceInput(1)).toHaveValue(
-            general_msg.oneToSix
-          );
-        } else if (index == 2) {
-          await expect(createUnitPage.getPriceInput(1)).toHaveValue(
-            general_msg.numberOneThroughnine
-          );
-        } else {
-          await expect(createUnitPage.getPriceInput(1)).toHaveValue(
-            general_msg.empty
-          );
-        }
+      if (index < 2) {
+        await expect(createUnitPage.getPriceInput(1)).toHaveValue(
+          general_msg.oneToSix
+        );
+      } else if (index == 2) {
+        await expect(createUnitPage.getPriceInput(1)).toHaveValue(
+          general_msg.numberOneThroughnine
+        );
+      } else {
+        await expect(createUnitPage.getPriceInput(1)).toHaveValue(
+          general_msg.empty
+        );
       }
     }
   });

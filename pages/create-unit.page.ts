@@ -332,10 +332,6 @@ export class CreateUnitPage extends Page {
     return ["123 456", "123456 ","1234567890" , " ", "abc", "!@#$%.,"]
   }
 
-  getListOfCopyPasteActions(){
-    return ["type", "copy-paste"]
-  }
-
   getListOfMeasurementUnits() {
     return [
       "година",
@@ -770,10 +766,6 @@ export class CreateUnitPage extends Page {
 
   async clickRemovePriceBtn() {
     await super.clickLocator(super.getElement(removePriceBtn));
-  }
-
-  async writeToClipboardSymbols(symbols: string) {
-    await super.writeTextToClipboard(symbols);
   }
 
   async clickPriceInput(index: number = 0) {
