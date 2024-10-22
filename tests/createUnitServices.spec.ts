@@ -150,4 +150,112 @@ test.describe("tests for unit services section", () => {
       }
     }
   });
+
+  test("TC-632 Verify entering special characters in the 'Послуги' input", async ({
+    createUnitPage,
+  }) => {
+    await createUnitPage.fillServiceUnitInput(general_msg.invalidSymbols);
+    await expect(createUnitPage.getServiceUnitInput()).toHaveValue(
+      general_msg.empty
+    );
+    await createUnitPage.fillServiceUnitInput(
+      general_msg.drillingwithinvalidSymbols
+    );
+    await expect(createUnitPage.getServiceUnitInput()).toHaveValue(
+      general_msg.drilling
+    );
+    await expect(createUnitPage.getSearchedServicesWrapper()).toBeVisible();
+  });
+
+  test("TC-633 Verify data length for 'Послуги' input field", async ({
+    createUnitPage,
+    randomValueHelper,
+  }) => {
+    await createUnitPage.fillServiceUnitInput(general_msg.dot);
+    for (const services of await createUnitPage.getAllSearchItemServicesResult()) {
+      await expect(services).toContainText(general_msg.dot);
+    }
+    await createUnitPage.clearServiceUnitInput();
+    await expect(createUnitPage.getServiceUnitInput()).toHaveValue(
+      general_msg.empty
+    );
+    await createUnitPage.fillServiceUnitInput(
+      randomValueHelper.generateStringWithLength(101)
+    );
+    expect(await createUnitPage.getServiceUnitInputValue()).toHaveLength(100);
+  });
+
+  test("TC-634 Verify the search function is not sensetive to upper or lower case", async ({
+    createUnitPage,
+  }) => {
+    await createUnitPage.fillServiceUnitInput(general_msg.diggingInLowwerCase);
+    for (const services of await createUnitPage.getAllSearchItemServicesResult()) {
+      await expect(services).toContainText(
+        new RegExp(general_msg.diggingInLowwerCase, "i")
+      );
+    }
+    await createUnitPage.fillServiceUnitInput(general_msg.diggingInUpperCase);
+    for (const services of await createUnitPage.getAllSearchItemServicesResult()) {
+      await expect(services).toContainText(
+        new RegExp(general_msg.diggingInLowwerCase, "i")
+      );
+    }
+  });
+
+  test("TC-591 Verify 'Послуги' input with invalid data", async ({
+    createUnitPage,
+  }) => {
+    await createUnitPage.fillServiceUnitInput(general_msg.invalidSymbols);
+    await expect(createUnitPage.getServiceUnitInput()).toHaveValue(
+      general_msg.empty
+    );
+  });
+
+  test("TC-592 Verify 'Послуги' input choosing of existing service", async ({
+    createUnitPage,
+  }) => {
+    await expect(createUnitPage.getServicesInputTitle()).toHaveText(
+      /^Знайдіть послуги, які надає Ваш технічний засіб.*\*$/
+    );
+    await expect(createUnitPage.getServicesInfoClue()).toBeVisible();
+    await expect(createUnitPage.getServicesInfoClue()).toHaveText(
+      general_msg.addAtLeastOneService
+    );
+    await expect(createUnitPage.getServiceUnitInput()).toHaveAttribute(
+      "placeholder",
+      general_msg.servicesInputPlaceholder
+    );
+    await createUnitPage.fillServiceUnitInput(general_msg.B);
+    await expect(createUnitPage.getSearchedServicesWrapper()).toBeVisible();
+    await createUnitPage.clearServiceUnitInput();
+    await createUnitPage.fillServiceUnitInput(general_msg.diggingInLowwerCase);
+    const resultsForDiggingInLowwerCase = await Promise.all(
+      (
+        await createUnitPage.getAllSearchItemServicesResult()
+      ).map(
+        async (services) =>
+          await createUnitPage.getServicesSearchResultTextContent(services)
+      )
+    );
+    await createUnitPage.fillServiceUnitInput(general_msg.diggingInUpperCase);
+    const resultsForDiggingInUpperCase = await Promise.all(
+      (
+        await createUnitPage.getAllSearchItemServicesResult()
+      ).map(
+        async (services) =>
+          await createUnitPage.getServicesSearchResultTextContent(services)
+      )
+    );
+
+    expect(resultsForDiggingInLowwerCase).toEqual(resultsForDiggingInUpperCase);
+    await createUnitPage.clickSearchItemServicesResulByIndex(0);
+    await expect(createUnitPage.getSelectedServices()).toBeVisible();
+    await expect(createUnitPage.getSelectedServices()).toHaveText(
+      general_msg.excavationForFoundations
+    );
+    await expect(createUnitPage.getTechnicalServiceDescription()).toHaveText(
+      general_msg.servicesProvidedByTechnicalMeans
+    );
+    await expect(createUnitPage.getRemoveServicesBtnByIndex(0)).toBeVisible();
+  });
 });

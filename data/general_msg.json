@@ -46,5 +46,14 @@
   "zero": "0",
   "empty": "",
   "createService": "Створити послугу",
-  "letterG": "Г"
+  "letterG": "Г",
+  "drillingwithinvalidSymbols": "Буріння<>{};^",
+  "drilling":"Буріння",
+  "dot": ".",
+  "diggingInLowwerCase":"риття",
+  "diggingInUpperCase": "РИТТЯ",
+  "addAtLeastOneService": "Додайте в оголошення принаймні 1 послугу",
+  "servicesInputPlaceholder": "Наприклад: Рихлення грунту, буріння",
+  "B": "Б",
+  "excavationForFoundations": "Риття котлованів під фундаменти"
 }

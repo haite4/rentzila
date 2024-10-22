@@ -90,6 +90,8 @@ const searchItemServicesResult = '[class*="ServicesUnitFlow_flexForServices"]'
 const removeServicesBtn = `[data-testid="remove-servicesUnitFlow"]`
 const technicalServiceDescription = `//div[contains(@class, 'ServicesUnitFlow_paragraph') and contains(text(), "Послуги, які надає технічний засіб:")]`
 const servicesInfoClue = `[data-testid="add-info"]`
+const searchedServicesWrapper = '[class*="ServicesUnitFlow_searchedServicesCatWrapper"]'
+const servicesInputTitle = '[class*="ServicesUnitFlow_paragraph"]'
 
 export class CreateUnitPage extends Page {
   constructor(page: Page["page"]) {
@@ -532,6 +534,14 @@ export class CreateUnitPage extends Page {
     return super.getElement(servicesInfoClue)
   }
 
+  getSearchedServicesWrapper(){
+    return super.getElement(searchedServicesWrapper)
+  }
+
+  getServicesInputTitle(){
+    return super.getElement(servicesInputTitle)
+  }
+
   async clickDeleteIconWrapper(index: number) {
     await super.clickLocator(this.getDeleteIconWrapperByindex(index));
   }
@@ -844,4 +854,15 @@ export class CreateUnitPage extends Page {
     await super.clickLocator(this.getRemoveServicesBtnByIndex(index))
   }
 
+  async clearServiceUnitInput(){
+    await super.clearInputField(this.getServiceUnitInput())
+  }
+
+  async getServiceUnitInputValue(){
+    return super.getElementInputValue(this.getServiceUnitInput())
+  }
+
+  async getServicesSearchResultTextContent(locator: Locator){
+    return super.getElementTextContent(locator)
+  }
 }
