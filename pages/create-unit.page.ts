@@ -865,4 +865,15 @@ export class CreateUnitPage extends Page {
   async getServicesSearchResultTextContent(locator: Locator){
     return super.getElementTextContent(locator)
   }
+
+  async servicesSearchResultText(){
+    await Promise.all(
+      (
+        await this.getAllSearchItemServicesResult()
+      ).map(
+        async (services) =>
+          await this.getServicesSearchResultTextContent(services)
+      )
+    );
+  }
 }

@@ -229,24 +229,9 @@ test.describe("tests for unit services section", () => {
     await expect(createUnitPage.getSearchedServicesWrapper()).toBeVisible();
     await createUnitPage.clearServiceUnitInput();
     await createUnitPage.fillServiceUnitInput(general_msg.diggingInLowwerCase);
-    const resultsForDiggingInLowwerCase = await Promise.all(
-      (
-        await createUnitPage.getAllSearchItemServicesResult()
-      ).map(
-        async (services) =>
-          await createUnitPage.getServicesSearchResultTextContent(services)
-      )
-    );
+    const resultsForDiggingInLowwerCase = await createUnitPage.servicesSearchResultText()
     await createUnitPage.fillServiceUnitInput(general_msg.diggingInUpperCase);
-    const resultsForDiggingInUpperCase = await Promise.all(
-      (
-        await createUnitPage.getAllSearchItemServicesResult()
-      ).map(
-        async (services) =>
-          await createUnitPage.getServicesSearchResultTextContent(services)
-      )
-    );
-
+    const resultsForDiggingInUpperCase = await createUnitPage.servicesSearchResultText()
     expect(resultsForDiggingInLowwerCase).toEqual(resultsForDiggingInUpperCase);
     await createUnitPage.clickSearchItemServicesResulByIndex(0);
     await expect(createUnitPage.getSelectedServices()).toBeVisible();
