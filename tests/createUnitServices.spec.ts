@@ -26,7 +26,7 @@ test.describe("tests for unit services section", () => {
       await createUnitPage.clickAddressSelectionBtn();
 
       const { x, y } = await createUnitPage.getMapPopupBoundingBox();
-      await createUnitPage.getMapPopUp().waitFor({ state: "visible" });
+      await expect(createUnitPage.getMapPopUp()).toBeVisible()
       await createUnitPage.clickOnThePopUpMap(x, y);
       await createUnitPage.page.waitForTimeout(3000);
       await createUnitPage.clickMapPopUpSubmitChoice();
