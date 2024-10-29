@@ -260,7 +260,7 @@ test.describe("test create unit price section", () => {
     createUnitPage,
   }) => {
     await createUnitPage.typePriceInput(general_msg.zero);
-    await expect(createUnitPage.getPriceInput()).toHaveValue(general_msg.empty);
+    await expect(createUnitPage.getPriceInput()).toHaveValue("");
     await createUnitPage.typePriceInput(general_msg.one);
     await expect(createUnitPage.getPriceInput()).toHaveValue(general_msg.one);
     await createUnitPage.clickNextBtn();
@@ -321,7 +321,7 @@ test.describe("test create unit price section", () => {
           );
         } else {
           await expect(createUnitPage.getPriceInput()).toHaveValue(
-            general_msg.empty
+            ""
           );
         }
       }
@@ -395,7 +395,7 @@ test.describe("test create unit price section", () => {
           );
         } else {
           await expect(createUnitPage.getPriceInput(1)).toHaveValue(
-            general_msg.empty
+           ""
           );
         }
       }

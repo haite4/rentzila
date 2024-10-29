@@ -156,7 +156,7 @@ test.describe("tests for unit services section", () => {
   }) => {
     await createUnitPage.fillServiceUnitInput(general_msg.invalidSymbols);
     await expect(createUnitPage.getServiceUnitInput()).toHaveValue(
-      general_msg.empty
+      ""
     );
     await createUnitPage.fillServiceUnitInput(
       general_msg.drillingwithinvalidSymbols
@@ -177,7 +177,7 @@ test.describe("tests for unit services section", () => {
     }
     await createUnitPage.clearServiceUnitInput();
     await expect(createUnitPage.getServiceUnitInput()).toHaveValue(
-      general_msg.empty
+     ""
     );
     await createUnitPage.fillServiceUnitInput(
       randomValueHelper.generateStringWithLength(101)
@@ -207,7 +207,7 @@ test.describe("tests for unit services section", () => {
   }) => {
     await createUnitPage.fillServiceUnitInput(general_msg.invalidSymbols);
     await expect(createUnitPage.getServiceUnitInput()).toHaveValue(
-      general_msg.empty
+      ""
     );
   });
 
