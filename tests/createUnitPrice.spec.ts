@@ -261,7 +261,7 @@ test.describe("test create unit price section", () => {
     createUnitPage,
   }) => {
     await createUnitPage.typePriceInput(general_msg.zero);
-    await expect(createUnitPage.getPriceInput()).toHaveValue(general_msg.empty);
+    await expect(createUnitPage.getPriceInput()).toHaveValue("");
     await createUnitPage.typePriceInput(general_msg.one);
     await expect(createUnitPage.getPriceInput()).toHaveValue(general_msg.one);
     await createUnitPage.clickNextBtn();
@@ -301,18 +301,19 @@ test.describe("test create unit price section", () => {
       .entries()) {
       await createUnitPage.fillPriceInput(option);
 
-      if (index < 2) {
-        await expect(createUnitPage.getPriceInput()).toHaveValue(
-          general_msg.oneToSix
-        );
-      } else if (index == 2) {
-        await expect(createUnitPage.getPriceInput()).toHaveValue(
-          general_msg.numberOneThroughnine
-        );
-      } else {
-        await expect(createUnitPage.getPriceInput()).toHaveValue(
-          general_msg.empty
-        );
+        if (index < 2) {
+          await expect(createUnitPage.getPriceInput()).toHaveValue(
+            general_msg.oneToSix
+          );
+        } else if (index == 2) {
+          await expect(createUnitPage.getPriceInput()).toHaveValue(
+            general_msg.numberOneThroughnine
+          );
+        } else {
+          await expect(createUnitPage.getPriceInput()).toHaveValue(
+            ""
+          );
+        }
       }
     }
   });
@@ -363,18 +364,19 @@ test.describe("test create unit price section", () => {
       .entries()) {
       await createUnitPage.fillPriceInput(option, 1);
 
-      if (index < 2) {
-        await expect(createUnitPage.getPriceInput(1)).toHaveValue(
-          general_msg.oneToSix
-        );
-      } else if (index == 2) {
-        await expect(createUnitPage.getPriceInput(1)).toHaveValue(
-          general_msg.numberOneThroughnine
-        );
-      } else {
-        await expect(createUnitPage.getPriceInput(1)).toHaveValue(
-          general_msg.empty
-        );
+        if (index < 2) {
+          await expect(createUnitPage.getPriceInput(1)).toHaveValue(
+            general_msg.oneToSix
+          );
+        } else if (index == 2) {
+          await expect(createUnitPage.getPriceInput(1)).toHaveValue(
+            general_msg.numberOneThroughnine
+          );
+        } else {
+          await expect(createUnitPage.getPriceInput(1)).toHaveValue(
+           ""
+          );
+        }
       }
     }
   });

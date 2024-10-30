@@ -12,10 +12,10 @@
     "test:signin": "playwright test tests/signIn.spec.ts --project=chromium --trace on --headed",
     "test:createUnit": "playwright test tests/createUnit.spec.ts --project=chromium --trace on --headed",
     "test:createUnitPhoto": "playwright test tests/createUnitPhoto.spec.ts --project=chromium --trace on --headed",
-    "test:createUnitPrice": "playwright test tests/createUnitPrice.spec.ts --project=chromium --trace on",
+    "test:createUnitPrice": "playwright test tests/createUnitPrice.spec.ts --project=chromium --trace on --headed --workers 4",
+    "test:createUnitServices": "playwright test tests/createUnitServices.spec.ts --project=chromium --trace on --workers 4",
     "allure:generate": "npx allure generate allure-results --clean"
-
-  },
+}, 
   "keywords": [],
   "author": "Stanislav Stankov",
   "license": "ISC",
