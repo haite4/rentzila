@@ -33,7 +33,7 @@ test.describe("Main page testing", () => {
 
       await productsPage.clickExpendFilterContainer();
       const checkboxLabel = productsPage.getCheckboxByLabel(text ?? "");
-      await mainPage.page.waitForTimeout(2000);
+      await mainPage.page.waitForTimeout(3000);
       await expect(checkboxLabel).toBeVisible();
       await expect(checkboxLabel).toBeChecked();
       await productsPage.clickUnitCardImage();
