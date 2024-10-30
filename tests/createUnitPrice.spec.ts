@@ -316,7 +316,7 @@ test.describe("test create unit price section", () => {
         }
       }
     }
-  });
+  );
 
   test("TC-637 Verify UI of the 'Вартість Ваших послуг *' section", async ({
     createUnitPage,
@@ -379,5 +379,5 @@ test.describe("test create unit price section", () => {
         }
       }
     }
-  });
+  );
 });
