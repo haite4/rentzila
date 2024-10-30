@@ -25,28 +25,31 @@ export class ProductsPage extends Page {
   }
 
   async clickExpendFilterContainer(): Promise<void> {
-    const isExpanded = await super
-      .getElement(expandedClassSelector)
-      .isVisible();
+    const rightArrowElements = super.getElement(rightArrowSelector);
 
-    if (!isExpanded) {
-      const rightArrowElements = super.getElement(rightArrowSelector);
+    for (let i = 0; i < (await rightArrowElements.count()); i++) {
+      const element = rightArrowElements.nth(i);
 
-      for (let i = 0; i < (await rightArrowElements.count()); i++) {
-        const element = rightArrowElements.nth(i);
+      const hasClickedClass = await element.evaluate((el) =>
+        Array.from(el.classList).some((className) =>
+          className.startsWith("ServiceCategory_clicked")
+        )
+      );
+
+      if (!hasClickedClass) {
         await element.waitFor({ state: "visible", timeout: 5000 });
         await element.click();
 
-        await super
-          .getElement(expandedClassSelector)
-          .waitFor({ state: "attached", timeout: 5000 });
-
-        if (await super.getElement(expandedClassSelector).isVisible()) {
-          break;
-        }
+        await element.evaluate(async (el) => {
+          while (
+            !Array.from(el.classList).some((className) =>
+              className.startsWith("ServiceCategory_clicked")
+            )
+          ) {
+            await new Promise((resolve) => setTimeout(resolve, 100));
+          }
+        });
       }
-    } else {
-      console.log("Element is already expanded.");
     }
   }
 

@@ -2,7 +2,7 @@ import { Locator } from "@playwright/test";
 import Page from "./page";
 
 const equipment = `[data-testid="specialEquipment"]`;
-const popularServices = 'section[data-testid*="services"]';
+const popularServices = 'section[data-testid="services"]';
 const populyarniEquipment = 'section[data-testid*="specialEquipment"]';
 const itemServices = '[class*="RentzilaProposes_proposes_item"]';
 const title = `[data-testid="title"]`;
